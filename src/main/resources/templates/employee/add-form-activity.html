@@ -14,7 +14,7 @@ and open the template in the editor.
     <body>
         <div layout:fragment="content">
             <div>
-              <nav aria-label="breadcrumb">
+              <nav aria-label="breadcrumb" style="font-size: 10px">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
@@ -24,40 +24,41 @@ and open the template in the editor.
               </nav>
             </div>
             
-            <div class="p-3 mr-3">
-                <h3 class="text-primary p-3" >TIMESHEET</h3>
+            
+            <div class="p-2 mr-2">
+                <h3 class="text-primary" >TIMESHEET</h3>
             </div>
             
-            <div  class="card  p-3">
-                <h4 class="p-3"> Add New Log Activity</h4>
+            <div  class="card  p-3" style="font-size: 12px">
+                <h6> Add New Log Activity</h6>
                         
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                     <label for="projectName" class="col-sm-2 col-form-label">Date</label>
                     <div class="col-sm-4">
-                      <input type="text"  class="form-control" id="staticEmail" >
+                      <input type="date" >
                     </div>
                   </div>
                                 
-                <div class="mb-3 row">
-                    <h6>Working hour</h6>
+                <div class="mb-1 row">
+                    <label style="font-size: 12px">Working hour</label>
                 </div>
-                  <div class="mb-3 row">
+                  <div class="mb-1 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Start</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" id="inputPassword">
+                      <input type="time" >
                     </div>
                   </div>
                   
-                <div class="mb-3 row">
+                <div class="mb-1 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">End</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" id="inputPassword">
+                      <input type="time">
                     </div>
                   </div>
                               
                 
-                <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Status Attendance</label>
+                <div class="mb-1 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label" >Status Attendance</label>
                     <div class="dropdown col-sm-2">
                         <button
                           class="btn btn-light dropdown-toggle"
@@ -65,7 +66,7 @@ and open the template in the editor.
                           id="dropdownMenuButton"
                           data-mdb-toggle="dropdown"
                           aria-expanded="false"
-                        >
+                         style="font-size: 12px">
                           Status Attendance
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -79,11 +80,11 @@ and open the template in the editor.
                       </div>           
                 </div>
                 
-                <div class="mb-3 row">
+                <div class="mb-1 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
                     <div class="col-sm-8">
                       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      <button type="submit" class="btn btn-primary  float-end m-5" >Submit</button>
+                      <button type="submit" class="btn btn-primary  float-end m-5" style="font-size: 12px" >Submit</button>
                     </div>
                   </div>
             </div>
