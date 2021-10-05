@@ -14,79 +14,70 @@ and open the template in the editor.
     <body>
         <div layout:fragment="content">
             <div>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
-                  <li class="breadcrumb-item active" aria-current="page">Timesheet Summary</li>
-                  <li class="breadcrumb-item active" aria-current="page">Timesheet Form</li>
-                </ol>
-              </nav>
+                <nav aria-label="breadcrumb" style="font-size: 10px">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
+                        <li class="breadcrumb-item active" aria-current="page">Timesheet Summary</li>
+                        <li class="breadcrumb-item active" aria-current="page">Timesheet Form</li>
+                    </ol>
+                </nav>
             </div>
-            
-            <div class="p-3 mr-3">
-                <h3 class="text-primary p-3" >TIMESHEET</h3>
+
+
+            <div class="p-2 mr-2">
+                <h3 class="text-primary" >TIMESHEET</h3>
             </div>
-            
-            <div  class="card  p-3">
-                <h4 class="p-3"> Add New Log Activity</h4>
-                        
-                    <div class="mb-3 row">
-                    <label for="projectName" class="col-sm-2 col-form-label">Date</label>
-                    <div class="col-sm-4">
-                      <input type="text"  class="form-control" id="staticEmail" >
+
+            <form th:action="@{/job/add}" th:object="${job}" method="POST" id="jobForm">
+                <div  class="card  p-3" style="font-size: 12px">
+                    <h6> Add New Log Activity</h6>
+                    <div class="mb-1 row">
+                        <label class="col-sm-2 col-form-label">Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" th:field="*{date}" class="form-control"  id="date"><br>
+                        </div>
                     </div>
-                  </div>
-                                
-                <div class="mb-3 row">
-                    <h6>Working hour</h6>
+
+                    <div class="mb-1 row">
+                        <label style="font-size: 12px">Working hour</label>
+                    </div>
+                    <div class="mb-1 row">
+                        <label for="startTime" class="col-sm-2 col-form-label">Start</label>
+                        <div class="col-sm-4">
+                            <input type="time" th:field="*{startTime}" class="form-control"  id="startTime"><br>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="endTime" class="col-sm-2 col-form-label">End</label>
+                        <div class="col-sm-4">
+                            <input type="time" th:field="*{endTime}" class="form-control"  id="endTime"><br>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label" >Status Attendance</label>
+                        <div class="dropdown col-sm-2">
+                            <select th:field="*{status.id}">
+                                <option 
+                                    th:each="status : ${statuses}" 
+                                    th:text="${status.name}" 
+                                    th:value="${status.id}">
+                                </option>
+                            </select>
+                        </div>           
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <button type="submit" class="btn btn-primary  float-end m-5" style="font-size: 12px" >Submit</button>
+                        </div>
+                    </div>
                 </div>
-                  <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Start</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="inputPassword">
-                    </div>
-                  </div>
-                  
-                <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">End</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="inputPassword">
-                    </div>
-                  </div>
-                              
-                
-                <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Status Attendance</label>
-                    <div class="dropdown col-sm-2">
-                        <button
-                          class="btn btn-light dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuButton"
-                          data-mdb-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          Status Attendance
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <li><a class="dropdown-item" >Present</a></li>
-                          <li><a class="dropdown-item" >Sick</a></li>
-                          <li><a class="dropdown-item" >Business Trip</a></li>
-                          <li><a class="dropdown-item" >Permit</a></li>
-                          <li><a class="dropdown-item" >Vacation</a></li>
-                          <li><a class="dropdown-item" >Not Working</a></li>
-                        </ul>
-                      </div>           
-                </div>
-                
-                <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
-                    <div class="col-sm-8">
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      <button type="submit" class="btn btn-primary  float-end m-5" >Submit</button>
-                    </div>
-                  </div>
-            </div>
+            </form>
         </div>    
     </body>
 </html>

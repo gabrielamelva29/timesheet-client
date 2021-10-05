@@ -5,36 +5,49 @@
  */
 package com.example.timesheetclient.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 /**
  *
  * @author gabri
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Job {
-    @Nullable
+//    @Nullable
     private Integer id;
     
-    @NotEmpty(message = "please input date")
+//    @NotEmpty(message = "please input date")
+    @JsonFormat(pattern = "dd-MMM-yyyy")
     private LocalDate date;
     
-    @NotEmpty(message = "please input start time")
+//    @NotEmpty(message = "please input start time")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
     
-    @NotEmpty(message = "please input end time")
+//    @NotEmpty(message = "please input end time")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
     
-    @NotEmpty(message = "please input total hour")
+//    @NotEmpty(message = "please input total hour")
     private String totalHour;
     
-    @NotNull(message = "please select a activity")
+//    @NotNull(message = "please select a activity")
     private String activity;
     
-//    @NotNull(message = "please select a date")
-//    private Employee employee;
-//    
+    private Employee employee;
+    
+    private Status status;
+    
 }

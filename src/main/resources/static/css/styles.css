@@ -4030,6 +4030,8 @@ textarea.form-control-lg {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  background-color: #095EDE;
+
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -5056,7 +5058,7 @@ textarea.form-control-lg {
   flex-direction: column;
   padding-left: 0;
   margin-bottom: 0;
-  border-radius: 0.25rem;
+  border-radius: 0.15rem;
 }
 
 .list-group-numbered {
@@ -5072,6 +5074,7 @@ textarea.form-control-lg {
   width: 100%;
   color: #495057;
   text-align: inherit;
+  padding: 0.2rem 1rem;
 }
 .list-group-item-action:hover, .list-group-item-action:focus {
   z-index: 1;
@@ -5091,7 +5094,7 @@ textarea.form-control-lg {
 .list-group-item {
   position: relative;
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2.5rem;
   color: #212529;
   text-decoration: none;
   background-color: #fff;
@@ -5363,7 +5366,8 @@ textarea.form-control-lg {
 
 .list-group-item-light {
   color: #ffffff;
-  background-color: #0d6efd;;
+  background-color: #095EDE;
+  font-size: 0.8rem;
 }
 .list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:focus {
   color: #636464;
@@ -11286,11 +11290,14 @@ textarea.form-control-lg {
   min-height: 100vh;
   margin-left: -15rem;
   transition: margin 0.25s ease-out;
+  background-color: #095EDE;
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
+  padding: 0.875rem 1.2rem;
   font-size: 1.2rem;
+  background-color: #095EDE;
+  color:#fff;
 }
 
 #sidebar-wrapper .list-group {
