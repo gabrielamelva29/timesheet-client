@@ -6,7 +6,6 @@
 package com.example.timesheetclient.services;
 
 import com.example.timesheetclient.models.Employee;
-import com.example.timesheetclient.models.ResponseModel;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,46 +22,43 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class EmployeeService {
-    
-    @Autowired
     private RestTemplate restTemplate;
     
     @Value("${api.baseUrl}/employee")
     private String url;
-    
+
     @Autowired
     public EmployeeService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-    
-    public List<Employee> getAll() {
-        ResponseEntity<List<Employee>> response =  restTemplate
-                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Employee>>(){});
-    
-        return response.getBody();
-    }
-    
-    public Employee getById(Integer id){
-        return restTemplate
-                .getForObject(url + "/"+id, Employee.class);
-    }
-    
-    public ResponseModel<Employee> create(Employee employee){
-        return new ResponseModel<>(restTemplate
-                .postForObject(url, employee, Employee.class), "Employee Created");
-    }
-    
-    public void update(Integer id, Employee employee){
-        employee.setId(id);
-        restTemplate.put(url + "/" + id, employee, Employee.class);
-    }
-
-    public void delete(Integer id){
-        restTemplate.delete(url + "/" + id, String.class);
-    }
-
-    public void counts(Integer id){
+     
+     public List<Employee> getAll(){         
+         ResponseEntity<List<Employee>> response=restTemplate
+                 .exchange(url, HttpMethod.GET, null, 
+                         new ParameterizedTypeReference<List<Employee>>(){});
+         
+         return response.getBody();
+     }
+     
+     public Employee getById(Integer id){
+          return restTemplate
+                 .getForObject(url + "/" +id, Employee.class);         
+     }
+     
+     public void create(Employee employee) {
         restTemplate
-                .getForObject(url + "/counts/"+id, Employee.class);
+                .postForObject(url, employee, Employee.class);
     }
+
+    public void update(Long id, Employee employee) {
+        restTemplate
+                .put(url + "/" + id, employee, Employee.class);
+    }
+
+    public void delete(Long id) {
+        restTemplate
+                .delete(url + "/" + id, Employee.class);
+    }
+
+    
 }
