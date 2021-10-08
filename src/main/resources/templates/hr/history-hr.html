@@ -12,26 +12,23 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div layout:fragment="content">
+         <div layout:fragment="content">
             <div>
               <nav aria-label="breadcrumb" style="font-size: 10px">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
-                  <li class="breadcrumb-item active" aria-current="page">Timesheet Summary</li>
-                  <li class="breadcrumb-item active" aria-current="page">Timesheet Form</li>
+                  <li class="breadcrumb-item active" aria-current="page">Timesheet HR</li>
+           
                 </ol>
               </nav>
             </div>
             
             
             <div class="p-2 mr-2">
-                <h3 class="text-primary" >TIMESHEET</h3>
+                <h3 class="text-primary" >TIMESHEET HR</h3>
             </div>
-            
-             </div>
-        
-         <script th:inline="javascript">
+             
+ <script th:inline="javascript">
             (function () {
                 const message = [[${message}]];
                 
@@ -44,4 +41,4 @@ and open the template in the editor.
        
     </body>
 </html>
-
+    
