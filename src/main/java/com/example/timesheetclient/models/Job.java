@@ -9,12 +9,20 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 /**
  *
  * @author gabri
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Job {
     @Nullable
     private Integer id;

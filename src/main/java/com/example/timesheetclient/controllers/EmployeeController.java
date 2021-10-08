@@ -46,7 +46,7 @@ public class EmployeeController {
 //        model.addAttribute("employees", employeeService.getAll());
         model.addAttribute("employees", new Employee());
             
-        return "employee/add-form";
+        return "employee/add-form-employee";
     }
     
     @PostMapping("/add")
@@ -55,10 +55,10 @@ public class EmployeeController {
             model.addAttribute("employees", employeeService.getAll());
             model.addAttribute("employees", new Employee());
 
-            return "employee/add-form";         
+            return "employee/add-form-employee";         
         }
         
-        return "redirect:/employee";
+        return "redirect:/add-form-employee";
     }
     
     @PutMapping("/edit/{id}")
@@ -75,7 +75,7 @@ public class EmployeeController {
 
         redirect.addFlashAttribute("message", "Employee updated");
 
-        return "redirect:/employee";
+        return "redirect:/add-form-employee";
     }
     
     @DeleteMapping("/{id}")

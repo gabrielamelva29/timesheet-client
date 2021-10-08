@@ -40,7 +40,7 @@ public class EmployeeService {
          return response.getBody();
      }
      
-     public Employee getById(Long id){
+     public Employee getById(Integer id){
           return restTemplate
                  .getForObject(url + "/" +id, Employee.class);         
      }
