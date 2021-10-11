@@ -6,6 +6,7 @@
 package com.example.timesheetclient.services;
 
 import com.example.timesheetclient.models.Job;
+import com.example.timesheetclient.models.ResponseModel;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -39,11 +40,11 @@ public class JobService {
         return restTemplate.getForObject(url+"/"+id, Job.class);
     }
     
-    public void create(Job job){
-        restTemplate
-                .postForObject(url, job, Job.class);
-    }
-    
+    public ResponseModel<Job> create(Job job){
+        return new ResponseModel<>(restTemplate
+                .postForObject(url, job, Job.class), "Job Created");
+    } 
+     
     public void update(Integer id, Job job){
         restTemplate
                 .put(url+"/"+id, job, Job.class);
@@ -53,5 +54,4 @@ public class JobService {
         restTemplate
                 .delete(url+"/"+id, Job.class);
     }    
-    
 }
