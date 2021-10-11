@@ -12,17 +12,14 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author Lenovo-PC
+ * @author gabri
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Status {
-    
     private String id;
-
     private String name;
-
     private Integer count;
 }

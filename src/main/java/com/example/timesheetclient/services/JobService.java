@@ -54,5 +54,4 @@ public class JobService {
         restTemplate
                 .delete(url+"/"+id, Job.class);
     }    
-    
 }

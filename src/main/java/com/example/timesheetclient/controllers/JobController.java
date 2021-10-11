@@ -9,6 +9,7 @@ import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.models.Job;
 import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobService;
+import com.example.timesheetclient.services.StatusService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,44 +30,53 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/job")
 public class JobController {
-    private EmployeeService employeeService;
+   private EmployeeService employeeService;
     private JobService jobService;
+    private StatusService statusService;
 
     @Autowired
-    public JobController(JobService jobService, EmployeeService employeeService) {
-        this.jobService = jobService;
+    public JobController(EmployeeService employeeService, JobService jobService, StatusService statusService) {
         this.employeeService = employeeService;
+        this.jobService = jobService;
+        this.statusService = statusService;
     }
 
     @GetMapping
-    public String index(Job job,Model model ) {
-        model.addAttribute("jobs", jobService.getAll());
-        model.addAttribute("employees", employeeService.getAll());
- 
-        return "job/summary-activity";
+    public String index(Job job, Model model) {
+//        model.addAttribute("jobs", jobService.getAll());
+//        model.addAttribute("employees", employeeService.getAll());
+        model.addAttribute("statuses", statusService.getAll());
+        return "employee/add-form-activity";
     }
 
     @GetMapping("/add")
-    public String create(Job job, Model model) {
-        model.addAttribute("jobs", jobService.getAll());
-        model.addAttribute("e", employeeService.getAll());
-        return "job/add-form-job";
+    public String create(Job job, Model model){
+        model.addAttribute("statuses", statusService.getAll());
+        return "employee/add-form-activity";
     }
 
     @PostMapping("/add")
-    public String create(@Valid Job job,
-            BindingResult result, RedirectAttributes attributes, Model model) {
-
+    public String create(Job job, 
+            BindingResult result,
+            Model model,
+            RedirectAttributes attributes){
+        System.out.println(job);
+        if(result.hasErrors()){
+            return "employee/add-form-activity";
+        }
         jobService.create(job);
         attributes.addFlashAttribute("message", "Create Successed");
-        return "redirect:/job?created=true";
+        System.out.println("mantab");
+       return "employee/add-form-activity";
     }
+    
 
     @GetMapping("/edit/{id}")
     public String update(@PathVariable Integer id, Model model) {
-        model.addAttribute("jobs", jobService.getAll());
+        model.addAttribute("jobs", jobService.getById(id));
         model.addAttribute("employee", employeeService.getById(id));
-        return "job/edit-form-job";
+        model.addAttribute("statuses", statusService.getAll());
+        return "employee/update-form";
     }
 
     @PutMapping("/edit/{id}")
@@ -77,13 +87,13 @@ public class JobController {
             RedirectAttributes attributes) {
         System.out.println(job.toString());
         if (result.hasErrors()) {
-            model.addAttribute("jobs", jobService.getAll());
             model.addAttribute("employees", employeeService.getAll());
-            return "job/edit-form-job";
+            model.addAttribute("statuses", statusService.getAll());
+            return "job/update-form";
         }
         jobService.update(id, job);
         attributes.addFlashAttribute("message", "Update Successed");
-        return "redirect:/job?updated=true";
+        return "redirect:/employee?updated=true";
     }
 
     @DeleteMapping("/{id}")
