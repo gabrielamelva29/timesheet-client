@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -50,13 +51,13 @@ public class JobControllers {
 //        model.addAttribute("jobs", jobService.getAll());
 //        model.addAttribute("employees", employeeService.getAll());
         model.addAttribute("statuses", statusService.getAll());
-        return "employee/add-form-activity";
+        return "timesheet/add-form-activity";
     }
 
     @GetMapping("/add")
     public String create(Job job, Model model){
         model.addAttribute("statuses", statusService.getAll());
-        return "employee/add-form-activity";
+        return "timesheet/add-form-activity";
     }
 
     @PostMapping("/add")
@@ -66,34 +67,35 @@ public class JobControllers {
             RedirectAttributes attributes){
         System.out.println(job);
         if(result.hasErrors()){
-            return "employee/add-form-activity";
+            model.addAttribute("statuses", statusService.getAll());
+            return "timesheet/add-form-activity";
         }
         jobService.create(job);
         attributes.addFlashAttribute("message", "Create Successed");
         System.out.println("mantab");
-       return "employee/add-form-activity";
+       return "redirect:/employee";
     }
-    
 
     @GetMapping("/edit/{id}")
     public String update(@PathVariable Integer id, Model model) {
-        model.addAttribute("jobs", jobService.getById(id));
-        model.addAttribute("employee", employeeService.getById(id));
+        model.addAttribute("job", jobService.getById(id));
+//        model.addAttribute("employee", employeeService.getById(id));
         model.addAttribute("statuses", statusService.getAll());
-        return "employee/update-form";
+        return "timesheet/update-form-activity";
     }
 
     @PutMapping("/edit/{id}")
     public String update(@PathVariable Integer id,
-            @Valid Job job,
+            Job job,
             BindingResult result,
             Model model,
             RedirectAttributes attributes) {
-        System.out.println(job.toString());
+        System.out.println(job);
         if (result.hasErrors()) {
-            model.addAttribute("employees", employeeService.getAll());
+            System.out.println("ono seng error");
+//            model.addAttribute("employees", employeeService.getAll());
             model.addAttribute("statuses", statusService.getAll());
-            return "job/update-form";
+            return "timesheet/update-form-activity";
         }
         jobService.update(id, job);
         attributes.addFlashAttribute("message", "Update Successed");
@@ -103,6 +105,6 @@ public class JobControllers {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id) {
         jobService.delete(id);
-        return "redirect:/job?deleted=true";
+        return "redirect:/employee?deleted=true";
     }
 }

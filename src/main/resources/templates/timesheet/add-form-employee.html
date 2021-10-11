@@ -30,7 +30,7 @@ and open the template in the editor.
                     <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
                 </ol>
             </nav>
-            <form th:action="@{/employee/add}" th:object="${employee}" method="POST" id="employeeForm">
+            <form th:action="@{/employee}" th:object="${employee}" method="POST" id="employeeForm">
                 <div style="margin: 2% 3%">
                     <h2 class="text-primary" style="margin-bottom: 2%" >TIMESHEET</h2>
                     <div class="row">
@@ -73,30 +73,56 @@ and open the template in the editor.
                     </div>
                 </div>
             </form>
-            <a th:href="@{job/add}" type="button" class="btn btn-info m-3 float-end" >Add Log</a> 
-            <table class="table" style="width: 100%">
-                <thead class="bg-light">
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Work Hour Start</th>
-                        <th scope="col">Work Hour End</th>
-                        <th scope="col">Total Work Hour</th>
-                        <th scope="col">Status Attendance</th>
-                        <th scope="col">Activy/Remark</th>
-                        <th scope="col">Tools</th>
+            <div class="container">
+                <table class="table" style="width: 100%">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Work Hour Start</th>
+                            <th scope="col">Work Hour End</th>
+                            <th scope="col">Total Work Hour</th>
+                            <th scope="col">Status Attendance</th>
+                            <th scope="col">Activy/Remark</th>
+                            <th scope="col">Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="job : ${jobs}">
+                            <td th:text="${job.date}"></td>
+                            <td th:text="${job.startTime}"></td>
+                            <td th:text="${job.endTime}"></td>
+                            <td th:text="${job.totalHour}"></td>
+                            <td th:text="${job.status.name}"></td>
+                            <td th:text="${job.activity}"></td>
+                            <td>
+                                <!--Update Button-->
+                                <a th:href="@{/job/edit/{id} (id = ${job.id})}" type="button" class="btn btn-sm btn-warning">
+                                    Edit
+                                </a>
+                                <!--Delete Button-->
+                                <form 
+                                    th:action="@{/job/{id} (id = ${job.id})}" 
+                                    th:method="DELETE"
+                                    onSubmit="return confirm('Are you sure you wish to delete?');" class="btn btn-sm btn-danger">
+                                    <input type="submit" value="Delete">
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>             
+                </table>    
+                <table style="width: 35%">
+                    <tr id="status">
+                        <td th:object="${p}" th:text="*{name}+' : '+*{count}"></td>
+                        <td th:object="${s}" th:text="*{name}+' : '+*{count}"></td>
+                        <td th:object="${bt}" th:text="*{name}+' : '+*{count}"></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="job : ${jobs}">
-                        <td th:text="${job.date}"></td>
-                        <td th:text="${job.startTime}"></td>
-                        <td th:text="${job.endTime}"></td>
-                        <td th:text="${job.totalHour}"></td>
-                        <td th:text="${job.status.name}"></td>
-                        <td th:text="${job.activity}"></td>
+                    <tr id="status">
+                        <td th:object="${pm}" th:text="*{name}+' : '+*{count}"></td>
+                        <td th:object="${v}" th:text="*{name}+' : '+*{count}"></td>
+                        <td th:object="${x}" th:text="*{name}+' : '+*{count}"></td>
                     </tr>
-                </tbody>             
-            </table>        
+                </table>
+            </div>
 
         </div>
     <th:block layout:fragment="scripts">

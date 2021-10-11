@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div>
+                <nav aria-label="breadcrumb" style="font-size: 10px">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
+                        <li class="breadcrumb-item active" aria-current="page">Timesheet Summary</li>
+                        <li class="breadcrumb-item active" aria-current="page">Timesheet Form</li>
+                    </ol>
+                </nav>
+            </div>
+
+
+            <div class="p-2 mr-2">
+                <h3 class="text-primary" >TIMESHEET</h3>
+            </div>
+
+            <form th:action="@{/job/edit/{id} (id = ${job.id})}" th:object="${job}" th:method="PUT" id="jobForm">
+                <div  class="card  p-3" style="font-size: 12px">
+                    <h6> Add New Log Activity</h6>
+                    <div class="mb-1 row">
+                        <label class="col-sm-2 col-form-label">Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" th:field="*{date}" class="form-control"  id="date"><br>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label style="font-size: 12px">Working hour</label>
+                    </div>
+                    <div class="mb-1 row">
+                        <label for="startTime" class="col-sm-2 col-form-label">Start</label>
+                        <div class="col-sm-4">
+                            <input type="time" th:field="*{startTime}" class="form-control"  id="startTime"><br>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="endTime" class="col-sm-2 col-form-label">End</label>
+                        <div class="col-sm-4">
+                            <input type="time" th:field="*{endTime}" class="form-control"  id="endTime"><br>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-1 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label" >Status Attendance</label>
+                        <div class="dropdown col-sm-2">
+                            <select th:field="*{status.id}">
+                                <option 
+                                    th:each="status : ${statuses}" 
+                                    th:text="${status.name}" 
+                                    th:value="${status.id}">
+                                </option>
+                            </select>
+                        </div>           
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <button type="submit" class="btn btn-primary  float-end m-5" style="font-size: 12px" >Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </body>
+</html>

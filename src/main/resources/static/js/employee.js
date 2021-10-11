@@ -16,12 +16,6 @@ function waktu() {
     document.getElementById("periode").innerHTML = arrbulan[bulan] + " " + tanggal.getFullYear();
 }
 
-function updateEmployee(id, projectName, divisi, name, miiId){
-    $("#employeeForm").attr('action', "/employee/edit/"+id);
-//    $("#submit").attr('onclick', "update()");
-//    $("#hidden").attr('method', "PUT");
-    $("#projectName").val(projectName);
-    $("#divisi").val(divisi);
-    $("#name").val(name);
-    $("#miiId").val(miiId);
+function a() {
+    
 }

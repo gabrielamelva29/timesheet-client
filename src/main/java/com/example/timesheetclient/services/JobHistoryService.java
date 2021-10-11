@@ -5,7 +5,8 @@
  */
 package com.example.timesheetclient.services;
 
-import com.example.timesheetclient.models.Status;
+import com.example.timesheetclient.models.JobHistory;
+import com.example.timesheetclient.models.ResponseModel;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,24 +20,25 @@ import org.springframework.web.client.RestTemplate;
  * @author Lenovo-PC
  */
 @Service
-public class StatusService {
+public class JobHistoryService {
     
     private RestTemplate restTemplate;
     
-    @Value("${api.baseUrl}/status")
+    @Value("${api.baseUrl}/jobHistory")
     private String url;
 
-    public StatusService(RestTemplate restTemplate) {
+    public JobHistoryService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
     
-    public List<Status> getAll(){
-        ResponseEntity<List<Status>> response =  restTemplate
-                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Status>>(){});
+    public List<JobHistory> getAll(){
+        ResponseEntity<List<JobHistory>> response =  restTemplate
+                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<JobHistory>>(){});
         return response.getBody();
     }
     
-     public Status getById(String id){
-        return restTemplate.getForObject(url+"/"+id, Status.class);
-    }
+    public ResponseModel<JobHistory> create(){
+        return new ResponseModel<>(restTemplate
+                .postForObject(url, null, JobHistory.class), "Job Created");
+    } 
 }
