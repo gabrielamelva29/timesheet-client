@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author Lenovo-PC
+ * @author gabri
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseModel<T> {
+public class ResponseModel<T>{
     private T data;
     private String message;
 }

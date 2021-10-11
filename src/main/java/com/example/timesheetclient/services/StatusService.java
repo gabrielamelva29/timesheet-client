@@ -16,11 +16,10 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  *
- * @author Lenovo-PC
+ * @author gabri
  */
 @Service
 public class StatusService {
-    
     private RestTemplate restTemplate;
     
     @Value("${api.baseUrl}/status")
@@ -30,13 +29,13 @@ public class StatusService {
         this.restTemplate = restTemplate;
     }
     
-    public List<Status> getAll(){
+   public List<Status> getAll(){
         ResponseEntity<List<Status>> response =  restTemplate
                 .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Status>>(){});
         return response.getBody();
     }
     
-     public Status getById(String id){
+     public Status getById(Integer id){
         return restTemplate.getForObject(url+"/"+id, Status.class);
     }
 }

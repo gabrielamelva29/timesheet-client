@@ -8,6 +8,7 @@ package com.example.timesheetclient.controllers;
 
 import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.services.EmployeeService;
+import com.example.timesheetclient.services.JobService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,62 +29,73 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
+    
     private EmployeeService employeeService;
+    private JobService jobService;
     
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+  
     
     @GetMapping
     public String index(Employee employee,Model model ) {
         model.addAttribute("employees", employeeService.getAll());
-        return "employee/layout";
-    }
-    
-    @GetMapping("/add")
-    public String create(Employee employee, Model model){
-//        model.addAttribute("employees", employeeService.getAll());
-        model.addAttribute("employees", new Employee());
-            
+        model.addAttribute("jobs", jobService.getAll());
         return "employee/add-form-employee";
     }
+
+    public EmployeeController(EmployeeService employeeService, JobService jobService) {
+        this.employeeService = employeeService;
+        this.jobService = jobService;
+    }
+     
+    
+//    @GetMapping("/add")
+//    public String create(Employee employee, Model model){
+////        model.addAttribute("employees", employeeService.getAll());
+//        model.addAttribute("employees", new Employee());
+//            
+//        return "employee/add-form-employee";
+//    }
     
     @PostMapping("/add")
-    public String create(@Valid Employee employee, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+    public String create(@Valid Employee employee, BindingResult result, RedirectAttributes attributes, Model model){
         if (result.hasErrors()) {     
-            model.addAttribute("employees", employeeService.getAll());
-            model.addAttribute("employees", new Employee());
+//            model.addAttribute("employees", employeeService.getAll());
+//            model.addAttribute("employees", new Employee());
 
             return "employee/add-form-employee";         
         }
+        employeeService.create(employee);
+        attributes.addFlashAttribute("messafe", "Created Successed");
         
-        return "redirect:/add-form-employee";
+        return "employee/add-form-employee";
+    }
+    
+     @GetMapping("/edit/{id}")
+    public String update(@PathVariable Integer id, Model model){
+        model.addAttribute("employee", employeeService.getById(id));
+        return "employee/update-form";
     }
     
     @PutMapping("/edit/{id}")
-    public String update(@PathVariable Long id, @Valid Employee employee,
-            BindingResult result, RedirectAttributes redirect, Model model) {
-
-        if (result.hasErrors()) {
-            model.addAttribute("employees", employeeService.getAll());
-      
+    public String update(@PathVariable Integer id,
+            Employee employee,
+            BindingResult result,
+            Model model, 
+            RedirectAttributes attributes){
+        if(result.hasErrors()){
             return "employee/update-form";
         }
-
-        employeeService.update(id, employee);
-
-        redirect.addFlashAttribute("message", "Employee updated");
-
-        return "redirect:/add-form-employee";
+        employeeService.update(id,employee);
+        attributes.addFlashAttribute("message", "Create Successed");
+        return "redirect/employee";
     }
     
     @DeleteMapping("/{id}")
-     public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Integer id){
         employeeService.delete(id);
-        return "redirect:/employee?deleted=true";
-    }
-}
+        return "redirect:/employee";
+    }}
 
 
     

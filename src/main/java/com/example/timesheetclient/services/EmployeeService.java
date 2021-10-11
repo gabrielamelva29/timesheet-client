@@ -6,11 +6,11 @@
 package com.example.timesheetclient.services;
 
 import com.example.timesheetclient.models.Employee;
+import com.example.timesheetclient.models.ResponseModel;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class EmployeeService {
+    @Autowired
     private RestTemplate restTemplate;
     
     @Value("${api.baseUrl}/employee")
@@ -45,17 +46,22 @@ public class EmployeeService {
                  .getForObject(url + "/" +id, Employee.class);         
      }
      
-     public void create(Employee employee) {
-        restTemplate
-                .postForObject(url, employee, Employee.class);
+//     public void create(Employee employee) {
+//        restTemplate
+//                .postForObject(url, employee, Employee.class);
+//    }
+     
+     public ResponseModel<Employee> create(Employee employee){
+        return new ResponseModel<>(restTemplate
+                .postForObject(url, employee, Employee.class), "Employee Created");
     }
 
-    public void update(Long id, Employee employee) {
+    public void update(Integer id, Employee employee) {
         restTemplate
                 .put(url + "/" + id, employee, Employee.class);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         restTemplate
                 .delete(url + "/" + id, Employee.class);
     }
