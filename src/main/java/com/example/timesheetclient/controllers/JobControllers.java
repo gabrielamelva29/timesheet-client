@@ -58,26 +58,26 @@ public class JobControllers {
         return "timesheet/add-form-activity";
     }
 
-    @GetMapping("/add")
-    public String create(Job job, Model model){
-        model.addAttribute("statuses", statusService.getAll());
-        return "timesheet/add-form-activity";
-    }
-
-    @PostMapping("/add")
-    public String create(Job job, 
-            BindingResult result,
-            Model model,
-            RedirectAttributes attributes){
-        System.out.println(job);
-        if(result.hasErrors()){
-            model.addAttribute("statuses", statusService.getAll());
-            return "timesheet/add-form-activity";
-        }
-        jobService.create(job);
-        attributes.addFlashAttribute("message", "Create Successed");
-       return "redirect:/history";
-    }
+//    @GetMapping("/add")
+//    public String create(Job job, Model model){
+//        model.addAttribute("statuses", statusService.getAll());
+//        return "timesheet/add-form-activity";
+//    }
+//
+//    @PostMapping("/add")
+//    public String create(Job job, 
+//            BindingResult result,
+//            Model model,
+//            RedirectAttributes attributes){
+//        System.out.println(job);
+//        if(result.hasErrors()){
+//            model.addAttribute("statuses", statusService.getAll());
+//            return "timesheet/add-form-activity";
+//        }
+//        jobService.create(job,id);
+//        attributes.addFlashAttribute("message", "Create Successed");
+//       return "redirect:/history";
+//    }
 
 //    @GetMapping("/edits/{id}/{ids}")
 //    public String update(@PathVariable Integer id,JobHistory jobHistory,

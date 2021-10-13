@@ -29,7 +29,7 @@ and open the template in the editor.
                 <h3 class="text-primary" >TIMESHEET</h3>
             </div>
 
-            <form th:action="@{/job/add}" th:object="${job}" method="POST" id="jobForm">
+            <form th:action="@{/job/add/{id}/{ids} (ids = ${history}, id = ${employee.id})}" th:object="${job}" method="POST" id="jobForm">
                 <div  class="card  p-3" style="font-size: 12px">
                     <h6> Add New Log Activity</h6>
                     <div class="mb-1 row">

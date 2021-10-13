@@ -27,62 +27,66 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
-            <div layout:fragment="content">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
-                    </ol>
-                </nav>
+        <div layout:fragment="content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
+                </ol>
+            </nav>
 
-                <form th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" th:method="PUT" id="jobForm">
-                    <div style="margin: 2% 3%">
-                        <h2 class="text-primary" style="margin-bottom: 2%" >TIMESHEET</h2>
-                        <div class="row">
-                            <label for="projectName" class="col-sm-2 col-form-label"><b>Name of Project</b></label>
-                            <div class="col-sm-2">
-                                <input type="text" th:field="*{projectName}" class="form-control"  id="projectName"><br>
-                            </div>
+            <form th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" th:method="PUT" id="jobForm">
+                <div style="margin: 2% 3%">
+                    <h2 class="text-primary" style="margin-bottom: 2%" >TIMESHEET</h2>
+                    <div class="row">
+                        <label for="projectName" class="col-sm-2 col-form-label"><b>Name of Project</b></label>
+                        <div class="col-sm-2">
+                            <input type="text" th:field="*{projectName}" class="form-control"  id="projectName"><br>
                         </div>
-                        <div class="row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label"><b>Unit/Division</b></label>
-                            <div class="col-sm-2">
-                                <input type="text" th:field="*{divisi}" class="form-control"  id="divisi"><br>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Unit/Division</b></label>
+                        <div class="col-sm-2">
+                            <input type="text" th:field="*{divisi}" class="form-control"  id="divisi"><br>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label"><b>Name</b></label>
-                            <div class="col-sm-2">
-                                <input type="text" th:field="*{name}" class="form-control"  id="name"><br>
-                            </div>
+                    <div class="row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Name</b></label>
+                        <div class="col-sm-2">
+                            <input type="text" th:field="*{name}" class="form-control"  id="name"><br>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label"><b>MII Id</b></label>
-                            <div class="col-sm-2">
-                                <input type="text" th:field="*{miiId}" class="form-control"  id="miiId"><br>
-                            </div>
+                    <div class="row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>MII Id</b></label>
+                        <div class="col-sm-2">
+                            <input type="text" th:field="*{miiId}" class="form-control"  id="miiId"><br>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label for="Periode" class="col-sm-2 col-form-label"><b>Periode</b></label>
-                            </div>
-                            <div class="col-sm-2">
-                                <p id="periode"></p><br>
-                            </div>
-                            <div class="col-sm-2">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="Periode" class="col-sm-2 col-form-label"><b>Periode</b></label>
+                        </div>
+                        <div class="col-sm-2">
+                            <p id="periode"></p><br>
+                        </div>
+                        <div class="col-sm-2">
+                            <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
                                 <button th:if="${condition}" id="submitEmployee" type="submit" class="btn btn-primary" >update</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
 
-                <div class="container">
-                    <a th:href="@{/job/add}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a> 
+            <div class="container">
+                <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                    <!--<a th:href="@{/job/add}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a>--> 
+                    <a th:href="@{/job/add/{id}  (ids = ${history.id}, id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a> 
                     <table class="table" style="width: 100%">
+
                         <thead class="bg-light">
                             <tr>
                                 <th scope="col">Date</th>
@@ -91,6 +95,7 @@ and open the template in the editor.
                                 <th scope="col">Total Work Hour</th>
                                 <th scope="col">Status Attendance</th>
                                 <th scope="col">Activy/Remark</th>
+
                                 <th scope="col" th:if="${condition}">Tools</th>
                             </tr>
                         </thead>
@@ -104,11 +109,16 @@ and open the template in the editor.
                                 <td th:text="${job.activity}"></td>
                                 <td>
                                     <!--Update Button-->
-                                    <a th:href="@{/job/edit/{id}/{ids} (ids = ${history.id}, id = ${job.id})}" 
-                                       th:if="${condition}" 
-                                       type="button" class="btn btn-sm btn-warning">
-                                        Edit
-                                    </a>
+                                    <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+
+
+                                        <a th:if="${condition}"
+                                           th:href="@{/job/edit/{id}/{ids} (ids = ${history.id}, id = ${job.id})}" 
+
+                                           type="button" class="btn btn-sm btn-warning">
+                                            Edit
+                                        </a>
+                                    </div>
                                     <!--Delete Button-->
                                     <form 
                                         th:action="@{/job/{id} (id = ${job.id})}" 

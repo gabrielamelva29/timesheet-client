@@ -52,18 +52,14 @@ public class EmployeeController {
 
     public JobHistory idemp = null;
 
+    
+    //HISTORY ADD
     @GetMapping("/history")
     public String index(Model model) {
         model.addAttribute("histories", jobHistoryService.getAll());
         return "timesheet/job-history";
     }
-
-    @GetMapping("/hr")
-    public String index2(Model model) {
-        model.addAttribute("histories", jobHistoryService.findByHr());
-        return "timesheet/approvement";
-    }
-
+    
     @PostMapping("/history/add")
     public String create(Model model,
             RedirectAttributes attributes) {
@@ -71,6 +67,30 @@ public class EmployeeController {
         return "redirect:/history";
     }
 
+    //HR
+    @GetMapping("/hr")
+    public String index2(Model model) {
+        model.addAttribute("histories", jobHistoryService.findByHr());
+        return "timesheet/approvement";
+    }
+    
+    @PostMapping("/approved/{id}")
+    public String approved(@PathVariable Integer id,
+            Model model,
+            RedirectAttributes attributes) {
+        jobHistoryService.approved(id);
+        return "redirect:/history";
+    }
+    
+    @PostMapping("/sent/{id}")
+    public String sent(@PathVariable Integer id,
+            Model model,
+            RedirectAttributes attributes) {
+        jobHistoryService.sent(id);
+        return "redirect:/history";
+    }
+
+    //EMPLOYEE ADD
     @GetMapping("/history/{id}")
     public String update(@PathVariable Integer id, Employee employee, Model model) {
         model.addAttribute("bt", statusService.getById("BT"));
@@ -79,10 +99,11 @@ public class EmployeeController {
         model.addAttribute("s", statusService.getById("S"));
         model.addAttribute("v", statusService.getById("V"));
         model.addAttribute("x", statusService.getById("X"));
-        model.addAttribute("jobs", jobService.getAll());
         model.addAttribute("history", jobHistoryService.getById(id));
         JobHistory jobHistory = jobHistoryService.getById(id);
         idemp = jobHistoryService.getById(id);
+        model.addAttribute("jobs", jobService.findByEmployee(idemp.getEmployee().getId()));
+        
         if (jobHistory.getEmployee() == null) {
             return "timesheet/add-form-employee";
         }
@@ -104,6 +125,7 @@ public class EmployeeController {
         return "redirect:/history/{id}";
     }
 
+    //EMPLOYEE UPDATE
     @PutMapping("/history/{id}")
     public String update(@PathVariable Integer id,
             Employee employee,
@@ -119,6 +141,35 @@ public class EmployeeController {
         return "redirect:/history/{id}";
     }
 
+    //JOB ADD
+    @GetMapping("/job/add/{id}")
+    public String create(@PathVariable Integer id,
+            Job job,
+            Model model){
+        model.addAttribute("statuses", statusService.getAll());
+        model.addAttribute("employee", employeeService.getById(id));
+        model.addAttribute("history", idemp.getId());
+        return "timesheet/add-form-activity";
+    }
+
+    @PostMapping("/job/add/{id}/{ids}")
+    public String create(Job job,
+            @PathVariable Integer id,
+            @PathVariable Integer ids,
+            BindingResult result,
+            Model model,
+            RedirectAttributes attributes){
+        System.out.println(job);
+        if(result.hasErrors()){
+            model.addAttribute("statuses", statusService.getAll());
+            return "timesheet/add-form-activity";
+        }
+        jobService.create(job,id);
+        attributes.addFlashAttribute("message", "Create Successed");
+       return "redirect:/history/{ids}";
+    }
+    
+    //JOB EDIT
     @GetMapping("/job/edit/{id}/{ids}")
     public String update(@PathVariable Integer id, JobHistory jobHistory,
             @PathVariable Integer ids,
@@ -144,21 +195,5 @@ public class EmployeeController {
         jobService.update(id, job);
         attributes.addFlashAttribute("message", "Update Successed");
         return "redirect:/history/{ids}";
-    }
-    
-    @PostMapping("/approved/{id}")
-    public String approved(@PathVariable Integer id,
-            Model model,
-            RedirectAttributes attributes) {
-        jobHistoryService.approved(id);
-        return "redirect:/history";
-    }
-    
-    @PostMapping("/sent/{id}")
-    public String sent(@PathVariable Integer id,
-            Model model,
-            RedirectAttributes attributes) {
-        jobHistoryService.sent(id);
-        return "redirect:/history";
     }
 }
