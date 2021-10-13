@@ -30,7 +30,7 @@ and open the template in the editor.
                     <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
                 </ol>
             </nav>
-            <form th:action="@{/employee}" th:object="${employee}" method="POST" id="employeeForm">
+            <form th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" method="POST" id="employeeForm">
                 <div style="margin: 2% 3%">
                     <h2 class="text-primary" style="margin-bottom: 2%" >TIMESHEET</h2>
                     <div class="row">
@@ -68,7 +68,11 @@ and open the template in the editor.
                             <p id="periode"></p><br>
                         </div>
                         <div class="col-sm-2">
-                            <button id="submitEmployee" type="submit" class="btn btn-primary" >Send</button>
+                            <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                                <h2 th:if="${condition}"><button id="submitEmployee" type="submit" class="btn btn-primary" >Send</button></h2>
+                                <span th:unless="${condition}" class="xxx">Something else</span>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
