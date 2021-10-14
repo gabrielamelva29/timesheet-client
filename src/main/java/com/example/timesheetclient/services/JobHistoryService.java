@@ -22,9 +22,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class JobHistoryService {
     
-    private RestTemplate restTemplate;
+   private RestTemplate restTemplate;
     
-    @Value("${api.baseUrl}/jobHistory")
+    @Value("${api.baseUrl}/history")
     private String url;
 
     public JobHistoryService(RestTemplate restTemplate) {
@@ -37,8 +37,29 @@ public class JobHistoryService {
         return response.getBody();
     }
     
+    public List<JobHistory> findByHr(){
+        ResponseEntity<List<JobHistory>> response =  restTemplate
+                .exchange(url+"/hr", HttpMethod.GET, null, new ParameterizedTypeReference<List<JobHistory>>(){});
+        return response.getBody();
+    }
+    
     public ResponseModel<JobHistory> create(){
         return new ResponseModel<>(restTemplate
                 .postForObject(url, null, JobHistory.class), "Job Created");
     } 
+    
+    public JobHistory getById(Integer id){
+        return restTemplate.getForObject(url+"/"+id, JobHistory.class);
+    }
+    
+    public ResponseModel<JobHistory> approved(Integer id){
+        return new ResponseModel<>(restTemplate
+                .postForObject(url+"/approved/"+id, null, JobHistory.class), "Approved");
+    } 
+    
+    public ResponseModel<JobHistory> sent(Integer id){
+        return new ResponseModel<>(restTemplate
+                .postForObject(url+"/sent/"+id, null, JobHistory.class), "Sent");
+    } 
+
 }

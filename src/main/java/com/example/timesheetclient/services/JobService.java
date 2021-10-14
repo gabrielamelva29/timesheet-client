@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class JobService {
-    private RestTemplate restTemplate;
+   private RestTemplate restTemplate;
     
     @Value("${api.baseUrl}/job")
     private String url;
@@ -36,13 +36,19 @@ public class JobService {
         return response.getBody();
     }
     
+    public List<Job> findByEmployee(Integer id){
+        ResponseEntity<List<Job>> response =  restTemplate
+                .exchange(url+"/employee/"+id, HttpMethod.GET, null, new ParameterizedTypeReference<List<Job>>(){});
+        return response.getBody();
+    }
+    
      public Job getById(Integer id){
         return restTemplate.getForObject(url+"/"+id, Job.class);
     }
     
-    public ResponseModel<Job> create(Job job){
+    public ResponseModel<Job> create(Job job, Integer id){
         return new ResponseModel<>(restTemplate
-                .postForObject(url, job, Job.class), "Job Created");
+                .postForObject(url+"/"+id, job, Job.class), "Job Created");
     } 
      
     public void update(Integer id, Job job){
@@ -54,4 +60,5 @@ public class JobService {
         restTemplate
                 .delete(url+"/"+id, Job.class);
     }    
+    
 }
