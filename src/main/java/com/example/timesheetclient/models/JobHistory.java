@@ -5,11 +5,8 @@
  */
 package com.example.timesheetclient.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.sql.Date;
-import java.sql.Time;
+import java.time.Month;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,24 +20,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Job {
+public class JobHistory {
     
     private Integer id;
     
-//    @JsonFormat(pattern = "dd-MMM-yyyy")
-    private String date;
+    private Month month;
     
-//    @JsonFormat(pattern = "HH:mm")
-    private String startTime;
+    private Integer year;
     
-//    @JsonFormat(pattern = "HH:mm")
-    private String endTime;
+    private String status;
     
-    private String totalHour;
-    
-    private String activity;
+    private Date approveDate;
     
     private Employee employee;
     
-    private Status status;
+    private HR hr;
 }

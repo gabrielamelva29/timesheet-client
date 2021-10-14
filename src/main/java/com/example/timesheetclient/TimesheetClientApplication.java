@@ -8,6 +8,7 @@ public class TimesheetClientApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TimesheetClientApplication.class, args);
+                System.out.println("done");
 	}
 
 }

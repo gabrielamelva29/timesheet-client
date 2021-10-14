@@ -23,22 +23,19 @@ import org.springframework.lang.Nullable;
 @Builder
 public class Employee {
     
-    @Nullable
     private Integer id;
     
-    @NotEmpty(message = "please input name")
+    @NotEmpty(message = "Please input your Name")
     private String name;
     
-    @NotEmpty(message = "please input miiId")
+    @NotEmpty(message = "Please input your Mii Id")
     private Integer miiId;
     
-    @NotEmpty(message = "please input project Name")
+    @NotEmpty(message = "Please input your Project Name")
     private String projectName;
     
-    @NotEmpty(message = "please input divisi")
+    @NotEmpty(message = "Please input your Divisi")
     private String divisi;
-//    
-//    @NotNull(message = "please select a date")
-//    private Job date;
     
+//    private JobHistory jobHistory;
 }

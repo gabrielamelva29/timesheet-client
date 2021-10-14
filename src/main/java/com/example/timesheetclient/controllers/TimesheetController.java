@@ -17,7 +17,7 @@ public class TimesheetController {
     
     @GetMapping("/")
     public String timesheet(){
-        return "hr/history-hr";
+        return "timesheet/history-job";
     }
     
 }
