@@ -60,4 +60,9 @@ public class EmployeeService {
     public void delete(Integer id){
         restTemplate.delete(url + "/" + id, String.class);
     }
+
+    public void counts(Integer id){
+        restTemplate
+                .getForObject(url + "/counts/"+id, Employee.class);
+    }
 }

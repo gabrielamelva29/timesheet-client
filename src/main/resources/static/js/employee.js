@@ -8,9 +8,9 @@
 //            location.reload();
 //        }, 500);
 
-const arrayToCount = [1, 2, 3, 5, 2, 8, 9, 2];
-const result = arrayToCount.filter(i => i === 2).length;
-console.log('number of the found elements: ' + result);
+//const arrayToCount = [1, 2, 3, 5, 2, 8, 9, 2];
+//const result = arrayToCount.filter(i => i === 2).length;
+//console.log('number of the found elements: ' + result);
 window.setTimeout("waktu()", 0);
 window.setTimeout("status()", 0);
 
@@ -22,5 +22,5 @@ function waktu() {
 }
 
 function status() {
-    $('#status').load("/history")
+    $('#statusAttendance').load("/history");
 }

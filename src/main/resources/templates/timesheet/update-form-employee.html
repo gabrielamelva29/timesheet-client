@@ -20,9 +20,6 @@ and open the template in the editor.
             .row{
                 margin-bottom: -2%
             }
-            /*            #status td{
-                            width: 20%;
-                        }*/
 
         </style>
     </head>
@@ -66,11 +63,9 @@ and open the template in the editor.
                     </div>
 
                     <div class="row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Periode</b></label>
                         <div class="col-sm-2">
-                            <label for="Periode" class="col-sm-2 col-form-label"><b>Periode</b></label>
-                        </div>
-                        <div class="col-sm-2">
-                            <p id="periode"></p><br>
+                            <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="form-control"  id="periode" readonly><br>
                         </div>
                         <div class="col-sm-2">
                             <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
@@ -121,7 +116,7 @@ and open the template in the editor.
                                     </div>
                                     <!--Delete Button-->
                                     <form 
-                                        th:action="@{/job/{id} (id = ${job.id})}" 
+                                        th:action="@{/job/{id}/{ids} (id = ${job.id}, ids = ${history.id})}" 
                                         th:if="${condition}"
                                         th:method="DELETE"
                                         onSubmit="return confirm('Are you sure you wish to delete?');" class="btn btn-sm btn-danger">
@@ -131,13 +126,13 @@ and open the template in the editor.
                             </tr>
                         </tbody>             
                     </table>
-                    <table style="width: 35%">
-                        <tr id="status">
+                    <table style="width: 35%" id="status">
+                        <tr>
                             <td th:object="${p}" th:text="*{name}+' : '+*{count}"></td>
                             <td th:object="${s}" th:text="*{name}+' : '+*{count}"></td>
                             <td th:object="${bt}" th:text="*{name}+' : '+*{count}"></td>
                         </tr>
-                        <tr id="status">
+                        <tr>
                             <td th:object="${pm}" th:text="*{name}+' : '+*{count}"></td>
                             <td th:object="${v}" th:text="*{name}+' : '+*{count}"></td>
                             <td th:object="${x}" th:text="*{name}+' : '+*{count}"></td>

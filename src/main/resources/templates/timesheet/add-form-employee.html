@@ -61,18 +61,14 @@ and open the template in the editor.
                     </div>
 
                     <div class="row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Periode</b></label>
                         <div class="col-sm-2">
-                            <label for="Periode" class="col-sm-2 col-form-label"><b>Periode</b></label>
-                        </div>
-                        <div class="col-sm-2">
-                            <p id="periode"></p><br>
+                            <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="form-control"  id="periode" readonly><br>
                         </div>
                         <div class="col-sm-2">
                             <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
-                                <h2 th:if="${condition}"><button id="submitEmployee" type="submit" class="btn btn-primary" >Send</button></h2>
-                                <span th:unless="${condition}" class="xxx">Something else</span>
+                                <button th:if="${condition}" id="submitEmployee" type="submit" class="btn btn-primary" >Save</button>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -108,6 +104,7 @@ and open the template in the editor.
                                     th:action="@{/job/{id} (id = ${job.id})}" 
                                     th:method="DELETE"
                                     onSubmit="return confirm('Are you sure you wish to delete?');" class="btn btn-sm btn-danger">
+                                    <input  name="delete" th:value="${history.id}" hidden>
                                     <input type="submit" value="Delete">
                                 </form>
                             </td>
@@ -116,14 +113,14 @@ and open the template in the editor.
                 </table>    
                 <table style="width: 35%">
                     <tr id="status">
-                        <td th:object="${p}" th:text="*{name}+' : '+*{count}"></td>
-                        <td th:object="${s}" th:text="*{name}+' : '+*{count}"></td>
-                        <td th:object="${bt}" th:text="*{name}+' : '+*{count}"></td>
+                        <td th:object="${p}" th:text="*{name}+' : '+'0'"></td>
+                        <td th:object="${s}" th:text="*{name}+' : '+'0'"></td>
+                        <td th:object="${bt}" th:text="*{name}+' : '+'0'"></td>
                     </tr>
                     <tr id="status">
-                        <td th:object="${pm}" th:text="*{name}+' : '+*{count}"></td>
-                        <td th:object="${v}" th:text="*{name}+' : '+*{count}"></td>
-                        <td th:object="${x}" th:text="*{name}+' : '+*{count}"></td>
+                        <td th:object="${pm}" th:text="*{name}+' : '+'0'"></td>
+                        <td th:object="${v}" th:text="*{name}+' : '+'0'"></td>
+                        <td th:object="${x}" th:text="*{name}+' : '+'0'"></td>
                     </tr>
                 </table>
             </div>
