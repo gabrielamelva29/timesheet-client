@@ -30,7 +30,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class JobHistoryService {
 
-    private RestTemplate restTemplate;
+     private RestTemplate restTemplate;
 
     @Value("${api.baseUrl}/history")
     private String url;

@@ -14,6 +14,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -27,44 +28,40 @@ public class EmployeeService {
     
     @Value("${api.baseUrl}/employee")
     private String url;
-
+    
     @Autowired
     public EmployeeService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-     
-     public List<Employee> getAll(){         
-         ResponseEntity<List<Employee>> response=restTemplate
-                 .exchange(url, HttpMethod.GET, null, 
-                         new ParameterizedTypeReference<List<Employee>>(){});
-         
-         return response.getBody();
-     }
-     
-     public Employee getById(Integer id){
-          return restTemplate
-                 .getForObject(url + "/" +id, Employee.class);         
-     }
-     
-//     public void create(Employee employee) {
-//        restTemplate
-//                .postForObject(url, employee, Employee.class);
-//    }
-     
-     public ResponseModel<Employee> create(Employee employee){
+    
+    public List<Employee> getAll() {
+        ResponseEntity<List<Employee>> response =  restTemplate
+                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Employee>>(){});
+    
+        return response.getBody();
+    }
+    
+    public Employee getById(Integer id){
+        return restTemplate
+                .getForObject(url + "/"+id, Employee.class);
+    }
+    
+    public ResponseModel<Employee> create(Employee employee){
         return new ResponseModel<>(restTemplate
                 .postForObject(url, employee, Employee.class), "Employee Created");
     }
-
-    public void update(Integer id, Employee employee) {
-        restTemplate
-                .put(url + "/" + id, employee, Employee.class);
-    }
-
-    public void delete(Integer id) {
-        restTemplate
-                .delete(url + "/" + id, Employee.class);
-    }
-
     
+    public void update(Integer id, Employee employee){
+        employee.setId(id);
+        restTemplate.put(url + "/" + id, employee, Employee.class);
+    }
+
+    public void delete(Integer id){
+        restTemplate.delete(url + "/" + id, String.class);
+    }
+
+    public void counts(Integer id){
+        restTemplate
+                .getForObject(url + "/counts/"+id, Employee.class);
+    }
 }
