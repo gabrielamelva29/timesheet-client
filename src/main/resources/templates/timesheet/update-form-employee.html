@@ -69,7 +69,12 @@ and open the template in the editor.
                         </div>
                         <div class="col-sm-2">
                             <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
-                                <button th:if="${condition}" id="submitEmployee" type="submit" class="btn btn-primary" >update</button>
+                                <button th:if="${condition}" id="submitEmployee" type="submit" class="btn" style="background-color: #009DE1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -79,7 +84,14 @@ and open the template in the editor.
             <div class="container">
                 <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
                     <!--<a th:href="@{/job/add}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a>--> 
-                    <a th:href="@{/job/add/{id}  (ids = ${history.id}, id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a> 
+                    <a th:href="@{/job/add/{id}  (ids = ${history.id}, id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" style="background-color:#0094FF; font-size: 14px; color: #fff">
+                        Add Log
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                        </svg>
+                    </a> 
                     <table class="table" style="width: 100%">
 
                         <thead class="bg-light">
@@ -103,6 +115,11 @@ and open the template in the editor.
                                 <td th:text="${job.status.name}"></td>
                                 <td th:text="${job.activity}"></td>
                                 <td>
+                                    <form 
+                                        th:action="@{/job/{id}/{ids} (id = ${job.id}, ids = ${history.id})}" 
+                                        th:if="${condition}"
+                                        th:method="DELETE"
+                                        onSubmit="return confirm('Are you sure you wish to delete?');" >
                                     <!--Update Button-->
                                     <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
 
@@ -110,40 +127,43 @@ and open the template in the editor.
                                         <a th:if="${condition}"
                                            th:href="@{/job/edit/{id}/{ids} (ids = ${history.id}, id = ${job.id})}" 
 
-                                           type="button" class="btn btn-sm btn-warning">
-                                            Edit
+                                           type="button" class="btn" style="background-color: #33ABEF">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg>
                                         </a>
                                     </div>
                                     <!--Delete Button-->
-                                    <form 
-                                        th:action="@{/job/{id}/{ids} (id = ${job.id}, ids = ${history.id})}" 
-                                        th:if="${condition}"
-                                        th:method="DELETE"
-                                        onSubmit="return confirm('Are you sure you wish to delete?');" class="btn btn-sm btn-danger">
-                                        <input type="submit" value="Delete">
+                                    
+                                        <button type="submit" style="background-color: #D60B17" class="btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                            </svg>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
                         </tbody>             
                     </table>
-                    <table style="width: 35%" id="status">
-                        <tr>
-                            <td th:object="${p}" th:text="*{name}+' : '+*{count}"></td>
-                            <td th:object="${s}" th:text="*{name}+' : '+*{count}"></td>
-                            <td th:object="${bt}" th:text="*{name}+' : '+*{count}"></td>
-                        </tr>
-                        <tr>
-                            <td th:object="${pm}" th:text="*{name}+' : '+*{count}"></td>
-                            <td th:object="${v}" th:text="*{name}+' : '+*{count}"></td>
-                            <td th:object="${x}" th:text="*{name}+' : '+*{count}"></td>
-                        </tr>
+                    <table style="width: 35%" id="statusTable">
+
                     </table>
-                    <center><a th:href="@{/history}" type="button" class="btn btn-info m-3" >Save</a></center>
+                    <center>
+                        <a th:if="${condition}" th:href="@{/history}" type="button" class="btn btn-info m-3" style="background-color:#0094FF; color: #fff">
+                            Save
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane fa-w-16" role="img" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 
+                                  33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/>
+                            </svg>
+                        </a>
+                    </center>
                 </div>
             </div>
         </div>
     <th:block layout:fragment="scripts">
         <script th:src="@{/js/employee.js}"></script>
+        <script th:src="@{/js/status.js}"></script>
     </th:block>
 
 </body>

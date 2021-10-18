@@ -11,6 +11,7 @@ import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.models.Job;
 import com.example.timesheetclient.models.JobHistory;
 import com.example.timesheetclient.models.Month;
+import com.example.timesheetclient.models.Status;
 import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
 import com.example.timesheetclient.services.JobService;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**

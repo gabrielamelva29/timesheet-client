@@ -18,7 +18,15 @@ and open the template in the editor.
                 margin-left: 10%;
                 width: 80%;
                 padding: 5%;
-                font-size: 14px
+/*                font-size: 11px*/
+            }
+            
+            .dropdown-item{
+                font-size: 12px;
+            }
+            
+            .nav-item{
+                font-size: 12px;
             }
         </style>
     </head>
@@ -26,7 +34,7 @@ and open the template in the editor.
         <div  class="d-flex" id="wrapper" th:fragment="layout(content)"> 
             <!--Sidebar-->
 
-            <div class="bg-primary border-end" id="sidebar-wrapper" >
+            <div class=" border-end" id="sidebar-wrapper" >
                 <div class=" sidebar-heading ">Menu</div>
                 <div class="list-group list-group-flush"  >
                     <a class="list-group-item list-group-item-action list-group-item-light " href="#!" >Home</a>
@@ -41,7 +49,7 @@ and open the template in the editor.
             <!--Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light bg-primary border-bottom" style="height: 7%">
+                <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="height: 7%">
                     <div class="container-fluid">
                         <button class="btn" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

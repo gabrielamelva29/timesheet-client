@@ -45,7 +45,7 @@ public class HrController {
             Model model,
             RedirectAttributes attributes) {
         jobHistoryService.approved(id);
-        return "redirect:/history";
+        return "redirect:/hr";
     }
 
     @PostMapping("/sent/{id}")
