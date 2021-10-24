@@ -5,6 +5,7 @@
  */
 package com.example.timesheetclient.services;
 
+import com.example.timesheetclient.models.ResponseModel;
 import com.example.timesheetclient.models.Status;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,5 +39,10 @@ public class StatusService {
     
      public Status getById(String id){
         return restTemplate.getForObject(url+"/"+id, Status.class);
+    }
+    
+    public ResponseModel<Status> create() {
+        return new ResponseModel<>(restTemplate
+                .postForObject(url, null, Status.class), "Status Created");
     }
 }

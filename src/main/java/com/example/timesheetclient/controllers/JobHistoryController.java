@@ -9,6 +9,7 @@ import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.models.JobHistory;
 import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
+import com.example.timesheetclient.services.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,15 +28,18 @@ public class JobHistoryController {
     
     private JobHistoryService jobHistoryService;
     private EmployeeService employeeService;
+    private StatusService statusService;
     
     @Autowired
-    public JobHistoryController(JobHistoryService jobHistoryService, EmployeeService employeeService) {
+    public JobHistoryController(JobHistoryService jobHistoryService, EmployeeService employeeService, StatusService statusService) {
         this.jobHistoryService = jobHistoryService;
         this.employeeService = employeeService;
+        this.statusService = statusService;
     }
     
     @GetMapping
     public String index(Model model) {
+        
         model.addAttribute("histories", jobHistoryService.getAll());
         return "timesheet/job-history";
     }

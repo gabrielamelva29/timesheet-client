@@ -10,6 +10,11 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
+  <!-- bootstrap-iso digunakan untuk mengatur tampilan -->
+  <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+  <!--Menambahkan libray font awesome karena kita menggunakan ikon untuk tampilannya-->
+  <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
     </head>
     <body>
         <div layout:fragment="content">
@@ -35,7 +40,7 @@ and open the template in the editor.
                     <div class="mb-1 row">
                         <label class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-4">
-                            <input type="date" th:field="*{date}" class="form-control"  id="date"><br>
+                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off"><br>
                         </div>
                     </div>
 
@@ -86,5 +91,25 @@ and open the template in the editor.
                 </div>
             </form>
         </div>    
+        <th:block layout:fragment="scripts">
+            <!-- Menambahkan jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Menambahakan Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<script>
+	$(document).ready(function(){
+		var date_input=$('input[name="date"]');
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		date_input.datepicker({
+			format: 'dd MM yyyy',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+		})
+	})
+</script>
+    </th:block>
     </body>
 </html>

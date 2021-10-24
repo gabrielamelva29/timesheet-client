@@ -27,7 +27,7 @@ public class Job {
     
     private Integer id;
     
-//    @JsonFormat(pattern = "dd-MMM-yyyy")
+//    @JsonFormat(pattern = "dd MMMM yyyy")
     private String date;
     
 //    @JsonFormat(pattern = "HH:mm")

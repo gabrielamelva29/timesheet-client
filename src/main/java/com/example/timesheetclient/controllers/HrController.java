@@ -5,10 +5,15 @@
  */
 package com.example.timesheetclient.controllers;
 
+import com.example.timesheetclient.excel.Excel;
 import com.example.timesheetclient.models.JobHistory;
+import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
 import com.example.timesheetclient.services.JobService;
+import com.example.timesheetclient.services.StatusService;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,11 +32,16 @@ public class HrController {
 
     private JobHistoryService jobHistoryService;
     private JobService jobService;
+    private EmployeeService employeeService;
+    private StatusService statusService;
 
     @Autowired
-    public HrController(JobHistoryService jobHistoryService, JobService jobService) {
+    public HrController(JobHistoryService jobHistoryService, JobService jobService,
+            EmployeeService employeeService, StatusService statusService) {
         this.jobHistoryService = jobHistoryService;
         this.jobService = jobService;
+        this.employeeService = employeeService;
+        this.statusService = statusService;
     }
 
     @GetMapping("/hr")
@@ -56,14 +66,32 @@ public class HrController {
         return "redirect:/history";
     }
 
+    String bulan;
+    Integer tahun;
     @GetMapping("/search")
     public String year(JobHistory jobHistory,
             @RequestParam(value = "month", required = false) String month,
             @RequestParam(value = "year", required = false) Integer year,
             Model model,
             RedirectAttributes attributes) {
-        List<JobHistory> j = jobHistoryService.findByYear(month, year);
-        model.addAttribute("list", j);
+        List<JobHistory> jobHistoryYear = jobHistoryService.findByYear(month, year);
+        model.addAttribute("list", jobHistoryYear);
+        model.addAttribute("month", month);
+        model.addAttribute("year", year);
+        bulan = month;
+        tahun=year;
         return "timesheet/approvement";
+    }
+    
+    // DOWNLOAD EXCEL
+    @GetMapping("/history/download/excel")
+    public void exportExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=All Employee in "+bulan+" "+tahun+".xlsx";
+        response.setHeader(headerKey, headerValue);
+                Excel exportExcel = new Excel(bulan, tahun, jobHistoryService, jobService, employeeService, statusService);
+                exportExcel.export(response);
     }
 }
