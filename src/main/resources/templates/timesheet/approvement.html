@@ -10,6 +10,21 @@ and open the template in the editor.-->
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .RECEIVED{
+                background: #5D5FEF;
+                border-radius: 4px;
+                color: white;
+                padding:"12px 12px 12px 12px";
+            }
+            .APPROVED{
+                background: green;
+                border-radius: 4px;
+                color: white;
+                padding:"10px 10px 10px 10px";
+            }
+            
+        </style>
     </head>
     <body>
         <div layout:fragment="content">
@@ -31,42 +46,66 @@ and open the template in the editor.-->
 
             <div>
                 <form th:action="@{/search}" method="get">
-                    <select class="form-select form-select-lg" name="month" style="width: 15%;">
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="Desember">Desember</option>
-                    </select>
-                    <select class="form-select form-select-lg" name="year" style="width: 15%;">
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                    </select>
-                    <!--<input type="text" name="month" value="OCTOBER"  placeholder="Bulan" size="50" >-->
-                    <!--<input type="text" name="year" th:value="${year}"  placeholder="Tahun" size="50" >-->
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <div class="row g-3" style="margin-bottom: 10px">
+                        <div class="col-sm-2">
+                            <select class="form-select form-select-lg" name="month" >
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="Desember">Desember</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select class="form-select form-select-lg" name="year">
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+<!--                            <button type="submit" class="btn btn-primary">Search
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
+                                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                 </svg>
+                            </button>-->
+                             <button type="submit" class="btn rounded-circle"  style="background-color: #E10050" >
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
+                                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                   </svg>
+                             </button>
+                        </div>
+                        <div th:with="condition=${month != null || year != null }" th:remove="tag">
+                            <div class="col-sm-2">
+                                <a th:if="${condition}" th:href="@{/history/download/excel}" class="btn" style="background-color: #715454" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Excel">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
 
             <div>
-                <table class="table">
+                <table class="table" id="table">
                     <thead>
                         <tr style="font-size: 12px">
                             <th scope="col">Id Timesheet</th>
@@ -74,7 +113,7 @@ and open the template in the editor.-->
                             <th scope="col">Nama</th>
                             <th scope="col">Periode</th>
                             <th scope="col">Project</th>
-                            <th scope="col">Status</th>
+                            <th scope="col" style="text-align:center">Status</th>
                             <th scope="col">Approval Date</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -86,22 +125,38 @@ and open the template in the editor.-->
                             <td th:text="${history.employee.name}"></td>
                             <td th:text="${history.year}+' - '+${history.month}"></td>
                             <td th:text="${history.employee == null}? '-': *{history.employee.projectName}"></td>
-                            <td th:text="${history.status}"></td>
+                            <td><h5 th:class="${history.status}" th:text="${history.status}" style="text-align:center"></h5></td>
                             <td th:text="${history.approveDate == null}? '-': *{history.approveDate}"></td>
                             <td>
-                                <form th:action="@{/approved/{id} (id = ${history.id})}" method="POST" style="width: 100%">
-                                    <button type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                                <form th:action="@{/approved/{id} (id = ${history.id})}" method="POST" style="width: 100%" data-bs-toggle="tooltip" data-bs-placement="top" title="Approved">
+<!--                                        <script>
+                                            let data = '';
+                                            for(let i = 1; i<= 10; i++){
+//                                                console.log(i);
+                                                if((history.status) = 'APPROVED'){
+                                                   data = new document.getElementById('status')
+                                                    console.log(history.status)
+                                                }else{
+                                                    console.log(history.status)
+                                                }
+                                                
+                                                
+                                            }
+                                            
+                                        </script>-->
+                                    <button type="submit" id="status" class="btn" style="background-color: #4BBF41">
+                                        
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-check-square-fill" viewBox="0 0 16 16">
                                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
-                                        </svg> 
+                                        </svg>  
                                     </button>
-                                    <a th:href="@{/history/{id} (id = ${history.id})}" type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <a th:href="@{/history/{id} (id = ${history.id})}" type="button" style="background-color: #453B3B" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                                         </svg>
                                     </a>
-                                    <a th:href="@{/history/download/excel/{id} (id = ${history.id})}" class="btn" style="background-color: #715454">
+                                    <a th:href="@{/history/download/excel/{id} (id = ${history.id})}" class="btn" style="background-color: #715454" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Excel">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
                                         </svg>
@@ -110,13 +165,14 @@ and open the template in the editor.-->
                             </td>
                         </tr>                           
 
-                    <tbody>
 
                 </table>        
 
             </div>
 
         </div>
-
-    </body>
+    <th:block layout:fragment="scripts">
+        <script th:src="@{/js/history.js}"></script>
+    </th:block>
+</body>
 </html>

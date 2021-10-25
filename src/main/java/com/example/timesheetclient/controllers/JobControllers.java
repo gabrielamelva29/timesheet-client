@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/job")
 public class JobControllers {
+   
     private EmployeeService employeeService;
     private JobService jobService;
     private StatusService statusService;

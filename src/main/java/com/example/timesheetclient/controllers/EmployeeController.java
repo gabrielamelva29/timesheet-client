@@ -11,6 +11,7 @@ import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.models.Job;
 import com.example.timesheetclient.models.JobHistory;
 import com.example.timesheetclient.models.Month;
+import com.example.timesheetclient.models.Status;
 import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
 import com.example.timesheetclient.services.JobService;
@@ -23,6 +24,8 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +48,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //@RequestMapping("/employee")
 public class EmployeeController {
     
-   private EmployeeService employeeService;
+     private XSSFWorkbook workbook;
+    private XSSFSheet sheet;
+    private EmployeeService employeeService;
     private JobService jobService;
     private StatusService statusService;
     private JobHistoryService jobHistoryService;
@@ -72,7 +77,7 @@ public class EmployeeController {
         model.addAttribute("history", jobHistoryService.getById(id));
         JobHistory jobHistory = jobHistoryService.getById(id);
         idemp = jobHistoryService.getById(id);
-        
+
         if (jobHistory.getEmployee() == null) {
             return "timesheet/add-form-employee";
         }
@@ -144,19 +149,19 @@ public class EmployeeController {
     @GetMapping("/history/download/excel/{id}")
     public void exportToExcel(HttpServletResponse response, @PathVariable("id") Integer id) throws IOException {
         response.setContentType("application/octet-stream");
-        java.text.DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
 
         JobHistory jobHistory = jobHistoryService.getById(id);
         List<Job> listJobs = jobService.findByEmployee(jobHistory.getEmployee().getId());
+        Employee employee = employeeService.getById(jobHistory.getEmployee().getId());
         employeeService.counts(id);
+        List<Status> status = statusService.getAll();
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=Employee " + jobHistory.getEmployee().getName() + " "
+        String headerValue = "attachment; filename=Employee " + employee.getName() + " "
                 + jobHistory.getMonth() + " " + jobHistory.getYear() + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-        ExportExcel exportExcel = new ExportExcel(listJobs, jobHistory);
+        ExportExcel exportExcel = new ExportExcel(listJobs, jobHistory, employee, status);
 
         exportExcel.export(response);
     }

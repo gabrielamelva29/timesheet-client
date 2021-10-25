@@ -11,6 +11,27 @@ and open the template in the editor.-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <style>
+            .ON-PROGRESS{
+                background: #FB8832;
+                border-radius: 4px;
+                color: white;
+                padding:"12px 12px 12px 12px";
+            }
+            .RECEIVED{
+                background: #5D5FEF;
+                border-radius: 4px;
+                color: white;
+                padding:"12px 12px 12px 12px";
+            }
+            .APPROVED{
+                background: green;
+                border-radius: 4px;
+                color: white;
+                padding:"10px 10px 10px 10px";
+            }
+            
+        </style>
     </head>
     <body>
         <div layout:fragment="content">
@@ -41,11 +62,11 @@ and open the template in the editor.-->
             </div>
 
             <div>
-                <table class="table" id="tabel-history">
+                <table class="table" id="table">
                     <thead>
-                        <tr >
-                            <th scope="col">Id Timesheet</th>
-                            <th scope="col">Status</th>
+                        <tr style="font-size: 12px">
+                            <th scope="col">NO</th>
+                            <th scope="col" style="text-align: center">Status</th>
                             <th scope="col">Periode</th>
                             <th scope="col">Project</th>
                             <th scope="col">Approval Date</th>
@@ -54,33 +75,46 @@ and open the template in the editor.-->
                     </thead>
                     <tbody>
                         <tr th:each="history, i : ${histories}">
-                            <td th:text="${history.id}"></td>
-                            <td th:text="${history.status}"></td>
+                            <td th:text="${i.count}"></td>
+                            <td><h5 th:class="${history.status}"  th:text="${history.status}" style="text-align: center"></h5></td>
                             <td th:text="${history.year}+' - '+${history.month}"></td>
                             <td th:text="${history.employee == null}? '-': *{history.employee.projectName}"></td>
                             <td th:text="${history.approveDate == null}? '-': *{history.approveDate}"></td>
                             <td>
-                                <form th:action="@{/sent/{id} (id = ${history.id})}" method="POST" style="width: 100%" >
-                                    <a th:href="@{/history/{id} (id = ${history.id})}" type="button" class="btn" style="background-color: #33ABEF">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                        </svg>
-                                    </a>
-                                    <button type="submit" style="background-color: #4BBF41" class="btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane fa-w-16" role="img" viewBox="0 0 512 512">
-                                        <path fill="#fff" d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 
-                                              33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/>
+                                <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                                    <form th:action="@{/sent/{id} (id = ${history.id})}" method="POST" style="width: 100%">
+                                        <!--Edit-->
+                                        <a th:if="${condition}" th:href="@{/history/{id} (id = ${history.id})}" type="button" class="btn" style="background-color: #33ABEF" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg>
+                                        </a>
+                                        <a th:unless="${condition}" th:href="@{/history/{id} (id = ${history.id})}" type="button" style="background-color: #453B3B" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                            <!--View-->
+                                            <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                            </svg>
+                                        </a>
 
-                                        </svg>
-                                    </button>
-<!--                                    icon print-->
-<!--                                    <a th:href="@{/history/download/excel/{id} (id = ${history.id})}" class="btn" style="background-color: #715454">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
-                                        </svg>
-                                    </a>-->
-                                </form>
+                                        <!--Kirim-->
+                                        <button th:if="${condition}" type="submit" style="background-color: #4BBF41" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Send">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane fa-w-16" role="img" viewBox="0 0 512 512">
+                                            <path fill="#fff" d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 
+                                                  33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/>
+
+                                            </svg>
+                                        </button>
+
+                                        <!--Download-->
+                                        <a th:unless="${condition}" th:href="@{/history/download/excel/{id} (id = ${history.id})}" class="btn" style="background-color: #715454" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Excel">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                                            </svg>
+                                        </a>
+                                    </form>
+                                </div>
                             </td>
                         </tr>                           
 
