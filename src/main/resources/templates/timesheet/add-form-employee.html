@@ -20,6 +20,9 @@ and open the template in the editor.
             .row{
                 margin-bottom: -2%
             }
+            input{
+                width: 10px
+            }
         </style>
     </head>
     <body>
@@ -30,55 +33,47 @@ and open the template in the editor.
                     <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
                 </ol>
             </nav>
-            <form th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" method="POST" id="employeeForm">
+            <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" method="POST" id="employeeForm">
                 <div style="margin: 2% 3%">
-                    <h2 class="text-primary" style="margin-bottom: 2%" >TIMESHEET</h2>
-                    <div class="row">
-                        <label for="projectName" class="col-sm-2 col-form-label"><b>Name of Project</b></label>
-                        <div class="col-sm-2">
-                            <input type="text" th:field="*{projectName}" class="form-control"  id="projectName"><br>
-                        </div>
+                    <h2 class="text-primary" style="margin-bottom: 20px" >TIMESHEET</h2>
+                    <div class="input-group input-group-sm " style="width: 320px">
+                        <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
+                        <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" required>
                     </div>
-                    <div class="row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Unit/Division</b></label>
-                        <div class="col-sm-2">
-                            <input type="text" th:field="*{divisi}" class="form-control"  id="divisi"><br>
-                        </div>
-                    </div>
+                    <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}" style="font-size: 12px; margin-left: 160px"></p>
 
-                    <div class="row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Name</b></label>
-                        <div class="col-sm-2">
-                            <input type="text" th:field="*{name}" class="form-control"  id="name"><br>
-                        </div>
+                    <div class="input-group input-group-sm " style="width: 320px">
+                        <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
+                        <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" required>
                     </div>
+                    <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}" style="font-size: 12px; margin-left: 160px"></p>
 
-                    <div class="row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>MII Id</b></label>
-                        <div class="col-sm-2">
-                            <input type="text" th:field="*{miiId}" class="form-control"  id="miiId"><br>
-                        </div>
+                    <div class="input-group input-group-sm mb-1" style="width: 320px">
+                        <label class="col-sm-6 col-form-label"><b>Name</b></label>
+                        <input type="text" th:field="*{name}" class="rounded form-control"  id="name" required>
                     </div>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="font-size: 12px; margin-left: 160px"></p>
 
-                    <div class="row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>Periode</b></label>
-                        <div class="col-sm-2">
-                            <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="form-control"  id="periode" readonly><br>
-                        </div>
-                        <div class="col-sm-2">
-                            <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
-                                <button th:if="${condition}" id="submitEmployee" type="submit" class="btn btn-primary" style="background-color: #009DE1" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16" >
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
-                                    </svg>
+                    <div class="input-group input-group-sm mb-1" style="width: 320px">
+                        <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
+                        <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" required>
+                    </div>
+                    <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}" style="font-size: 12px; margin-left: 160px"></p>
+
+                        <div class="input-group input-group-sm mb-1" style="width: 415px">
+                            <label class="col-sm-4 col-form-label" style="margin-right: 20px"><b>Periode</b></label>
+                            <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="rounded col-sm-4 form-control"  id="periode" readonly><br>
+                                <button id="submitEmployee" type="submit" class="btn rounded-circle" style="background-color: #009DE1; margin-left: 60px" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16" >
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                        </svg>
                                 </button>
                             </div>
-                        </div>
+
                     </div>
-                </div>
             </form>
-            <div class="container">
-                <table class="table" style="width: 100%">
+            <div class="container" style="float: left; width: 100%">>
+                <table class="table" id="table" style="width: 100%">
                     <thead class="bg-light">
                         <tr>
                             <th scope="col">Nomor</th>
@@ -133,7 +128,8 @@ and open the template in the editor.
 
         </div>
     <th:block layout:fragment="scripts">
-        <script th:src="@{/js/employee.js}"></script>
+        <!--<script th:src="@{/js/employee.js}"></script>-->
+        <script th:src="@{/js/datatable.js}"></script>
     </th:block>
 
 </body>

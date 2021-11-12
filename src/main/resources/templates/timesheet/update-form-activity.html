@@ -11,10 +11,10 @@ and open the template in the editor.-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
-  <!-- bootstrap-iso digunakan untuk mengatur tampilan -->
-  <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-  <!--Menambahkan libray font awesome karena kita menggunakan ikon untuk tampilannya-->
-  <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <!-- bootstrap-iso digunakan untuk mengatur tampilan -->
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+        <!--Menambahkan libray font awesome karena kita menggunakan ikon untuk tampilannya-->
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
     </head>
     <body>
         <div layout:fragment="content">
@@ -33,13 +33,16 @@ and open the template in the editor.-->
             <div class="p-2 mr-2">
                 <h3 class="text-primary" >TIMESHEET</h3>
             </div>
-            <form th:action="@{/job/edits/{id}/{ids} (id = ${job.id}, ids = ${history})}" th:object="${job}" th:method="PUT" id="jobForm">
+            <form th:action="@{/job/edit/{id}/{ids} (id = ${job.id}, ids = ${history})}" th:object="${job}" th:method="PUT" id="jobForm">
                 <div  class="card  p-3" style="font-size: 12px">
                     <h6> Add New Log Activity</h6>
                     <div class="mb-1 row">
                         <label class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-4">
                             <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off"><br>
+                        </div>
+                        <div class="col-sm-2">
+                            <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
                         </div>
                     </div>
 
@@ -76,9 +79,10 @@ and open the template in the editor.-->
 
                     <div class="mb-1 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
-                        <div class="col-sm-8">
-                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            <button type="submit" class="btn btn-primary  float-end m-5" style="font-size: 12px; background-color:#0094FF; color: #fff" >
+                        <div class="col-sm-7">
+                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3" style="height: 120px"></textarea>
+
+                            <button type="submit" class="btn btn-primary float-end m-1" style="font-size: 12px; background-color:#0094FF; color: #fff" >
                                 Save
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane fa-w-16" role="img" viewBox="0 0 512 512">
                                 <path fill="currentColor" d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 
@@ -86,30 +90,36 @@ and open the template in the editor.-->
                                 </svg>
                             </button>
                         </div>
+                        <div class="col-sm-2">
+                            <p th:each="err : ${#fields.errors('activity')}" th:text="${err}" class="error"></p>
+                        </div>
                     </div>
                 </div>
             </form>
-            
-        </div>    
-        <th:block layout:fragment="scripts">
-            <!-- Menambahkan jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!-- Menambahakan Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-<script>
-	$(document).ready(function(){
-		var date_input=$('input[name="date"]');
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'dd MM yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-		})
-	})
-</script>
+        </div>    
+    <th:block layout:fragment="scripts">
+        <!-- Menambahkan jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+        <!-- Menambahakan Date Range Picker -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+        <script>
+            $(document).ready(function () {
+                var date_input = $('input[name="date"]');
+                var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+                date_input.datepicker({
+                    format: 'dd MM yyyy',
+//                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                    calendarWeeks: true,
+                    clearBtn: true
+//                    startDate: '-3d'
+                });
+            });
+        </script>
     </th:block>
-    </body>
+</body>
 </html>

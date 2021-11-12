@@ -61,6 +61,10 @@ public class JobHistoryService {
         return restTemplate.getForObject(url + "/" + id, JobHistory.class);
     }
 
+    public JobHistory created() {
+        return restTemplate.getForObject(url + "/add", JobHistory.class);
+    }
+
     public ResponseModel<JobHistory> approved(Integer id) {
         return new ResponseModel<>(restTemplate
                 .postForObject(url + "/approved/" + id, null, JobHistory.class), "Approved");

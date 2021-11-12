@@ -48,8 +48,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class EmployeeController {
 
-    private XSSFWorkbook workbook;
-    private XSSFSheet sheet;
     private EmployeeService employeeService;
     private JobService jobService;
     private StatusService statusService;
@@ -89,14 +87,21 @@ public class EmployeeController {
 
     @PostMapping("/history/{id}")
     public String create(@PathVariable Integer id,
-            Employee employee,
+            @Valid Employee employee,
             BindingResult result,
             Model model,
             RedirectAttributes attributes) {
         if (result.hasErrors()) {
+            model.addAttribute("bt", statusService.getById("BT"));
+            model.addAttribute("p", statusService.getById("P"));
+            model.addAttribute("pm", statusService.getById("PM"));
+            model.addAttribute("s", statusService.getById("S"));
+            model.addAttribute("v", statusService.getById("V"));
+            model.addAttribute("x", statusService.getById("X"));
+            model.addAttribute("history", jobHistoryService.getById(id));
             return "timesheet/add-form-employee";
         }
-        employeeService.create(employee);
+        employeeService.create(id, employee);
         attributes.addFlashAttribute("message", "Create Successed");
         return "redirect:/history/{id}";
     }
@@ -104,11 +109,18 @@ public class EmployeeController {
     //EMPLOYEE UPDATE
     @PutMapping("/history/{id}")
     public String update(@PathVariable Integer id,
-            Employee employee,
+            @Valid Employee employee,
             BindingResult result,
             Model model,
             RedirectAttributes attributes) {
         if (result.hasErrors()) {
+            model.addAttribute("bt", statusService.getById("BT"));
+            model.addAttribute("p", statusService.getById("P"));
+            model.addAttribute("pm", statusService.getById("PM"));
+            model.addAttribute("s", statusService.getById("S"));
+            model.addAttribute("v", statusService.getById("V"));
+            model.addAttribute("x", statusService.getById("X"));
+            model.addAttribute("history", jobHistoryService.getById(id));
             return "timesheet/update-form-employee";
         }
         JobHistory history = jobHistoryService.getById(id);
@@ -143,6 +155,42 @@ public class EmployeeController {
         model.addAttribute("statuses", statusService.getAll());
         model.addAttribute("history", idemp.getId());
         return "timesheet/update-form-activity";
+    }
+    
+    @PostMapping("/add/{id}/{ids}")
+    public String create(Job job,
+            @PathVariable Integer id,
+            @PathVariable Integer ids,
+            BindingResult result,
+            Model model,
+            RedirectAttributes attributes) {
+        System.out.println(job);
+        if (result.hasErrors()) {
+            model.addAttribute("statuses", statusService.getAll());
+            model.addAttribute("history", idemp.getId());
+            return "timesheet/add-form-activity";
+        }
+        jobService.create(job, id);
+        attributes.addFlashAttribute("message", "Create Successed");
+        return "redirect:/history/{ids}";
+    }
+
+    @PutMapping("/job/edit/{id}/{ids}")
+    public String update(@PathVariable Integer id,
+            @PathVariable Integer ids,
+            @Valid Job job,
+            BindingResult result,
+            Model model,
+            RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("statuses", statusService.getAll());
+            model.addAttribute("history", idemp.getId());
+            return "timesheet/update-form-activity";
+        }
+        jobService.update(id, job);
+        System.out.println("berhasil");
+        attributes.addFlashAttribute("message", "Update Successed");
+        return "redirect:/history/{ids}";
     }
 
     // DOWNLOAD EXCEL

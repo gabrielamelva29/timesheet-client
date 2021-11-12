@@ -53,7 +53,7 @@ public class Excel {
         this.statusService = statusService;
         this.jobHistoryService = jobHistoryService;
     }
-    
+
     public Excel(String bulan, Integer tahun, JobHistoryService jobHistoryService, JobService jobService,
             EmployeeService employeeService, StatusService statusService) {
         this.bulan = bulan;
@@ -66,6 +66,7 @@ public class Excel {
     }
 
     private void writeHeaderLine() {
+        int rowCountStatus = 7;
         List<JobHistory> listJobHistory = jobHistoryService.findByYear(bulan, tahun);
         for (JobHistory jobHistory1 : listJobHistory) {
             sheet = workbook.createSheet(jobHistory1.getEmployee().getName());
@@ -75,14 +76,12 @@ public class Excel {
             font.setBold(true);
             font.setFontHeight(16);
             style.setFont(font);
-            style.setBorderBottom(BorderStyle.THIN);
-            style.setBorderLeft(BorderStyle.THIN);
-            style.setBorderRight(BorderStyle.THIN);
-            style.setBorderTop(BorderStyle.THIN);
             style.setAlignment(HorizontalAlignment.LEFT);
 
             CellStyle style2 = workbook.createCellStyle();
-            style2.setFont(font);
+            XSSFFont font2 = workbook.createFont();
+            font2.setFontHeight(16);
+            style2.setFont(font2);
             style2.setBorderBottom(BorderStyle.THIN);
             style2.setBorderLeft(BorderStyle.THIN);
             style2.setBorderRight(BorderStyle.THIN);
@@ -108,7 +107,7 @@ public class Excel {
 
             CellStyle style3 = workbook.createCellStyle();
             XSSFFont font3 = workbook.createFont();
-            font3.setFontHeight(14);
+            font3.setFontHeight(16);
             style3.setFont(font3);
             style3.setAlignment(HorizontalAlignment.LEFT);
 
@@ -122,31 +121,93 @@ public class Excel {
             int rowCount = 7;
             for (Job job : listJobEmployee) {
                 Row rows = sheet.createRow(rowCount++);
-            int columnCount = 0;
+                int columnCount = 0;
 
-            createCell(rows, columnCount++, job.getDate().toString(), style3);
-            createCell(rows, columnCount++, job.getStartTime() == null ? "-" : job.getStartTime().toString(), style3);
-            createCell(rows, columnCount++, job.getEndTime() == null ? "-" : job.getEndTime().toString(), style3);
-            createCell(rows, columnCount++, job.getTotalHour() == null ? "-" : job.getTotalHour(), style3);
-            if (job.getStatus().getId().equals("P")) {
-                createCell(rows, 4, job.getStatus().getName(), style3);
+                createCell(rows, columnCount++, job.getDate().toString(), style2);
+                createCell(rows, columnCount++, job.getStartTime() == null ? "-" : job.getStartTime().toString(), style2);
+                createCell(rows, columnCount++, job.getEndTime() == null ? "-" : job.getEndTime().toString(), style2);
+                createCell(rows, columnCount++, job.getTotalHour() == null ? "-" : job.getTotalHour(), style2);
+                if (job.getStatus().getId().equals("P")) {
+                    createCell(rows, 4, "v", style2);
+                    createCell(rows, 5, "", style2);
+                    createCell(rows, 6, "", style2);
+                    createCell(rows, 7, "", style2);
+                    createCell(rows, 8, "", style2);
+                    createCell(rows, 9, "", style2);
+                }
+                if (job.getStatus().getId().equals("S")) {
+                    createCell(rows, 4, "", style2);
+                    createCell(rows, 5, "v", style2);
+                    createCell(rows, 6, "", style2);
+                    createCell(rows, 7, "", style2);
+                    createCell(rows, 8, "", style2);
+                    createCell(rows, 9, "", style2);
+                }
+                if (job.getStatus().getId().equals("BT")) {
+                    createCell(rows, 4, "", style2);
+                    createCell(rows, 5, "", style2);
+                    createCell(rows, 6, "v", style2);
+                    createCell(rows, 7, "", style2);
+                    createCell(rows, 8, "", style2);
+                    createCell(rows, 9, "", style2);
+                }
+                if (job.getStatus().getId().equals("PM")) {
+                    createCell(rows, 4, "", style2);
+                    createCell(rows, 5, "", style2);
+                    createCell(rows, 6, "", style2);
+                    createCell(rows, 7, "v", style2);
+                    createCell(rows, 8, "", style2);
+                    createCell(rows, 9, "", style2);
+                }
+                if (job.getStatus().getId().equals("V")) {
+                    createCell(rows, 4, "", style2);
+                    createCell(rows, 5, "", style2);
+                    createCell(rows, 6, "", style2);
+                    createCell(rows, 7, "", style2);
+                    createCell(rows, 8, "v", style2);
+                    createCell(rows, 9, "", style2);
+                }
+                if (job.getStatus().getId().equals("X")) {
+                    createCell(rows, 4, "", style2);
+                    createCell(rows, 5, "", style2);
+                    createCell(rows, 6, "", style2);
+                    createCell(rows, 7, "", style2);
+                    createCell(rows, 8, "", style2);
+                    createCell(rows, 9, "v", style2);
+                }
+                createCell(rows, 10, job.getActivity(), style2);
+                rowCountStatus = rowCount;
             }
-            if (job.getStatus().getId().equals("S")) {
-                createCell(rows, 5, job.getStatus().getName(), style3);
-            }
-            if (job.getStatus().getId().equals("BT")) {
-                createCell(rows, 6, job.getStatus().getName(), style3);
-            }
-            if (job.getStatus().getId().equals("PM")) {
-                createCell(rows, 7, job.getStatus().getName(), style3);
-            }
-            if (job.getStatus().getId().equals("V")) {
-                createCell(rows, 8, job.getStatus().getName(), style3);
-            }
-            if (job.getStatus().getId().equals("X")) {
-                createCell(rows, 9, job.getStatus().getName(), style3);
-            }
-            createCell(rows, 10, job.getActivity(), style3);
+
+            employeeService.counts(jobHistory1.getEmployee().getId());
+            List<Status> Statuses = statusService.getAll();
+            Row rows = sheet.createRow(rowCountStatus);
+            rowCountStatus++;
+            for (Status status : Statuses) {
+
+                createCell(rows, 0, "", style2);
+                createCell(rows, 1, "", style2);
+                createCell(rows, 2, "", style2);
+                createCell(rows, 3, "", style2);
+                if (status.getId().equals("P")) {
+                    createCell(rows, 4, status.getCount(), style2);
+                }
+                if (status.getId().equals("S")) {
+                    createCell(rows, 5, status.getCount(), style2);
+                }
+                if (status.getId().equals("BT")) {
+                    createCell(rows, 6, status.getCount(), style2);
+                }
+                if (status.getId().equals("PM")) {
+                    createCell(rows, 7, status.getCount(), style2);
+                }
+                if (status.getId().equals("V")) {
+                    createCell(rows, 8, status.getCount(), style2);
+                }
+                if (status.getId().equals("X")) {
+                    createCell(rows, 9, status.getCount(), style2);
+                }
+                createCell(rows, 10, "", style2);
             }
         }
     }

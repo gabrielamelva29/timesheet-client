@@ -47,9 +47,9 @@ public class EmployeeService {
                 .getForObject(url + "/"+id, Employee.class);
     }
     
-    public ResponseModel<Employee> create(Employee employee){
+    public ResponseModel<Employee> create(Integer id,Employee employee){
         return new ResponseModel<>(restTemplate
-                .postForObject(url, employee, Employee.class), "Employee Created");
+                .postForObject(url + "/" + id, employee, Employee.class), "Employee Created");
     }
     
     public void update(Integer id, Employee employee){

@@ -28,7 +28,7 @@ public class Employee {
     @NotEmpty(message = "Please input your Name")
     private String name;
     
-    @NotEmpty(message = "Please input your Mii Id")
+    @NotNull(message = "Please input your Mii Id")
     private Integer miiId;
     
     @NotEmpty(message = "Please input your Project Name")

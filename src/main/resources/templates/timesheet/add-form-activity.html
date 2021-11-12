@@ -42,6 +42,9 @@ and open the template in the editor.
                         <div class="col-sm-4">
                             <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off"><br>
                         </div>
+                        <div class="col-sm-2">
+                            <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
+                        </div>
                     </div>
 
                     <div class="mb-1 row">
@@ -87,6 +90,9 @@ and open the template in the editor.
                                 </svg>
                             </button>
                         </div>
+                        <div class="col-sm-2">
+                                <p th:each="err : ${#fields.errors('activity')}" th:text="${err}" class="error"></p>
+                            </div>
                     </div>
                 </div>
             </form>

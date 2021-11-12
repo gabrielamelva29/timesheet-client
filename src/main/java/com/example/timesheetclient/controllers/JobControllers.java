@@ -50,13 +50,6 @@ public class JobControllers {
         this.statusService = statusService;
         this.jobHistoryService = jobHistoryService;
     }
-
-    @GetMapping
-    public String index(Job job, Model model) {
-        model.addAttribute("statuses", statusService.getAll());
-        model.addAttribute("histories", jobHistoryService.getAll());
-        return "timesheet/add-form-activity";
-    }
     
     @PostMapping("/add/{id}/{ids}")
     public String create(Job job,
@@ -75,22 +68,22 @@ public class JobControllers {
         return "redirect:/history/{ids}";
     }
 
-    @PutMapping("/edits/{id}/{ids}")
-    public String update(@PathVariable Integer id,
-            @PathVariable Integer ids,
-            Job job,
-            BindingResult result,
-            Model model,
-            RedirectAttributes attributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("statuses", statusService.getAll());
-            return "timesheet/update-form-activity";
-        }
-        jobService.update(id, job);
-        System.out.println("berhasil");
-        attributes.addFlashAttribute("message", "Update Successed");
-        return "redirect:/history/{ids}";
-    }
+//    @PutMapping("/edits/{id}/{ids}")
+//    public String update(@PathVariable Integer id,
+//            @PathVariable Integer ids,
+//            @Valid Job job,
+//            BindingResult result,
+//            Model model,
+//            RedirectAttributes attributes) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("statuses", statusService.getAll());
+//            return "timesheet/update-form-activity";
+//        }
+//        jobService.update(id, job);
+//        System.out.println("berhasil");
+//        attributes.addFlashAttribute("message", "Update Successed");
+//        return "redirect:/history/{ids}";
+//    }
 
     @DeleteMapping("/{id}/{ids}")
     public String delete(@PathVariable Integer id,

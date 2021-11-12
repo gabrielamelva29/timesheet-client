@@ -70,12 +70,20 @@ public class HrController {
     Integer tahun;
     @GetMapping("/search")
     public String year(JobHistory jobHistory,
-            @RequestParam(value = "month", required = false) String month,
-            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "yearmonth", required = false) String yearmonth,
             Model model,
             RedirectAttributes attributes) {
+        if(yearmonth.equals("")){
+             return "redirect:/hr";
+        }
+        String a[] = yearmonth.split("-");
+        String[] monthname = {"","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        Integer year = Integer.valueOf(a[0]);
+        String month = monthname[Integer.valueOf(a[1])];
         List<JobHistory> jobHistoryYear = jobHistoryService.findByYear(month, year);
+        
         model.addAttribute("list", jobHistoryYear);
+        model.addAttribute("yearmonth", yearmonth);
         model.addAttribute("month", month);
         model.addAttribute("year", year);
         bulan = month;

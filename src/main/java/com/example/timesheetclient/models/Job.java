@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.sql.Date;
 import java.sql.Time;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +30,7 @@ public class Job {
     private Integer id;
     
 //    @JsonFormat(pattern = "dd MMMM yyyy")
+    @NotEmpty(message = "Please input your Date")
     private String date;
     
 //    @JsonFormat(pattern = "HH:mm")
@@ -38,6 +41,8 @@ public class Job {
     
     private String totalHour;
     
+    @NotEmpty(message = "Please input your Activity")
+    @Size(max = 2000, message = "Max character is 2000")
     private String activity;
     
     private Employee employee;

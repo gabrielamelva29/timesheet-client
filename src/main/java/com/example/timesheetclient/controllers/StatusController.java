@@ -19,27 +19,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author gabri
  */
 @Controller
-public class TimesheetController {
+public class StatusController {
     
     private StatusService statusService;
 
     @Autowired
-    public TimesheetController(StatusService statusService) {
+    public StatusController(StatusService statusService) {
         this.statusService = statusService;
     }
     
-    @GetMapping("/")
-    public String timesheet(){
-        return "timesheet/Hello";
-    }
-    
-    //EMPLOYEE ADD
     @GetMapping("/status/getAll")
     public @ResponseBody
     List<Status> getall(Model model) {
         model.addAttribute("status", statusService.getAll());
         return statusService.getAll();
     }
-
-    
 }

@@ -31,45 +31,39 @@ and open the template in the editor.
                     <li class="breadcrumb-item active" aria-current="page">Timesheet</li>
                 </ol>
             </nav>
+            <div class="row">
+                <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" th:method="PUT" id="jobForm">
+                    <div style="margin: 2% 3%">
+                        <h2 class="text-primary" style="margin-bottom: 20px" >TIMESHEET</h2>
+                        <div class="input-group input-group-sm " style="width: 320px">
+                            <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
+                            <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" required>
+                        </div>
+                        <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}" style="font-size: 12px; margin-left: 160px"></p>
 
-            <form th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" th:method="PUT" id="jobForm">
-                <div style="margin: 2% 3%">
-                    <h2 class="text-primary" style="margin-bottom: 2%" >TIMESHEET</h2>
-                    <div class="row">
-                        <label class="col-sm-2 col-form-label"><b>Name of Project</b></label>
-                        <div class="col-sm-2" style="width: 20%">
-                            <input type="text" th:field="*{projectName}" class="form-control"  id="projectName"><br>
+                        <div class="input-group input-group-sm " style="width: 320px">
+                            <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
+                            <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" required>
                         </div>
-                    </div>
-                    <div class="row">
-                        <label class="col-sm-2 col-form-label"><b>Unit/Division</b></label>
-                        <div class="col-sm-2" style="width: 20%">
-                            <input type="text" th:field="*{divisi}" class="form-control"  id="divisi"><br>
-                        </div>
-                    </div>
+                        <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}" style="font-size: 12px; margin-left: 160px"></p>
 
-                    <div class="row">
-                        <label class="col-sm-2 col-form-label"><b>Name</b></label>
-                        <div class="col-sm-2" style="width: 20%">
-                            <input type="text" th:field="*{name}" class="form-control"  id="name"><br>
+                        <div class="input-group input-group-sm mb-1" style="width: 320px">
+                            <label class="col-sm-6 col-form-label"><b>Name</b></label>
+                            <input type="text" th:field="*{name}" class="rounded form-control"  id="name" required>
                         </div>
-                    </div>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
-                    <div class="row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label"><b>MII Id</b></label>
-                        <div class="col-sm-2" style="width: 20%">
-                            <input type="text" th:field="*{miiId}" class="form-control"  id="miiId"><br>
+                        <div class="input-group input-group-sm mb-1" style="width: 320px">
+                            <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
+                            <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" required>
                         </div>
-                    </div>
+                        <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}" style="font-size: 12px; margin-left: 160px"></p>
 
-                    <div class="row">
-                        <label class="col-sm-2 col-form-label"><b>Periode</b></label>
-                        <div class="col-sm-2" style="width: 20%">
-                            <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="form-control"  id="periode" readonly><br>
-                        </div>
-                        <div class="col-sm-2">
-                            <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
-                                <button th:if="${condition}" id="submitEmployee" type="submit" class="btn" style="background-color: #009DE1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                        <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                            <div th:style="${condition}?'width: 415px':'width: 320px'" class="input-group input-group-sm mb-1" style="width: 320px">
+                                <label th:class="${condition}?'col-sm-4 col-form-label':'col-sm-6 col-form-label'"><b>Periode</b></label>
+                                <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="rounded col-sm-4 form-control"  id="periode" readonly><br>
+                                <button  th:if="${condition}" id="submitEmployee" type="submit" class="btn rounded-circle" style="background-color: #009DE1; margin-left: 60px" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -78,13 +72,12 @@ and open the template in the editor.
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-
-            <div class="container">
+                </form>
+            </div>
+            <div class="container" style="float: left; width: 100%">
                 <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
                     <!--<a th:href="@{/job/add}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a>--> 
-                    <a th:href="@{/job/add/{id}  (ids = ${history.id}, id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" style="background-color:#0094FF; font-size: 14px; color: #fff">
+                    <a th:href="@{/job/add/{id}  (ids = ${history.id}, id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end rounded-pill" style="background-color:#0094FF; font-size: 14px; color: #fff">
                         Add Log
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
@@ -107,46 +100,50 @@ and open the template in the editor.
                                 <th scope="col" th:if="${condition}">Tools</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr th:each="job,i : ${jobs}">
-                                <td th:text="${i.count}"></td>
-                                <td th:text="${job.date}" style="width: 16%"></td>
-                                <td th:text="${job.startTime}"></td>
-                                <td th:text="${job.endTime}"></td>
-                                <td th:text="${job.totalHour}"></td>
-                                <td th:text="${job.status.name}"></td>
-                                <td th:text="${job.activity}"></td>
-                                <td style="width: 13%">
-                                    <form 
-                                        th:action="@{/job/{id}/{ids} (id = ${job.id}, ids = ${history.id})}" 
-                                        th:if="${condition}"
-                                        th:method="DELETE"
-                                        onSubmit="return confirm('Are you sure you wish to delete?');" >
-                                    <!--Update Button-->
-                                    <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                        <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                            <tbody>
+
+                                <tr th:each="job,i : ${jobs}">
+                                    <td th:text="${i.count}"></td>
+                                    <td th:text="${job.date}" style="width: 18%"></td>
+                                    <td th:text="${job.startTime}"></td>
+                                    <td th:text="${job.endTime}"></td>
+                                    <td th:text="${job.totalHour}"></td>
+                                    <td th:text="${job.status.name}"></td>
+                                    <td th:text="${job.activity}"></td>
+                                    <td th:if="${condition}" style="width: 13%">
+                                        <form 
+                                            th:action="@{/job/{id}/{ids} (id = ${job.id}, ids = ${history.id})}" 
+                                            th:if="${condition}"
+                                            th:method="DELETE"
+                                            onSubmit="return confirm('Are you sure you wish to delete?');" >
+                                            <!--Update Button-->
 
 
-                                        <a th:if="${condition}"
-                                           th:href="@{/job/edit/{id}/{ids} (ids = ${history.id}, id = ${job.id})}" 
 
-                                           type="button" class="btn" style="background-color: #33ABEF" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                    <!--Delete Button-->
-                                    
-                                        <button type="submit" style="background-color: #D60B17" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>             
+                                            <a th:if="${condition}"
+                                               th:href="@{/job/edit/{id}/{ids} (ids = ${history.id}, id = ${job.id})}" 
+
+                                               type="button" class="btn rounded-circle" style="background-color: #33ABEF" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                </svg>
+                                            </a>
+
+                                            <!--Delete Button-->
+
+                                            <button type="submit" style="background-color: #D60B17" class="btn rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                            </tbody>     
+                        </div>
                     </table>
                     <table style="width: 35%" id="statusTable">
 
@@ -163,10 +160,11 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+
     <th:block layout:fragment="scripts">
-        <script th:src="@{/js/employee.js}"></script>
+        <!--<script th:src="@{/js/employee.js}"></script>-->
         <script th:src="@{/js/status.js}"></script>
-        <script th:src="@{/js/history.js}"></script>
+        <script th:src="@{/js/datatable.js}"></script>
     </th:block>
 
 </body>

@@ -1,26 +1,46 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-// 1 detik = 1000
-//            setTimeout(function() {
-//            location.reload();
-//        }, 500);
-
-//const arrayToCount = [1, 2, 3, 5, 2, 8, 9, 2];
-//const result = arrayToCount.filter(i => i === 2).length;
-//console.log('number of the found elements: ' + result);
-window.setTimeout("waktu()", 0);
-window.setTimeout("status()", 0);
-
-function waktu() {
-    const arrbulan = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var tanggal = new Date();
-    var bulan = new Date().getMonth();
-    document.getElementById("periode").innerHTML = arrbulan[bulan] + " " + tanggal.getFullYear();
-}
-
-function status() {
-    $('#statusAttendance').load("/history");
-}
+$(document).ready(() => {
+    load();
+});
+$("#submitEmployee").on("click", function () {
+    event.preventDefault();
+    const data = {
+        projectName: $('#projectName').val(),
+        divisi: $('#divisi').val(),
+        name: $('#name').val(),
+        miiId: $('#miiId').val()
+    };
+    const urlAct = $('#jobForm').attr('action');
+    console.log(JSON.stringify(data));
+    $.ajax({
+        url: urlAct,
+        type: 'POST',
+        data: $('#jobForm').serialize(),
+        beforeSend: (req) => {
+            addRequestHeader();
+        },
+        dataType: 'json',
+        success: (result) => {
+            console.log("benar");
+            console.log(result.message);
+            if (result.message == null) {
+                successMessage(" Updated");
+            } else {
+                successMessage(result.message);
+            }
+//            load();
+//            $("#createEmployeeAjax").modal("hide");
+        },
+        error: (err) => {
+            console.log("salah");
+            $('#errorProjectName').html("Please input your projectName !");
+            $('#errorProjectName').show();
+            $('#errorDivisi').html("Please input your divisi !");
+            $('#errorDivisi').show('slow');
+            $('#errorName').html("Please input name !");
+            $('#errorName').show('slow');
+            $('#errorMiiId').html("Please input your miiId !");
+            $('#errorPhoneNumber').show('slow');
+            console.log(err);
+        }
+    });
+});

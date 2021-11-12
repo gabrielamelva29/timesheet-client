@@ -13,6 +13,10 @@ and open the template in the editor.
         <link rel="stylesheet" th:href="@{/css/styles.css}" >
         <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
         
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <!-- default header name is X-CSRF-TOKEN -->
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        
         <style>
             .list-group-item{
                 margin-left: 10%;
@@ -33,7 +37,7 @@ and open the template in the editor.
     <body>
         <div  class="d-flex" id="wrapper" th:fragment="layout(content)" > 
             <!--Sidebar-->
-
+            
             <div class=" border-end" id="sidebar-wrapper">
                 <div class=" sidebar-heading ">Menu</div>
                 <div class="list-group list-group-flush"  >
@@ -78,8 +82,8 @@ and open the template in the editor.
         <!-- Bootstrap core JS-->
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-        <script th:src="@{/js/scripts.js}"></script>
     <!-- Core theme JS-->
+    <script th:src="@{/js/csrf.js}"></script>
     <th:block layout:fragment="scripts">
     </th:block>
 </body>
