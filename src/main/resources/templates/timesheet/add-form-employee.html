@@ -7,7 +7,7 @@ and open the template in the editor.
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout.html}">
     <head>
-        <title>TODO supply a title</title>
+        <title>Timesheet Summary</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
@@ -22,6 +22,11 @@ and open the template in the editor.
             }
             input{
                 width: 10px
+            }
+            p{
+                color: red;
+                font-size: 12px;
+                margin-left: 160px
             }
         </style>
     </head>
@@ -40,25 +45,25 @@ and open the template in the editor.
                         <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
                         <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" required>
                     </div>
-                    <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}" style="font-size: 12px; margin-left: 160px"></p>
+                    <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}"></p>
 
                     <div class="input-group input-group-sm " style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
                         <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" required>
                     </div>
-                    <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}" style="font-size: 12px; margin-left: 160px"></p>
+                    <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}"></p>
 
                     <div class="input-group input-group-sm mb-1" style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>Name</b></label>
                         <input type="text" th:field="*{name}" class="rounded form-control"  id="name" required>
                     </div>
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="font-size: 12px; margin-left: 160px"></p>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
                     <div class="input-group input-group-sm mb-1" style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
                         <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" required>
                     </div>
-                    <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}" style="font-size: 12px; margin-left: 160px"></p>
+                    <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}"></p>
 
                         <div class="input-group input-group-sm mb-1" style="width: 415px">
                             <label class="col-sm-4 col-form-label" style="margin-right: 20px"><b>Periode</b></label>

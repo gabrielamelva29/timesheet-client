@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -48,6 +49,13 @@ public class HrController {
     public String index2(Model model, String month, Integer year) {
         model.addAttribute("list", jobHistoryService.findByHr());
         return "timesheet/approvement";
+    }
+
+    @GetMapping("/getall")
+    public @ResponseBody
+    List<JobHistory> index(Model model, String month, Integer year) {
+//        model.addAttribute("list", jobHistoryService.findByHr());
+        return jobHistoryService.findByHr();
     }
 
     @PostMapping("/approved/{id}")

@@ -201,15 +201,14 @@ public class EmployeeController {
         JobHistory jobHistory = jobHistoryService.getById(id);
         List<Job> listJobs = jobService.findByEmployee(jobHistory.getEmployee().getId());
         Employee employee = employeeService.getById(jobHistory.getEmployee().getId());
-        employeeService.counts(id);
-        List<Status> status = statusService.getAll();
+//        List<Status> status = statusService.getAll();
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=Employee " + employee.getName() + " "
                 + jobHistory.getMonth() + " " + jobHistory.getYear() + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-        ExportExcel exportExcel = new ExportExcel(listJobs, jobHistory, employee, status);
+        ExportExcel exportExcel = new ExportExcel(listJobs, jobHistory, employee, statusService, employeeService);
 
         exportExcel.export(response);
     }

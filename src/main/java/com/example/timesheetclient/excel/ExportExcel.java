@@ -9,7 +9,9 @@ import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.models.Job;
 import com.example.timesheetclient.models.JobHistory;
 import com.example.timesheetclient.models.Status;
+import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobService;
+import com.example.timesheetclient.services.StatusService;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
@@ -32,17 +34,17 @@ public class ExportExcel {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private List<Job> listJobs;
-    private List<Status> statuses;
+    private StatusService statusService;
     private JobHistory jobHistory;
     private Employee employee;
-    private JobService jobService;
+    private EmployeeService employeeService;
 
-    public ExportExcel(List<Job> listJobs, JobHistory jobHistory, Employee employee, List<Status> statuses) {
+    public ExportExcel(List<Job> listJobs, JobHistory jobHistory, Employee employee, StatusService statusService, EmployeeService employeeService) {
         this.listJobs = listJobs;
         this.jobHistory = jobHistory;
         this.employee = employee;
-        this.statuses = statuses;
-
+        this.statusService = statusService;
+        this.employeeService = employeeService;
     }
 
     public ExportExcel(List<Job> listJobs) {
@@ -108,7 +110,7 @@ public class ExportExcel {
 
     private void writeDataLines() {
         int rowCount = 7;
-
+        
         CellStyle style1 = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
         font.setFontHeight(14);
@@ -134,9 +136,11 @@ public class ExportExcel {
         createCell(sheet.getRow(4), 1, jobHistory.getMonth() + " " + jobHistory.getYear(), style1);
 
         //List Jobs
+        Integer a = null;
         for (Job job : listJobs) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
+            a = job.getEmployee().getId();
 //            int a = job.getActivity().length()+8000;
 //            row.setHeight((short)a);
 
@@ -200,6 +204,8 @@ public class ExportExcel {
         int column = 0;
         //List Status
         rowCount++;
+        employeeService.counts(a);
+        List<Status> statuses = statusService.getAll();
         for (Status status : statuses) {
 
             createCell(rows, 0, "", style);
