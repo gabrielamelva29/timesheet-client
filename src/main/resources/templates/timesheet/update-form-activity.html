@@ -33,13 +33,13 @@ and open the template in the editor.-->
             <div class="p-2 mr-2">
                 <h3 class="text-primary" >TIMESHEET</h3>
             </div>
-            <form th:action="@{/job/edit/{id}/{ids} (id = ${job.id}, ids = ${history})}" th:object="${job}" th:method="PUT" id="jobForm">
+            <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/job/edit/{id}/{ids} (id = ${job.id}, ids = ${history})}" th:object="${job}" th:method="PUT" id="jobForm">
                 <div  class="card  p-3" style="font-size: 12px">
                     <h6> Add New Log Activity</h6>
                     <div class="mb-1 row">
                         <label class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off"><br>
+                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off" required><br>
                         </div>
                         <div class="col-sm-2">
                             <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
@@ -80,7 +80,7 @@ and open the template in the editor.-->
                     <div class="mb-1 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3" style="height: 120px"></textarea>
+                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3" style="height: 120px" maxlength="2000" required></textarea>
 
                             <button type="submit" class="btn btn-primary float-end m-1" style="font-size: 12px; background-color:#0094FF; color: #fff" >
                                 Save

@@ -41,25 +41,25 @@ and open the template in the editor.
                         <h2 class="text-primary" style="margin-bottom: 20px" >TIMESHEET</h2>
                         <div class="input-group input-group-sm " style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
-                            <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" required>
+                            <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" maxlength="30" required>
                         </div>
                         <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}"></p>
 
                         <div class="input-group input-group-sm " style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
-                            <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" required>
+                            <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" maxlength="15" required>
                         </div>
                         <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}"></p>
 
                         <div class="input-group input-group-sm mb-1" style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>Name</b></label>
-                            <input type="text" th:field="*{name}" class="rounded form-control"  id="name" required>
+                            <input type="text" th:field="*{name}" class="rounded form-control"  id="name" maxlength="10" required>
                         </div>
                         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
                         <div class="input-group input-group-sm mb-1" style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
-                            <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" required>
+                            <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" maxlength="11" required>
                         </div>
                         <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}"></p>
 
@@ -81,7 +81,7 @@ and open the template in the editor.
             <div class="container" style="float: left; width: 100%">
                 <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
                     <!--<a th:href="@{/job/add}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a>--> 
-                    <a th:href="@{/job/add/{id}  (ids = ${history.id}, id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end rounded-pill" style="background-color:#0094FF; font-size: 14px; color: #fff">
+                    <a th:href="@{/job/add/{id} (id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end rounded-pill" style="background-color:#0094FF; font-size: 14px; color: #fff">
                         Add Log
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>

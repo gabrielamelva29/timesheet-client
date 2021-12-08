@@ -43,39 +43,39 @@ and open the template in the editor.
                     <h2 class="text-primary" style="margin-bottom: 20px" >TIMESHEET</h2>
                     <div class="input-group input-group-sm " style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
-                        <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" required>
+                        <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" maxlength="30" required>
                     </div>
                     <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}"></p>
 
                     <div class="input-group input-group-sm " style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
-                        <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" required>
+                        <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" maxlength="15" required>
                     </div>
                     <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}"></p>
 
                     <div class="input-group input-group-sm mb-1" style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>Name</b></label>
-                        <input type="text" th:field="*{name}" class="rounded form-control"  id="name" required>
+                        <input type="text" th:field="*{name}" class="rounded form-control"  id="name" maxlength="10" required>
                     </div>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
                     <div class="input-group input-group-sm mb-1" style="width: 320px">
                         <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
-                        <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" required>
+                        <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" maxlength="11" required>
                     </div>
                     <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}"></p>
 
-                        <div class="input-group input-group-sm mb-1" style="width: 415px">
-                            <label class="col-sm-4 col-form-label" style="margin-right: 20px"><b>Periode</b></label>
-                            <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="rounded col-sm-4 form-control"  id="periode" readonly><br>
-                                <button id="submitEmployee" type="submit" class="btn rounded-circle" style="background-color: #009DE1; margin-left: 60px" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16" >
-                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
-                                        </svg>
-                                </button>
-                            </div>
-
+                    <div class="input-group input-group-sm mb-1" style="width: 415px">
+                        <label class="col-sm-4 col-form-label" style="margin-right: 20px"><b>Periode</b></label>
+                        <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="rounded col-sm-4 form-control"  id="periode" readonly><br>
+                        <button id="submitEmployee" type="submit" class="btn rounded-circle" style="background-color: #009DE1; margin-left: 60px" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16" >
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                            </svg>
+                        </button>
                     </div>
+
+                </div>
             </form>
             <div class="container" style="float: left; width: 100%">>
                 <table class="table" id="table" style="width: 100%">
@@ -117,23 +117,27 @@ and open the template in the editor.
                         </tr>
                     </tbody>             
                 </table>    
-                <table style="width: 35%">
-                    <tr id="status">
-                        <td th:object="${p}" th:text="*{name}+' : '+'0'"></td>
-                        <td th:object="${s}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
-                        <td th:object="${bt}" th:text="*{name}+' : '+'0'"></td>
-                    </tr>
-                    <tr id="status">
-                        <td th:object="${pm}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
-                        <td th:object="${v}" th:text="*{name}+' : '+'0'"></td>
-                        <td th:object="${x}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
-                    </tr>
+                <!--                <table style="width: 35%">
+                                    <tr id="status">
+                                        <td th:object="${p}" th:text="*{name}+' : '+'0'"></td>
+                                        <td th:object="${s}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
+                                        <td th:object="${bt}" th:text="*{name}+' : '+'0'"></td>
+                                    </tr>
+                                    <tr id="status">
+                                        <td th:object="${pm}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
+                                        <td th:object="${v}" th:text="*{name}+' : '+'0'"></td>
+                                        <td th:object="${x}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
+                                    </tr>
+                                </table>-->
+                <table style="width: 35%" id="statusTable">
+
                 </table>
             </div>
 
         </div>
     <th:block layout:fragment="scripts">
         <!--<script th:src="@{/js/employee.js}"></script>-->
+        <script th:src="@{/js/status.js}"></script>
         <script th:src="@{/js/datatable.js}"></script>
     </th:block>
 

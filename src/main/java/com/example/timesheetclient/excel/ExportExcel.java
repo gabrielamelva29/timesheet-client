@@ -204,7 +204,7 @@ public class ExportExcel {
         int column = 0;
         //List Status
         rowCount++;
-        employeeService.counts(a);
+        statusService.counts(a);
         List<Status> statuses = statusService.getAll();
         for (Status status : statuses) {
 

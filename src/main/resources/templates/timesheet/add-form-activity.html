@@ -34,13 +34,13 @@ and open the template in the editor.
                 <h3 class="text-primary" >TIMESHEET</h3>
             </div>
 
-            <form th:action="@{/job/add/{id}/{ids} (ids = ${history}, id = ${employee.id})}" th:object="${job}" method="POST" id="jobForm">
+            <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/job/add/{id}/{ids} (id = ${employee.id}, ids = ${history})}" th:object="${job}" method="POST" id="jobForm">
                 <div  class="card  p-3" style="font-size: 12px">
                     <h6> Add New Log Activity</h6>
                     <div class="mb-1 row">
                         <label class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off"><br>
+                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off" required><br>
                         </div>
                         <div class="col-sm-2">
                             <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
@@ -81,7 +81,7 @@ and open the template in the editor.
                     <div class="mb-1 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3" maxlength="2000" required></textarea>
                             <button type="submit" class="btn  float-end m-5" style="font-size: 12px; background-color:#0094FF; color: #fff" >
                                 Save
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane fa-w-16" role="img" viewBox="0 0 512 512">
@@ -105,17 +105,20 @@ and open the template in the editor.
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 <script>
-	$(document).ready(function(){
-		var date_input=$('input[name="date"]');
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'dd MM yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-		})
-	})
-</script>
+            $(document).ready(function () {
+                var date_input = $('input[name="date"]');
+                var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+                date_input.datepicker({
+                    format: 'dd MM yyyy',
+//                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                    calendarWeeks: true,
+                    clearBtn: true
+//                    startDate: '-3d'
+                });
+            });
+        </script>
     </th:block>
     </body>
 </html>

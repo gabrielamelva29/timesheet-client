@@ -45,4 +45,9 @@ public class StatusService {
         return new ResponseModel<>(restTemplate
                 .postForObject(url, null, Status.class), "Status Created");
     }
+    
+    public void counts(Integer id){
+        restTemplate
+                .getForObject(url + "/counts/"+id, Status.class);
+    }
 }

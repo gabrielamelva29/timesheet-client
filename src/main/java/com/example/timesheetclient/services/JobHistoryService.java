@@ -57,6 +57,11 @@ public class JobHistoryService {
                 .postForObject(url, null, JobHistory.class), "Job Created");
     }
 
+    public JobHistory creates() {
+        return restTemplate
+                .postForObject(url, null, JobHistory.class);
+    }
+
     public JobHistory getById(Integer id) {
         return restTemplate.getForObject(url + "/" + id, JobHistory.class);
     }

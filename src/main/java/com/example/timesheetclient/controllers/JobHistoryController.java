@@ -40,28 +40,15 @@ public class JobHistoryController {
     
     @GetMapping
     public String index(Model model) {
-        
         model.addAttribute("histories", jobHistoryService.getAll());
         return "timesheet/job-history";
     }
     
-//    @PostMapping("/add")
-//    public String create(Model model,
-//            RedirectAttributes attributes) {
-//        jobHistoryService.create();
-//        return "redirect:/history?created=true";
-//    }
-    
     @PostMapping("add")
     public String created(Model model, Employee employee,
             RedirectAttributes attributes) {
-        model.addAttribute("bt", statusService.getById("BT"));
-        model.addAttribute("p", statusService.getById("P"));
-        model.addAttribute("pm", statusService.getById("PM"));
-        model.addAttribute("s", statusService.getById("S"));
-        model.addAttribute("v", statusService.getById("V"));
-        model.addAttribute("x", statusService.getById("X"));
-        JobHistory jobHistory = jobHistoryService.created();
+        statusService.counts(Integer.SIZE);
+        JobHistory jobHistory = jobHistoryService.creates();
         JobHistory emp = jobHistoryService.getById(jobHistory.getId());
         model.addAttribute("history", emp);
         return "timesheet/add-form-employee";

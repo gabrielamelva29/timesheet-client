@@ -66,22 +66,17 @@ public class EmployeeController {
     //EMPLOYEE ADD
     @GetMapping("/history/{id}")
     public String update(@PathVariable Integer id, Employee employee, Model model) {
-        model.addAttribute("bt", statusService.getById("BT"));
-        model.addAttribute("p", statusService.getById("P"));
-        model.addAttribute("pm", statusService.getById("PM"));
-        model.addAttribute("s", statusService.getById("S"));
-        model.addAttribute("v", statusService.getById("V"));
-        model.addAttribute("x", statusService.getById("X"));
         model.addAttribute("history", jobHistoryService.getById(id));
         JobHistory jobHistory = jobHistoryService.getById(id);
         idemp = jobHistoryService.getById(id);
 
         if (jobHistory.getEmployee() == null) {
+            statusService.counts(Integer.SIZE);
             return "timesheet/add-form-employee";
         }
         model.addAttribute("jobs", jobService.findByEmployee(idemp.getEmployee().getId()));
         model.addAttribute("employee", employeeService.getById(jobHistory.getEmployee().getId()));
-        employeeService.counts(jobHistory.getEmployee().getId());
+        statusService.counts(jobHistory.getEmployee().getId());
         return "timesheet/update-form-employee";
     }
 
@@ -92,12 +87,6 @@ public class EmployeeController {
             Model model,
             RedirectAttributes attributes) {
         if (result.hasErrors()) {
-            model.addAttribute("bt", statusService.getById("BT"));
-            model.addAttribute("p", statusService.getById("P"));
-            model.addAttribute("pm", statusService.getById("PM"));
-            model.addAttribute("s", statusService.getById("S"));
-            model.addAttribute("v", statusService.getById("V"));
-            model.addAttribute("x", statusService.getById("X"));
             model.addAttribute("history", jobHistoryService.getById(id));
             return "timesheet/add-form-employee";
         }
@@ -114,12 +103,6 @@ public class EmployeeController {
             Model model,
             RedirectAttributes attributes) {
         if (result.hasErrors()) {
-            model.addAttribute("bt", statusService.getById("BT"));
-            model.addAttribute("p", statusService.getById("P"));
-            model.addAttribute("pm", statusService.getById("PM"));
-            model.addAttribute("s", statusService.getById("S"));
-            model.addAttribute("v", statusService.getById("V"));
-            model.addAttribute("x", statusService.getById("X"));
             model.addAttribute("history", jobHistoryService.getById(id));
             return "timesheet/update-form-employee";
         }
@@ -127,12 +110,6 @@ public class EmployeeController {
         employeeService.update(history.getEmployee().getId(), employee);
         attributes.addFlashAttribute("message", "Create Successed");
         return "redirect:/history/{id}";
-    }
-
-    @GetMapping("/a")
-    public String counts() {
-        employeeService.counts(25);
-        return "timesheet/Hello";
     }
 
     //JOB GET ADD
@@ -156,42 +133,6 @@ public class EmployeeController {
         model.addAttribute("history", idemp.getId());
         return "timesheet/update-form-activity";
     }
-    
-    @PostMapping("/add/{id}/{ids}")
-    public String create(Job job,
-            @PathVariable Integer id,
-            @PathVariable Integer ids,
-            BindingResult result,
-            Model model,
-            RedirectAttributes attributes) {
-        System.out.println(job);
-        if (result.hasErrors()) {
-            model.addAttribute("statuses", statusService.getAll());
-            model.addAttribute("history", idemp.getId());
-            return "timesheet/add-form-activity";
-        }
-        jobService.create(job, id);
-        attributes.addFlashAttribute("message", "Create Successed");
-        return "redirect:/history/{ids}";
-    }
-
-    @PutMapping("/job/edit/{id}/{ids}")
-    public String update(@PathVariable Integer id,
-            @PathVariable Integer ids,
-            @Valid Job job,
-            BindingResult result,
-            Model model,
-            RedirectAttributes attributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("statuses", statusService.getAll());
-            model.addAttribute("history", idemp.getId());
-            return "timesheet/update-form-activity";
-        }
-        jobService.update(id, job);
-        System.out.println("berhasil");
-        attributes.addFlashAttribute("message", "Update Successed");
-        return "redirect:/history/{ids}";
-    }
 
     // DOWNLOAD EXCEL
     @GetMapping("/history/download/excel/{id}")
@@ -201,7 +142,6 @@ public class EmployeeController {
         JobHistory jobHistory = jobHistoryService.getById(id);
         List<Job> listJobs = jobService.findByEmployee(jobHistory.getEmployee().getId());
         Employee employee = employeeService.getById(jobHistory.getEmployee().getId());
-//        List<Status> status = statusService.getAll();
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=Employee " + employee.getName() + " "

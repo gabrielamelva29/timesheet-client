@@ -61,8 +61,5 @@ public class EmployeeService {
         restTemplate.delete(url + "/" + id, String.class);
     }
 
-    public void counts(Integer id){
-        restTemplate
-                .getForObject(url + "/counts/"+id, Employee.class);
-    }
+    
 }

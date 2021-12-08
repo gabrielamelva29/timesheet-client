@@ -179,7 +179,7 @@ public class Excel {
                 rowCountStatus = rowCount;
             }
 
-            employeeService.counts(jobHistory1.getEmployee().getId());
+            statusService.counts(jobHistory1.getEmployee().getId());
             List<Status> Statuses = statusService.getAll();
             Row rows = sheet.createRow(rowCountStatus);
             rowCountStatus++;

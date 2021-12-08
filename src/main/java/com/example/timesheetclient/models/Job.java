@@ -29,14 +29,11 @@ public class Job {
     
     private Integer id;
     
-//    @JsonFormat(pattern = "dd MMMM yyyy")
     @NotEmpty(message = "Please input your Date")
     private String date;
     
-//    @JsonFormat(pattern = "HH:mm")
     private String startTime;
     
-//    @JsonFormat(pattern = "HH:mm")
     private String endTime;
     
     private String totalHour;
