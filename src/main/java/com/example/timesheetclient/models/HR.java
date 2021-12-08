@@ -18,11 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Status {
+public class HR {
     
-    private String id;
-
+    private Integer id;
+    
     private String name;
-
-    private Integer count;
 }

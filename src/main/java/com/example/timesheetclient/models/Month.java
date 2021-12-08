@@ -18,11 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Status {
+public class Month {
     
-    private String id;
-
-    private String name;
-
-    private Integer count;
+    String month;
+    
+    Integer year;
 }

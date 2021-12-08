@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.timesheetclient.models;
+package com.example.timesheetclient.dto;
 
+import com.example.timesheetclient.models.Employee;
+import com.example.timesheetclient.models.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.sql.Date;
-import java.sql.Time;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -25,15 +24,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Job {
+public class JobDto {
     
     private Integer id;
     
+    @JsonFormat(pattern = "dd MMMM yyyy")
     @NotEmpty(message = "Please input your Date")
-    private String date;
+    private Date date;
     
+//    @JsonFormat(pattern = "HH:mm")
     private String startTime;
     
+//    @JsonFormat(pattern = "HH:mm")
     private String endTime;
     
     private String totalHour;

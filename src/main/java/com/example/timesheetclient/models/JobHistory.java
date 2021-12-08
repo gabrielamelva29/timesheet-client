@@ -5,6 +5,8 @@
  */
 package com.example.timesheetclient.models;
 
+import java.sql.Date;
+import java.time.Month;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,11 +20,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Status {
+public class JobHistory {
     
-    private String id;
-
-    private String name;
-
-    private Integer count;
+    private Integer id;
+    
+    private String month;
+    
+    private Integer year;
+    
+    private String status;
+    
+    private Date approveDate;
+    
+    private Employee employee;
+    
+    private HR hr;
 }
