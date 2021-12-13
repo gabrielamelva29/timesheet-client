@@ -117,18 +117,6 @@ and open the template in the editor.
                         </tr>
                     </tbody>             
                 </table>    
-                <!--                <table style="width: 35%">
-                                    <tr id="status">
-                                        <td th:object="${p}" th:text="*{name}+' : '+'0'"></td>
-                                        <td th:object="${s}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
-                                        <td th:object="${bt}" th:text="*{name}+' : '+'0'"></td>
-                                    </tr>
-                                    <tr id="status">
-                                        <td th:object="${pm}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
-                                        <td th:object="${v}" th:text="*{name}+' : '+'0'"></td>
-                                        <td th:object="${x}" th:text="*{name}+' : '+'0'" style="background-color: #CDE9FD"></td>
-                                    </tr>
-                                </table>-->
                 <table style="width: 35%" id="statusTable">
 
                 </table>
@@ -138,7 +126,7 @@ and open the template in the editor.
     <th:block layout:fragment="scripts">
         <!--<script th:src="@{/js/employee.js}"></script>-->
         <script th:src="@{/js/status.js}"></script>
-        <script th:src="@{/js/datatable.js}"></script>
+        <script th:src="@{/layout/js/datatable.js}"></script>
     </th:block>
 
 </body>

@@ -10,11 +10,7 @@ and open the template in the editor.
         <title>New Log</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
-  <!-- bootstrap-iso digunakan untuk mengatur tampilan -->
-  <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-  <!--Menambahkan libray font awesome karena kita menggunakan ikon untuk tampilannya-->
-  <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" th:href="@{/datepicker/css/datepicker.min.css}" >
     </head>
     <body>
         <div layout:fragment="content">
@@ -91,34 +87,16 @@ and open the template in the editor.
                             </button>
                         </div>
                         <div class="col-sm-2">
-                                <p th:each="err : ${#fields.errors('activity')}" th:text="${err}" class="error"></p>
-                            </div>
+                            <p th:each="err : ${#fields.errors('activity')}" th:text="${err}" class="error"></p>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>    
-        <th:block layout:fragment="scripts">
-            <!-- Menambahkan jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- Menambahakan Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-<script>
-            $(document).ready(function () {
-                var date_input = $('input[name="date"]');
-                var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-                date_input.datepicker({
-                    format: 'dd MM yyyy',
-//                    container: container,
-                    todayHighlight: true,
-                    autoclose: true,
-                    calendarWeeks: true,
-                    clearBtn: true
-//                    startDate: '-3d'
-                });
-            });
-        </script>
+    <th:block layout:fragment="scripts">
+        <!-- Menambahkan jQuery -->
+        <script type="text/javascript" th:src="@{/datepicker/js/bootstrap-datepicker.min.js}" charset="UTF-8"></script>
+        <script type="text/javascript" th:src="@{/datepicker/js/datepicker.js}" charset="UTF-8"></script>
     </th:block>
-    </body>
+</body>
 </html>
