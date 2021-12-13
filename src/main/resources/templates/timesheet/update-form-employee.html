@@ -37,33 +37,34 @@ and open the template in the editor.
             </nav>
             <div class="row">
                 <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" th:method="PUT" id="jobForm">
+                    <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
                     <div style="margin: 2% 3%">
                         <h2 class="text-primary" style="margin-bottom: 20px" >TIMESHEET</h2>
                         <div class="input-group input-group-sm " style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
-                            <input type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" maxlength="30" required>
+                            <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" maxlength="30" required>
                         </div>
                         <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}"></p>
 
                         <div class="input-group input-group-sm " style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
-                            <input type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" maxlength="15" required>
+                            <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" maxlength="15" required>
                         </div>
                         <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}"></p>
 
                         <div class="input-group input-group-sm mb-1" style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>Name</b></label>
-                            <input type="text" th:field="*{name}" class="rounded form-control"  id="name" maxlength="10" required>
+                            <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{name}" class="rounded form-control"  id="name" maxlength="10" required>
                         </div>
                         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
                         <div class="input-group input-group-sm mb-1" style="width: 320px">
                             <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
-                            <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" maxlength="11" required>
+                            <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" maxlength="11" required>
                         </div>
                         <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}"></p>
 
-                        <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                        
                             <div th:style="${condition}?'width: 480px':'width: 320px'" class="input-group input-group-sm mb-1" style="width: 320px">
                                 <label th:class="${condition}?'col-sm-4 col-form-label':'col-sm-6 col-form-label'"><b>Periode</b></label>
                                 <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="rounded col-sm-4 form-control"  id="periode" readonly><br>
@@ -164,7 +165,7 @@ and open the template in the editor.
     <th:block layout:fragment="scripts">
         <!--<script th:src="@{/js/employee.js}"></script>-->
         <script th:src="@{/js/status.js}"></script>
-        <script th:src="@{/js/datatable.js}"></script>
+        <script th:src="@{/layout/js/datatable.js}"></script>
     </th:block>
 
 </body>

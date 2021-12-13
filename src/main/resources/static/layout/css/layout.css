@@ -1,0 +1,13 @@
+.list-group-item{
+    margin-left: 10%;
+    width: 80%;
+    padding: 5%;
+}
+
+.dropdown-item{
+    font-size: 12px;
+}
+
+.nav-item{
+    font-size: 12px;
+}

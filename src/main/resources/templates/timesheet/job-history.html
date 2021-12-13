@@ -10,8 +10,6 @@ and open the template in the editor.-->
         <title>Timesheet</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <style>
             .ON{
                 background: #FB8832;
@@ -126,8 +124,7 @@ and open the template in the editor.-->
 
         </div>
     <th:block layout:fragment="scripts">
-        <script th:src="@{/js/datatable.js}"></script>
-    </script>
+        <script th:src="@{/layout/js/datatable.js}"></script>
 </th:block>
 </body>
 </html>
