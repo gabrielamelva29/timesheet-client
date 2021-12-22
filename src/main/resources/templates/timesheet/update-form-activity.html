@@ -12,7 +12,14 @@ and open the template in the editor.-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Menyisipkan Bootstrap -->
         <link rel="stylesheet" th:href="@{/datepicker/css/datepicker.min.css}" />
-
+        <style>
+            .form-control{
+                border-color: black
+            }
+            .form-select{
+                border-color: black
+            }
+        </style>
     </head>
     <body>
         <div layout:fragment="content">
@@ -37,48 +44,48 @@ and open the template in the editor.-->
                     <div class="mb-1 row">
                         <label class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-4">
-                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off" required><br>
+                            <input type="text" placeholder="dd MMMM yyyy" th:field="*{date}" class="form-control" autocomplete="off" required readonly style="background-color: white"/><br>
                         </div>
                         <div class="col-sm-2">
-                            <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
+                            <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"/>
                         </div>
                     </div>
-
-                    <div class="mb-1 row">
-                        <label style="font-size: 12px">Working hour</label>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="startTime" class="col-sm-2 col-form-label">Start</label>
-                        <div class="col-sm-4">
-                            <input type="time" th:field="*{startTime}" class="form-control"  id="startTime"><br>
-                        </div>
-                    </div>
-
-                    <div class="mb-1 row">
-                        <label for="endTime" class="col-sm-2 col-form-label">End</label>
-                        <div class="col-sm-4">
-                            <input type="time" th:field="*{endTime}" class="form-control"  id="endTime"><br>
-                        </div>
-                    </div>
-
 
                     <div class="mb-1 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label" >Status Attendance</label>
                         <div class="dropdown col-sm-2">
-                            <select th:field="*{status.id}">
+                            <select th:field="*{status.id}" class="form-select form-select-sm" id="attendance" onchange="proses()">
                                 <option 
                                     th:each="status : ${statuses}" 
                                     th:text="${status.name}" 
                                     th:value="${status.id}">
                                 </option>
                             </select>
-                        </div>           
+                        </div>  
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label style="font-size: 12px">Working hour</label>
+                        <label style="font-size: 10px">12:00 - 13:00 (Istirahat)</label>
+                    </div>
+                    <div class="mb-1 row">
+                        <label for="startTime" class="col-sm-2 col-form-label">Start</label>
+                        <div class="col-sm-4">
+                            <input type="time" th:field="*{startTime}" class="form-control" id="startTime"/><br>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 row">
+                        <label for="endTime" class="col-sm-2 col-form-label">End</label>
+                        <div class="col-sm-4">
+                            <input type="time" th:field="*{endTime}" class="form-control" id="endTime"/><br>
+                        </div>
                     </div>
 
                     <div class="mb-1 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Activity/Remark</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3" style="height: 120px" maxlength="2000" required></textarea>
+                            <textarea class="form-control" th:field="*{activity}" id="exampleFormControlTextarea1" rows="3" style="height: 120px" maxlength="2000" required/>
 
                             <button type="submit" class="btn btn-primary float-end m-1" style="font-size: 12px; background-color:#0094FF; color: #fff" >
                                 Save
@@ -89,7 +96,7 @@ and open the template in the editor.-->
                             </button>
                         </div>
                         <div class="col-sm-2">
-                            <p th:each="err : ${#fields.errors('activity')}" th:text="${err}" class="error"></p>
+                            <p th:each="err : ${#fields.errors('activity')}" th:text="${err}" class="error"/>
                         </div>
                     </div>
                 </div>
@@ -97,6 +104,7 @@ and open the template in the editor.-->
 
         </div>    
     <th:block layout:fragment="scripts">
+        <script type="text/javascript" th:src="@{/js/attendance.js}" charset="UTF-8"></script>
         <!-- Menambahakan Date Range Picker -->
         <script type="text/javascript" th:src="@{/datepicker/js/bootstrap-datepicker.min.js}" charset="UTF-8"></script>
         <script type="text/javascript" th:src="@{/datepicker/js/datepicker.js}" charset="UTF-8"></script>
