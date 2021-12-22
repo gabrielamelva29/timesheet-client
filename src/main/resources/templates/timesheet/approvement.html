@@ -15,13 +15,11 @@ and open the template in the editor.-->
                 background: #5D5FEF;
                 border-radius: 4px;
                 color: white;
-                padding:"12px 12px 12px 12px";
             }
             .APPROVED{
                 background: green;
                 border-radius: 4px;
                 color: white;
-                padding:"10px 10px 10px 10px";
             }
         </style>
     </head>
@@ -91,7 +89,7 @@ and open the template in the editor.-->
                             <td th:text="${history.employee.name}"></td>
                             <td th:text="${history.year}+' - '+${history.month}"></td>
                             <td th:text="${history.employee == null}? '-': *{history.employee.projectName}"></td>
-                            <td><p th:class="${history.status}" th:text="${history.status!='SENT'}?${history.status}:RECEIVED" style="text-align:center"></p></td>
+                            <td><p th:class="${history.status}" th:text="${history.status!='SENT'}?${history.status}:RECEIVED" style="text-align:center; margin-top: 15px"></p></td>
                             <td th:text="${history.approveDate == null}? '-': *{history.approveDate}"></td>
                             <td>
                                 <div th:with="condition=${history.status!='APPROVED'}" th:remove="tag">
