@@ -60,10 +60,10 @@ and open the template in the editor.
                             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
 
                             <div class="input-group input-group-sm mb-1" style="width: 320px">
-                                <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
-                                <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required style="background-color: white"/>
+                                <label class="col-sm-6 col-form-label"><b>NIK</b></label>
+                                <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{nik}" class="rounded form-control"  id="nik" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required style="background-color: white"/>
                             </div>
-                            <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}"/>
+                            <p th:if="${#fields.hasErrors('nik')}" th:errors="*{nik}"/>
 
 
                             <div th:style="${condition}?'width: 480px':'width: 320px'" class="input-group input-group-sm mb-1" style="width: 320px">
@@ -121,7 +121,7 @@ and open the template in the editor.
                                         >
                                         <!--Update Button-->
                                         <a th:if="${condition}"
-                                           th:href="@{/job/edit/{id}/{ids} (ids = ${history.id}, id = ${job.id})}" 
+                                           th:href="@{/job/edit/{id}/{ids} (ids = ${job.id}, id = ${employee.id})}" 
                                            type="button" class="btn rounded-circle" style="background-color: #33ABEF" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -145,11 +145,7 @@ and open the template in the editor.
                     </table>
                     <center>
                         <a th:if="${condition}" th:href="@{/history}" type="button" class="btn btn-info m-3" style="background-color:#0094FF; color: #fff">
-                            Save
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane fa-w-16" role="img" viewBox="0 0 512 512">
-                            <path fill="currentColor" d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 
-                                  33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/>
-                            </svg>
+                            Back
                         </a>
                     </center>
                 </div>

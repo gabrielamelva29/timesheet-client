@@ -60,7 +60,7 @@ and open the template in the editor.-->
             </div>
 
             <div>
-                <table class="table" id="table">
+                <table class="table" id="table" style="width: 100%">
                     <thead>
                         <tr style="font-size: 12px">
                             <th scope="col">NO</th>
@@ -74,7 +74,7 @@ and open the template in the editor.-->
                     <tbody>
                         <tr th:each="history, i : ${histories}">
                             <td th:text="${i.count}"></td>
-                            <td><p th:class="${history.status}"  th:text="${history.status}" style="text-align: center"></p></td>
+                            <td><p th:class="${history.status}"  th:text="${history.status}" style="text-align:center; margin-top: 15px"></p></td>
                             <td th:text="${history.year}+' - '+${history.month}"></td>
                             <td th:text="${history.employee == null}? '-': *{history.employee.projectName}"></td>
                             <td th:text="${history.approveDate == null}? '-': *{history.approveDate}"></td>
@@ -125,6 +125,8 @@ and open the template in the editor.-->
         </div>
     <th:block layout:fragment="scripts">
         <script th:src="@{/layout/js/datatable.js}"></script>
+        <script th:src="@{/js/jobhistory.js}"></script>
+        <script th:src="@{/sweetalert/sweetalert.js}"></script>
 </th:block>
 </body>
 </html>

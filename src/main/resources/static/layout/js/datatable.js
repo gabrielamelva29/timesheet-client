@@ -3,7 +3,7 @@ $(document).ready(function () {
         "searching": false,
         "paging": false,
         "info": false,
-        "scrollY": "200px",
+        "scrollY": "288px",
         "scrollCollapse": true
     });
 });

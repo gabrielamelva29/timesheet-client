@@ -66,6 +66,10 @@ public class JobHistoryService {
         return restTemplate.getForObject(url + "/" + id, JobHistory.class);
     }
 
+    public JobHistory getByMonth() {
+        return restTemplate.getForObject(url + "/month", JobHistory.class);
+    }
+
     public JobHistory created() {
         return restTemplate.getForObject(url + "/add", JobHistory.class);
     }

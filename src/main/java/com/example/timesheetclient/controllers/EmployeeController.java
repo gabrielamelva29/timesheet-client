@@ -128,7 +128,8 @@ public class EmployeeController {
     public String update(@PathVariable Integer id, JobHistory jobHistory,
             @PathVariable Integer ids,
             Model model) {
-        model.addAttribute("job", jobService.getById(id));
+        model.addAttribute("employee", employeeService.getById(id));
+        model.addAttribute("job", jobService.getById(ids));
         model.addAttribute("statuses", statusService.getAll());
         model.addAttribute("history", idemp.getId());
         return "timesheet/update-form-activity";
