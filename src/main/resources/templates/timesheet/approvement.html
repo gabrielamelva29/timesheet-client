@@ -69,7 +69,7 @@ and open the template in the editor.-->
             </div>
 
             <div>
-                <table class="table" id="table">
+                <table class="table" id="table" style="width: 100%">
                     <thead>
                         <tr style="font-size: 12px">
                             <th scope="col">NO</th>
@@ -85,7 +85,7 @@ and open the template in the editor.-->
                     <tbody>
                         <tr th:each="history,i : ${list}">
                             <td th:text="${i.count}"></td>
-                            <td th:text="${history.employee.miiId}"></td>
+                            <td th:text="${history.employee.nik}"></td>
                             <td th:text="${history.employee.name}"></td>
                             <td th:text="${history.year}+' - '+${history.month}"></td>
                             <td th:text="${history.employee == null}? '-': *{history.employee.projectName}"></td>

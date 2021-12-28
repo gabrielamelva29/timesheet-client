@@ -26,31 +26,35 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/history")
 public class JobHistoryController {
-    
+
     private JobHistoryService jobHistoryService;
     private EmployeeService employeeService;
     private StatusService statusService;
-    
+
     @Autowired
     public JobHistoryController(JobHistoryService jobHistoryService, EmployeeService employeeService, StatusService statusService) {
         this.jobHistoryService = jobHistoryService;
         this.employeeService = employeeService;
         this.statusService = statusService;
     }
-    
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("histories", jobHistoryService.getAll());
         return "timesheet/job-history";
     }
-    
+
     @PostMapping("add")
     public String created(Model model, Employee employee,
             RedirectAttributes attributes) {
-        statusService.counts(Integer.SIZE);
-        JobHistory jobHistory = jobHistoryService.creates();
-        JobHistory emp = jobHistoryService.getById(jobHistory.getId());
-        model.addAttribute("history", emp);
-        return "timesheet/add-form-employee";
+        if (jobHistoryService.getByMonth() == null) {
+            statusService.counts(Integer.SIZE);
+            JobHistory jobHistory = jobHistoryService.creates();
+            JobHistory emp = jobHistoryService.getById(jobHistory.getId());
+            model.addAttribute("history", emp);
+            return "timesheet/add-form-employee";
+        } else {
+            return "redirect:/history?created=false";
+        }
     }
 }

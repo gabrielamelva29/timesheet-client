@@ -61,10 +61,10 @@ and open the template in the editor.
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
 
                     <div class="input-group input-group-sm mb-1" style="width: 320px">
-                        <label class="col-sm-6 col-form-label"><b>MII Id</b></label>
-                        <input type="text" th:field="*{miiId}" class="rounded form-control"  id="miiId" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <=57" required/>
+                        <label class="col-sm-6 col-form-label"><b>NIK</b></label>
+                        <input type="text" th:field="*{nik}" class="rounded form-control"  id="nik" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <=57" required/>
                     </div>
-                    <p th:if="${#fields.hasErrors('miiId')}" th:errors="*{miiId}"/>
+                    <p th:if="${#fields.hasErrors('nik')}" th:errors="*{nik}"/>
 
                     <div class="input-group input-group-sm mb-1" style="width: 415px">
                         <label class="col-sm-4 col-form-label" style="margin-right: 20px"><b>Periode</b></label>
@@ -78,7 +78,7 @@ and open the template in the editor.
 
                 </div>
             </form>
-            <div class="container" style="float: left; width: 100%">>
+            <div class="container" style="float: left; width: 100%">
                 <table class="table" id="table" style="width: 100%">
                     <thead class="bg-light">
                         <tr>
