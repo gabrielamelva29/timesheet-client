@@ -2,8 +2,6 @@ $(document).ready(() => {
     load();
 });
 
-
-
 function load() {
     var rtable = $('#table').DataTable();
     $.ajax({

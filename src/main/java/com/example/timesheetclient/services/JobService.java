@@ -46,6 +46,12 @@ public class JobService {
         return restTemplate.getForObject(url+"/"+id, Job.class);
     }
     
+     public Integer getByCountDate(String periode){
+         ResponseEntity<Integer> response =  restTemplate
+                .exchange(url+"/periode?periode="+periode, HttpMethod.GET, null, new ParameterizedTypeReference<Integer>(){});
+        return response.getBody();
+    }
+    
     public ResponseModel<Job> create(Job job, Integer id){
         return new ResponseModel<>(restTemplate
                 .postForObject(url+"/"+id, job, Job.class), "Job Created");

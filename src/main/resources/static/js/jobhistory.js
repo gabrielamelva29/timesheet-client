@@ -6,6 +6,9 @@ $(document).ready(() => {
     if (urlParams.get('created') == 'false') {
         successMessage("This Month is Already");
     }
+    if (urlParams.get('sent') == 'false') {
+        successMessage("This Period Must be Full");
+    }
 });
 
 
@@ -19,23 +22,23 @@ function successMessage(berhasil) {
         }
     });
 }
-function create() {
-    event.preventDefault();
-    const urlAct = "/history/add";
-
-    $.ajax({
-        url: urlAct,
-        type: 'POST',
-        dataType: 'json',
-        data: $('#jobForm').serialize(),
-        beforeSend: (req) => {
-            addRequestHeader();
-        },
-        success: (result) => {
-            window.location.href = "add-form-employee.html";
-        },
-        error: (err) => {
-            console.log(err);
-        }
-    });
-}
+//function create() {
+//    event.preventDefault();
+//    const urlAct = "/history/add";
+//
+//    $.ajax({
+//        url: urlAct,
+//        type: 'POST',
+//        dataType: 'json',
+//        data: $('#jobForm').serialize(),
+//        beforeSend: (req) => {
+//            addRequestHeader();
+//        },
+//        success: (result) => {
+//            window.location.href = "add-form-employee.html";
+//        },
+//        error: (err) => {
+//            console.log(err);
+//        }
+//    });
+//}
