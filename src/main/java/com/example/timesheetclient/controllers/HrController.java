@@ -5,13 +5,14 @@
  */
 package com.example.timesheetclient.controllers;
 
-import com.example.timesheetclient.excel.Excel;
+import com.example.timesheetclient.excel.ExportExcelAll;
 import com.example.timesheetclient.models.JobHistory;
 import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
 import com.example.timesheetclient.services.JobService;
 import com.example.timesheetclient.services.StatusService;
 import java.io.IOException;
+import java.time.YearMonth;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,12 +67,31 @@ public class HrController {
         return "redirect:/hr";
     }
 
+    Integer days;
     @PostMapping("/sent/{id}")
     public String sent(@PathVariable Integer id,
             Model model,
             RedirectAttributes attributes) {
-        jobHistoryService.sent(id);
-        return "redirect:/history";
+        int bulan, countDays;
+        String periode;
+        String[] monthname = {"", "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+        JobHistory history = jobHistoryService.getById(id);
+        for (int i = 0; i < 13; i++) {
+            if (monthname[i].equals(history.getMonth())) {
+                days = i;
+            }
+        }
+        YearMonth yearMonthObject = YearMonth.of(history.getYear(), days);
+            int daysInMonth = yearMonthObject.lengthOfMonth();
+            periode = history.getMonth() + " " + history.getYear();
+            countDays = jobService.getByCountDate(periode);
+            System.out.println(countDays);
+            if (daysInMonth <= countDays) {
+                jobHistoryService.sent(id);
+                return "redirect:/history";
+            }else{
+                return "redirect:/history?sent=false";
+            }
     }
 
     String bulan;
@@ -81,33 +101,33 @@ public class HrController {
             @RequestParam(value = "yearmonth", required = false) String yearmonth,
             Model model,
             RedirectAttributes attributes) {
-        if(yearmonth.equals("")){
-             return "redirect:/hr";
+        if (yearmonth.equals("")) {
+            return "redirect:/hr";
         }
         String a[] = yearmonth.split("-");
-        String[] monthname = {"","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] monthname = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         Integer year = Integer.valueOf(a[0]);
         String month = monthname[Integer.valueOf(a[1])];
         List<JobHistory> jobHistoryYear = jobHistoryService.findByYear(month, year);
-        
+
         model.addAttribute("list", jobHistoryYear);
         model.addAttribute("yearmonth", yearmonth);
         model.addAttribute("month", month);
         model.addAttribute("year", year);
         bulan = month;
-        tahun=year;
+        tahun = year;
         return "timesheet/approvement";
     }
-    
+
     // DOWNLOAD EXCEL
     @GetMapping("/history/download/excel")
-    public void exportExcel(HttpServletResponse response) throws IOException {
+    public void exportExcelAll(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=All Employee in "+bulan+" "+tahun+".xlsx";
+        String headerValue = "attachment; filename=All Employee in " + bulan + " " + tahun + ".xlsx";
         response.setHeader(headerKey, headerValue);
-                Excel exportExcel = new Excel(bulan, tahun, jobHistoryService, jobService, employeeService, statusService);
-                exportExcel.export(response);
+        ExportExcelAll exportExcelAll = new ExportExcelAll(bulan, tahun, jobHistoryService, jobService, employeeService, statusService);
+        exportExcelAll.export(response);
     }
 }

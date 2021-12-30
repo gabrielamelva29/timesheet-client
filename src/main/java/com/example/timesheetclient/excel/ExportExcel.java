@@ -19,8 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.FontFamily;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -54,49 +59,85 @@ public class ExportExcel {
 
     private void writeHeaderLine() {
         sheet = workbook.createSheet(employee.getName());
-        Row row = sheet.createRow(6);
+        Row row = sheet.createRow(5);
+        row.setHeightInPoints(17.3f);
+        Row row2 = sheet.createRow(6);
+        row2.setHeightInPoints(17.3f);
 
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
-        font.setBold(true);
-        font.setFontHeight(16);
+        font.setFontHeight(9);
         style.setFont(font);
         style.setAlignment(HorizontalAlignment.LEFT);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
 
         CellStyle style2 = workbook.createCellStyle();
-        style2.setFont(font);
+        XSSFFont font2 = workbook.createFont();
+        font2.setFontHeight(9);
+        font2.setBold(true);
+        style2.setFont(font2);
         style2.setAlignment(HorizontalAlignment.CENTER);
         style2.setBorderBottom(BorderStyle.THIN);
         style2.setBorderLeft(BorderStyle.THIN);
         style2.setBorderRight(BorderStyle.THIN);
         style2.setBorderTop(BorderStyle.THIN);
+        style2.setAlignment(HorizontalAlignment.CENTER);
+        style2.setVerticalAlignment(VerticalAlignment.CENTER);
+        style2.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.index);
+        style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        createCell(sheet.createRow(0), 0, "Name of Project", style);
-        createCell(sheet.createRow(1), 0, "Unit/Division", style);
-        createCell(sheet.createRow(2), 0, "Name", style);
-        createCell(sheet.createRow(3), 0, "MII ID", style);
-        createCell(sheet.createRow(4), 0, "Periode", style);
-        createCell(row, 0, "Date", style2);
-        createCell(row, 1, "Start Time", style2);
-        createCell(row, 2, "End Time", style2);
-        createCell(row, 3, "Total Hour", style2);
-        createCell(row, 4, "Present", style2);
-        createCell(row, 5, "Sick", style2);
-        createCell(row, 6, "Business Trip", style2);
-        createCell(row, 7, "Permit", style2);
-        createCell(row, 8, "Vacation", style2);
-        createCell(row, 9, "Not Working", style2);
-        createCell(row, 10, "Activity", style2);
+        CellStyle styleStatus = workbook.createCellStyle();
+        XSSFFont fontStatus = workbook.createFont();
+        fontStatus.setFontHeight(11);
+        fontStatus.setBold(true);
+        styleStatus.setFont(fontStatus);
+        styleStatus.setBorderBottom(BorderStyle.THIN);
+        styleStatus.setBorderLeft(BorderStyle.THIN);
+        styleStatus.setBorderRight(BorderStyle.THIN);
+        styleStatus.setBorderTop(BorderStyle.THIN);
+        styleStatus.setAlignment(HorizontalAlignment.CENTER);
+        styleStatus.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.index);
+        styleStatus.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
+        createCell(height(0), 0, "NAME of PROJECT", style);
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 1));
+        createCell(height(1), 0, "UNIT/DIVISION", style);
+        sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 1));
+        createCell(height(2), 0, "NAME", style);
+        sheet.addMergedRegion(new CellRangeAddress(3, 3, 0, 1));
+        createCell(height(3), 0, "NIK", style);
+        sheet.addMergedRegion(new CellRangeAddress(4, 4, 0, 1));
+        createCell(height(4), 0, "PERIODE", style);
+
+        sheet.addMergedRegion(new CellRangeAddress(5, 6, 0, 0));
+        createCell(row, 0, "DATE", style2);
+        createCell(row2, 0, "", style2);
+        sheet.addMergedRegion(new CellRangeAddress(5, 5, 1, 2));
+        createCell(row, 1, "WORKING HOUR", style2);
+        createCell(row2, 1, "START", style2);
+        createCell(row, 2, "", style2);
+        createCell(row2, 2, "END", style2);
+        sheet.addMergedRegion(new CellRangeAddress(5, 6, 3, 3));
+        createCell(row, 3, "TOTAL HOUR", style2);
+        sheet.addMergedRegion(new CellRangeAddress(5, 5, 4, 9));
+        createCell(row, 4, "STATUS  ATTENDANCE", styleStatus);
+        for (int i = 5; i < 10; i++) {
+            createCell(row, i, "", style2);
+        }
+        createCell(row2, 4, "Present", style2);
+        createCell(row2, 5, "Sick ", style2);
+        createCell(row2, 6, "Business Trip", style2);
+        createCell(row2, 7, "Permit", style2);
+        createCell(row2, 8, "Vacation", style2);
+        createCell(row2, 9, "Not Working", style2);
+        sheet.addMergedRegion(new CellRangeAddress(5, 6, 10, 10));
+        createCell(row, 10, "ACTIVITY", style2);
+        createCell(row2, 10, "", style2);
     }
 
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
         sheet.autoSizeColumn(columnCount);
-//        for (Job job : listJobs) {
-//            if (job.getActivity().length()>100) {
-//                sheet.setColumnWidth(10, job.getActivity().length()+20000);
-//                System.out.println(job.getActivity().length());
-//            }
-//        }
         Cell cell = row.createCell(columnCount);
         if (value instanceof Integer) {
             cell.setCellValue((Integer) value);
@@ -110,30 +151,49 @@ public class ExportExcel {
 
     private void writeDataLines() {
         int rowCount = 7;
-        
-        CellStyle style1 = workbook.createCellStyle();
-        XSSFFont font = workbook.createFont();
-        font.setFontHeight(14);
-        style1.setAlignment(HorizontalAlignment.LEFT);
-        style1.setFont(font);
 
-        CellStyle style = workbook.createCellStyle();
-        font.setFontHeight(14);
-        style.setFont(font);
-        style.setAlignment(HorizontalAlignment.LEFT);
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBorderLeft(BorderStyle.THIN);
-        style.setBorderRight(BorderStyle.THIN);
-        style.setBorderTop(BorderStyle.THIN);
-        style.setWrapText(true);
-        
+        CellStyle style0 = workbook.createCellStyle();
+        XSSFFont font0 = workbook.createFont();
+        font0.setFontName("Verdana");
+        font0.setFontHeight(9);
+        style0.setFont(font0);
+        style0.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        CellStyle style2 = workbook.createCellStyle();
+        XSSFFont font2 = workbook.createFont();
+        font2.setFontHeight(9);
+        font2.setBold(true);
+        style2.setAlignment(HorizontalAlignment.LEFT);
+        style2.setVerticalAlignment(VerticalAlignment.CENTER);
+        style2.setFont(font2);
+
+        CellStyle style3 = workbook.createCellStyle();
+        XSSFFont font3 = workbook.createFont();
+        font3.setFontHeight(9);
+        font3.setFontName("Calibri Light");
+        font3.setBold(true);
+        style3.setFont(font3);
+        style3.setAlignment(HorizontalAlignment.LEFT);
+        style3.setBorderBottom(BorderStyle.THIN);
+        style3.setBorderLeft(BorderStyle.THIN);
+        style3.setBorderRight(BorderStyle.THIN);
+        style3.setBorderTop(BorderStyle.THIN);
+        style3.setVerticalAlignment(VerticalAlignment.CENTER);
+        style3.setAlignment(HorizontalAlignment.CENTER);
+        style3.setWrapText(true);
 
         //Employee
-        createCell(sheet.getRow(0), 1, employee.getProjectName(), style1);
-        createCell(sheet.getRow(1), 1, employee.getDivisi(), style1);
-        createCell(sheet.getRow(2), 1, employee.getName(), style1);
-        createCell(sheet.getRow(3), 1, employee.getMiiId(), style1);
-        createCell(sheet.getRow(4), 1, jobHistory.getMonth() + " " + jobHistory.getYear(), style1);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 6));
+        createCell(sheet.getRow(0), 2, ": " + employee.getProjectName(), style2);
+        sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 4));
+        createCell(sheet.getRow(1), 2, ": " + employee.getDivisi(), style2);
+        sheet.addMergedRegion(new CellRangeAddress(2, 2, 2, 5));
+        createCell(sheet.getRow(2), 2, ": " + employee.getName(), style2);
+        createCell(sheet.getRow(3), 2, ": " + employee.getNik(), style2);
+        sheet.addMergedRegion(new CellRangeAddress(4, 4, 2, 3));
+        createCell(sheet.getRow(4), 2, ": " + jobHistory.getMonth() + " " + jobHistory.getYear(), style2);
+
+        createCell(sheet.getRow(4), 6, "P = Present; S = Sick;  V = Vacation; BT = Business Trip; PM = Permit; X = Not Working Anymore", style0);
 
         //List Jobs
         Integer a = null;
@@ -141,63 +201,61 @@ public class ExportExcel {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
             a = job.getEmployee().getId();
-//            int a = job.getActivity().length()+8000;
-//            row.setHeight((short)a);
 
-            createCell(row, columnCount++, job.getDate().toString(), style);
-            createCell(row, columnCount++, job.getStartTime() == null ? "-" : job.getStartTime().toString(), style);
-            createCell(row, columnCount++, job.getEndTime() == null ? "-" : job.getEndTime().toString(), style);
-            createCell(row, columnCount++, job.getTotalHour() == null ? "-" : job.getTotalHour(), style);
+            createCell(row, columnCount++, job.getDate().toString(), style3);
+            createCell(row, columnCount++, job.getStartTime() == null ? "-" : job.getStartTime().toString(), style3);
+            createCell(row, columnCount++, job.getEndTime() == null ? "-" : job.getEndTime().toString(), style3);
+            createCell(row, columnCount++, job.getTotalHour() == null ? "-" : job.getTotalHour(), style3);
             if (job.getStatus().getId().equals("P")) {
-                createCell(row, 4, "v", style);
-                createCell(row, 5, "", style);
-                createCell(row, 6, "", style);
-                createCell(row, 7, "", style);
-                createCell(row, 8, "", style);
-                createCell(row, 9, "", style);
+                createCell(row, 4, job.getStatus().getId(), style3);
+                createCell(row, 5, "", style3);
+                createCell(row, 6, "", style3);
+                createCell(row, 7, "", style3);
+                createCell(row, 8, "", style3);
+                createCell(row, 9, "", style3);
             }
             if (job.getStatus().getId().equals("S")) {
-                createCell(row, 4, "", style);
-                createCell(row, 5, "v", style);
-                createCell(row, 6, "", style);
-                createCell(row, 7, "", style);
-                createCell(row, 8, "", style);
-                createCell(row, 9, "", style);
+                createCell(row, 4, "", style3);
+                createCell(row, 5, job.getStatus().getId(), style3);
+                createCell(row, 6, "", style3);
+                createCell(row, 7, "", style3);
+                createCell(row, 8, "", style3);
+                createCell(row, 9, "", style3);
             }
             if (job.getStatus().getId().equals("BT")) {
-                createCell(row, 4, "", style);
-                createCell(row, 5, "", style);
-                createCell(row, 6, "v", style);
-                createCell(row, 7, "", style);
-                createCell(row, 8, "", style);
-                createCell(row, 9, "", style);
+                createCell(row, 4, "", style3);
+                createCell(row, 5, "", style3);
+                createCell(row, 6, job.getStatus().getId(), style3);
+                createCell(row, 7, "", style3);
+                createCell(row, 8, "", style3);
+                createCell(row, 9, "", style3);
             }
             if (job.getStatus().getId().equals("PM")) {
-                createCell(row, 4, "", style);
-                createCell(row, 5, "", style);
-                createCell(row, 6, "", style);
-                createCell(row, 7, "v", style);
-                createCell(row, 8, "", style);
-                createCell(row, 9, "", style);
+                createCell(row, 4, "", style3);
+                createCell(row, 5, "", style3);
+                createCell(row, 6, "", style3);
+                createCell(row, 7, job.getStatus().getId(), style3);
+                createCell(row, 8, "", style3);
+                createCell(row, 9, "", style3);
             }
             if (job.getStatus().getId().equals("V")) {
-                createCell(row, 4, "", style);
-                createCell(row, 5, "", style);
-                createCell(row, 6, "", style);
-                createCell(row, 7, "", style);
-                createCell(row, 8, "v", style);
-                createCell(row, 9, "", style);
+                createCell(row, 4, "", style3);
+                createCell(row, 5, "", style3);
+                createCell(row, 6, "", style3);
+                createCell(row, 7, "", style3);
+                createCell(row, 8, job.getStatus().getId(), style3);
+                createCell(row, 9, "", style3);
             }
             if (job.getStatus().getId().equals("X")) {
-                createCell(row, 4, "", style);
-                createCell(row, 5, "", style);
-                createCell(row, 6, "", style);
-                createCell(row, 7, "", style);
-                createCell(row, 8, "", style);
-                createCell(row, 9, "v", style);
+                createCell(row, 4, "", style3);
+                createCell(row, 5, "", style3);
+                createCell(row, 6, "", style3);
+                createCell(row, 7, "", style3);
+                createCell(row, 8, "", style3);
+                createCell(row, 9, job.getStatus().getId(), style3);
             }
-                createCell(row, 10, job.getActivity(), style);
-            
+            createCell(row, 10, job.getActivity(), style3);
+
         }
 
         Row rows = sheet.createRow(rowCount);
@@ -208,36 +266,51 @@ public class ExportExcel {
         List<Status> statuses = statusService.getAll();
         for (Status status : statuses) {
 
-            createCell(rows, 0, "", style);
-            createCell(rows, 1, "", style);
-            createCell(rows, 2, "", style);
-            createCell(rows, 3, "", style);
+            createCell(rows, 0, "", style3);
+            createCell(rows, 1, "", style3);
+            createCell(rows, 2, "", style3);
+            createCell(rows, 3, "", style3);
             if (status.getId().equals("P")) {
-                createCell(rows, 4, status.getCount(), style);
+                createCell(rows, 4, status.getCount(), style3);
             }
             if (status.getId().equals("S")) {
-                createCell(rows, 5, status.getCount(), style);
+                createCell(rows, 5, status.getCount(), style3);
             }
             if (status.getId().equals("BT")) {
-                createCell(rows, 6, status.getCount(), style);
+                createCell(rows, 6, status.getCount(), style3);
             }
             if (status.getId().equals("PM")) {
-                createCell(rows, 7, status.getCount(), style);
+                createCell(rows, 7, status.getCount(), style3);
             }
             if (status.getId().equals("V")) {
-                createCell(rows, 8, status.getCount(), style);
+                createCell(rows, 8, status.getCount(), style3);
             }
             if (status.getId().equals("X")) {
-                createCell(rows, 9, status.getCount(), style);
+                createCell(rows, 9, status.getCount(), style3);
             }
-            createCell(rows, 10, "", style);
+            createCell(rows, 10, "", style3);
         }
+    }
+
+    public void resizeColumn() {
+        //width
+        for (int i = 1; i < 9; i++) {
+            sheet.setColumnWidth(i, 11 * 256);
+        }
+        sheet.setColumnWidth(10, 53 * 256);
+    }
+
+    private Row height(int rows) {
+        Row row = sheet.createRow(rows);
+        row.setHeightInPoints(17.3f);
+        return row;
     }
 
     public void export(HttpServletResponse response) throws IOException {
         workbook = new XSSFWorkbook();
         writeHeaderLine();
         writeDataLines();
+        resizeColumn();
 
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);

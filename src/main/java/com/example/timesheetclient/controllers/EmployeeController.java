@@ -6,7 +6,7 @@
  */
 package com.example.timesheetclient.controllers;
 
-import com.example.timesheetclient.excel.Excel;
+import com.example.timesheetclient.excel.ExportExcelAll;
 import com.example.timesheetclient.excel.ExportExcel;
 import com.example.timesheetclient.models.Employee;
 import com.example.timesheetclient.models.Job;
