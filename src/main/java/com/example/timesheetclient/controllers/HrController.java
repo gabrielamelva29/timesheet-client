@@ -85,7 +85,6 @@ public class HrController {
             int daysInMonth = yearMonthObject.lengthOfMonth();
             periode = history.getMonth() + " " + history.getYear();
             countDays = jobService.getByCountDate(periode);
-            System.out.println(countDays);
             if (daysInMonth <= countDays) {
                 jobHistoryService.sent(id);
                 return "redirect:/history";

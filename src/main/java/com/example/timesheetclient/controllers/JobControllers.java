@@ -58,8 +58,6 @@ public class JobControllers {
             BindingResult result,
             Model model,
             RedirectAttributes attributes) {
-        System.out.println(job);
-        System.out.println(result.hasErrors());
         if (result.hasErrors()) {
             model.addAttribute("statuses", statusService.getAll());
             model.addAttribute("history", ids);
@@ -84,7 +82,6 @@ public class JobControllers {
             return "timesheet/update-form-activity";
         }
         jobService.update(id, job);
-        System.out.println("berhasil");
         attributes.addFlashAttribute("message", "Update Successed");
         return "redirect:/history/{ids}";
     }

@@ -125,11 +125,12 @@ public class EmployeeController {
 
     //JOB GET EDIT
     @GetMapping("/job/edit/{id}/{ids}")
-    public String update(@PathVariable Integer id, JobHistory jobHistory,
+    public String update(@PathVariable Integer id,
             @PathVariable Integer ids,
+            JobHistory jobHistory,
             Model model) {
-        model.addAttribute("employee", employeeService.getById(id));
         model.addAttribute("job", jobService.getById(ids));
+        model.addAttribute("employee", employeeService.getById(id));
         model.addAttribute("statuses", statusService.getAll());
         model.addAttribute("history", idemp.getId());
         return "timesheet/update-form-activity";

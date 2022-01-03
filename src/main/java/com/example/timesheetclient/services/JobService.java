@@ -5,6 +5,7 @@
  */
 package com.example.timesheetclient.services;
 
+import com.example.timesheetclient.dto.JobDto;
 import com.example.timesheetclient.models.Job;
 import com.example.timesheetclient.models.ResponseModel;
 import java.util.List;
@@ -30,9 +31,9 @@ public class JobService {
         this.restTemplate = restTemplate;
     }
     
-    public List<Job> getAll(){
-        ResponseEntity<List<Job>> response =  restTemplate
-                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Job>>(){});
+    public List<JobDto> getAll(){
+        ResponseEntity<List<JobDto>> response =  restTemplate
+                .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<JobDto>>(){});
         return response.getBody();
     }
     
