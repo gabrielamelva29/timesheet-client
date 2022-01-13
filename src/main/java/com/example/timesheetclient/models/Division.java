@@ -5,35 +5,22 @@
  */
 package com.example.timesheetclient.models;
 
-import com.example.timesheetclient.dto.EmployeeDto;
-import java.sql.Date;
-import java.time.Month;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 /**
  *
- * @author Lenovo-PC
+ * @author ASUS
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JobHistory {
-    
+public class Division {
     private Integer id;
     
-    private String month;
+    private String projectName;
     
-    private Integer year;
-    
-    private String status;
-    
-    private Date approveDate;
-    
-    private EmployeeDto employee;
-    
-    private HR hr;
+    private String divisi;
 }
