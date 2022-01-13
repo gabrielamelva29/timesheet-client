@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,9 +7,6 @@
  */
 package com.example.timesheetclient.models;
 
-import com.example.timesheetclient.dto.EmployeeDto;
-import java.sql.Date;
-import java.time.Month;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,19 +20,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JobHistory {
-    
+public class Division {
     private Integer id;
     
-    private String month;
+    private String projectName;
     
-    private Integer year;
-    
-    private String status;
-    
-    private Date approveDate;
-    
-    private EmployeeDto employee;
-    
-    private HR hr;
+    private String divisi;
 }

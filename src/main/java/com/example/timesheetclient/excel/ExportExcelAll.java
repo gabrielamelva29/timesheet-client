@@ -181,9 +181,9 @@ public class ExportExcelAll {
 
             //Employee
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 6));
-            createCell(sheet.getRow(0), 2, ": " + jobHistory1.getEmployee().getProjectName(), style1);
+            createCell(sheet.getRow(0), 2, ": " + jobHistory1.getEmployee().getDivision().getProjectName(), style1);
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 4));
-            createCell(sheet.getRow(1), 2, ": " + jobHistory1.getEmployee().getDivisi(), style1);
+            createCell(sheet.getRow(1), 2, ": " + jobHistory1.getEmployee().getDivision().getDivisi(), style1);
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 2, 5));
             createCell(sheet.getRow(2), 2, ": " + jobHistory1.getEmployee().getName(), style1);
             createCell(sheet.getRow(3), 2, ": " + jobHistory1.getEmployee().getNik(), style1);
