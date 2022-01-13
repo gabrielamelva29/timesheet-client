@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.timesheetclient.models;
+package com.example.timesheetclient.dto;
 
-import com.example.timesheetclient.dto.EmployeeDto;
-import java.sql.Date;
-import java.time.Month;
+import com.example.timesheetclient.models.Division;
+import com.example.timesheetclient.models.Division;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,19 +21,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JobHistory {
+public class EmployeeDto {
     
     private Integer id;
-    
-    private String month;
-    
-    private Integer year;
-    
-    private String status;
-    
-    private Date approveDate;
-    
-    private EmployeeDto employee;
-    
-    private HR hr;
+
+    @NotEmpty(message = "Please input your Name")
+    private String name;
+
+    @NotEmpty(message = "Please input your NIK")
+    private String nik;
+
+    private Division division;
 }

@@ -76,7 +76,7 @@ and open the template in the editor.-->
                             <td th:text="${i.count}"></td>
                             <td><p th:class="${history.status}"  th:text="${history.status}" style="text-align:center; margin-top: 15px"></p></td>
                             <td th:text="${history.year}+' - '+${history.month}"></td>
-                            <td th:text="${history.employee == null}? '-': *{history.employee.projectName}"></td>
+                            <td th:text="${history.employee == null}? '-': *{history.employee.division.projectName}"></td>
                             <td th:text="${history.approveDate == null}? '-': *{history.approveDate}"></td>
                             <td>
                                 <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
