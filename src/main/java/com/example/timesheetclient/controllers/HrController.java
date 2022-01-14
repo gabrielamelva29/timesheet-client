@@ -68,6 +68,7 @@ public class HrController {
     }
 
     Integer days;
+
     @PostMapping("/sent/{id}")
     public String sent(@PathVariable Integer id,
             Model model,
@@ -82,19 +83,28 @@ public class HrController {
             }
         }
         YearMonth yearMonthObject = YearMonth.of(history.getYear(), days);
-            int daysInMonth = yearMonthObject.lengthOfMonth();
-            periode = history.getMonth() + " " + history.getYear();
-            countDays = jobService.getByCountDate(periode);
-            if (daysInMonth <= countDays) {
-                jobHistoryService.sent(id);
-                return "redirect:/history";
-            }else{
-                return "redirect:/history?sent=false";
-            }
+        System.out.println(days);
+        int daysInMonth = yearMonthObject.lengthOfMonth();
+        if (days<=9) {
+            periode = history.getYear() + "-0" + days;
+        }else{
+            periode = history.getYear() + "-" + days;
+        }
+        countDays = jobService.getByCountDate(periode);
+        System.out.println(daysInMonth);
+        System.out.println(countDays);
+        System.out.println(periode);
+        if (daysInMonth <= countDays) {
+            jobHistoryService.sent(id);
+            return "redirect:/history?sent=true";
+        } else {
+            return "redirect:/history?sent=false";
+        }
     }
 
     String bulan;
     Integer tahun;
+
     @GetMapping("/search")
     public String year(JobHistory jobHistory,
             @RequestParam(value = "yearmonth", required = false) String yearmonth,
