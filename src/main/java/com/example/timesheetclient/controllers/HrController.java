@@ -67,6 +67,14 @@ public class HrController {
         return "redirect:/hr";
     }
 
+    @PostMapping("/rejected/{id}")
+    public String rejected(@PathVariable Integer id,
+            Model model,
+            RedirectAttributes attributes) {
+        jobHistoryService.rejected(id);
+        return "redirect:/hr";
+    }
+
     Integer days;
 
     @PostMapping("/sent/{id}")

@@ -79,6 +79,11 @@ public class JobHistoryService {
                 .postForObject(url + "/approved/" + id, null, JobHistory.class), "Approved");
     }
 
+    public ResponseModel<JobHistory> rejected(Integer id) {
+        return new ResponseModel<>(restTemplate
+                .postForObject(url + "/rejected/" + id, null, JobHistory.class), "Rejected");
+    }
+
     public ResponseModel<JobHistory> sent(Integer id) {
         return new ResponseModel<>(restTemplate
                 .postForObject(url + "/sent/" + id, null, JobHistory.class), "Sent");
