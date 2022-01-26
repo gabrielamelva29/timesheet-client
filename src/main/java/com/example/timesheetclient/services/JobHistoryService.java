@@ -22,6 +22,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+
 /**
  *
  * @author Lenovo-PC
@@ -29,7 +30,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class JobHistoryService {
 
-    private RestTemplate restTemplate;
+  private RestTemplate restTemplate;
 
     @Value("${api.baseUrl}/history")
     private String url;
@@ -79,6 +80,11 @@ public class JobHistoryService {
                 .postForObject(url + "/approved/" + id, null, JobHistory.class), "Approved");
     }
 
+    public ResponseModel<JobHistory> rejected(Integer id) {
+        return new ResponseModel<>(restTemplate
+                .postForObject(url + "/rejected/" + id, null, JobHistory.class), "Rejected");
+    }
+
     public ResponseModel<JobHistory> sent(Integer id) {
         return new ResponseModel<>(restTemplate
                 .postForObject(url + "/sent/" + id, null, JobHistory.class), "Sent");
@@ -101,5 +107,4 @@ public class JobHistoryService {
         restTemplate
                 .getForObject(url + "/download/excel/" + id, JobHistory.class);
     }
-
 }

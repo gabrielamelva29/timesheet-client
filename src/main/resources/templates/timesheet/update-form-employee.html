@@ -38,38 +38,38 @@ and open the template in the editor.
             </nav>
             <div class="row">
                 <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/history/{id} (id = ${history.id})}" th:object="${employee}" th:method="PUT" id="jobForm">
-                    <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                    <div th:with="condition1=${history.status == 'ON PROGRESS'}, condition2=${history.status == 'REJECTED'}" th:remove="tag">
                         <div style="margin: 2% 3%">
                             <h2 class="text-primary" style="margin-bottom: 20px" >TIMESHEET</h2>
                             <div class="input-group input-group-sm " style="width: 320px">
                                 <label class="col-sm-6 col-form-label"><b>Name of Project</b></label>
-                                <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" maxlength="30" required style="background-color: white"/>
+                                <input th:readonly="${condition1 || condition2}?null:'readonly'" type="text" th:field="*{projectName}" class="rounded form-control"  id="projectName" maxlength="30" required style="background-color: white"/>
                             </div>
                             <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}"/>
 
                             <div class="input-group input-group-sm " style="width: 320px">
                                 <label class="col-sm-6 col-form-label"><b>Unit/Division</b></label>
-                                <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" maxlength="20" required style="background-color: white"/>
+                                <input th:readonly="${condition1 || condition2}?null:'readonly'" type="text" th:field="*{divisi}" class="rounded form-control"  id="divisi" maxlength="20" required style="background-color: white"/>
                             </div>
                             <p th:if="${#fields.hasErrors('divisi')}" th:errors="*{divisi}"/>
 
                             <div class="input-group input-group-sm mb-1" style="width: 320px">
                                 <label class="col-sm-6 col-form-label"><b>Name</b></label>
-                                <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{name}" class="rounded form-control"  id="name" maxlength="20" required style="background-color: white"/>
+                                <input th:readonly="${condition1 || condition2}?null:'readonly'" type="text" th:field="*{name}" class="rounded form-control"  id="name" maxlength="20" required style="background-color: white"/>
                             </div>
                             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
 
                             <div class="input-group input-group-sm mb-1" style="width: 320px">
                                 <label class="col-sm-6 col-form-label"><b>NIK</b></label>
-                                <input th:readonly="${!condition}?'readonly'" type="text" th:field="*{nik}" class="rounded form-control"  id="nik" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required style="background-color: white"/>
+                                <input th:readonly="${condition1 || condition2}?null:'readonly'" type="text" th:field="*{nik}" class="rounded form-control"  id="nik" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required style="background-color: white"/>
                             </div>
                             <p th:if="${#fields.hasErrors('nik')}" th:errors="*{nik}"/>
 
 
-                            <div th:style="${condition}?'width: 480px':'width: 320px'" class="input-group input-group-sm mb-1" style="width: 320px">
-                                <label th:class="${condition}?'col-sm-4 col-form-label':'col-sm-6 col-form-label'"><b>Periode</b></label>
+                            <div th:style="${condition1 || condition2}?'width: 480px':'width: 320px'" class="input-group input-group-sm mb-1" style="width: 320px">
+                                <label th:class="${condition1 || condition2}?'col-sm-4 col-form-label':'col-sm-6 col-form-label'"><b>Periode</b></label>
                                 <input type="text" th:object="${history}" th:value="*{month}+' '+*{year}" class="rounded col-sm-4 form-control"  id="periode" readonly style="background-color: white"/><br>
-                                <button  th:if="${condition}" id="submitEmployee" type="submit" class="btn rounded-circle" style="background-color: #009DE1; margin-left: 35px; margin-right: 90px" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                <button  th:if="${condition1 || condition2}" id="submitEmployee" type="submit" class="btn rounded-circle" style="background-color: #009DE1; margin-left: 35px; margin-right: 90px" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -81,9 +81,9 @@ and open the template in the editor.
                 </form>
             </div>
             <div class="container" style="float: left; width: 100%">
-                <div th:with="condition=${history.status == 'ON PROGRESS'}" th:remove="tag">
+                <div th:with="condition1=${history.status == 'ON PROGRESS'}, condition2=${history.status == 'REJECTED'}" th:remove="tag">
                     <!--<a th:href="@{/job/add}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end" >Add Log</a>--> 
-                    <a th:href="@{/job/add/{id} (id = ${employee.id})}" th:if="${condition}" type="button" class="btn btn-info m-3 float-end rounded-pill" style="background-color:#0094FF; font-size: 14px; color: #fff">
+                    <a th:href="@{/job/add/{id} (id = ${employee.id})}" th:if="${condition1 || condition2}" type="button" class="btn btn-info m-3 float-end rounded-pill" style="background-color:#0094FF; font-size: 14px; color: #fff">
                         Add Log
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
@@ -101,7 +101,7 @@ and open the template in the editor.
                                 <th scope="col">Total Work Hour</th>
                                 <th scope="col">Status Attendance</th>
                                 <th scope="col">Activy/Remark</th>
-                                <th scope="col" th:if="${condition}">Tools</th>
+                                <th scope="col" th:if="${condition1 || condition2}">Tools</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,14 +113,15 @@ and open the template in the editor.
                                 <td th:text="${job.totalHour}"></td>
                                 <td th:text="${job.status.name}"></td>
                                 <td th:text="${job.activity}"></td>
-                                <td th:if="${condition}" style="width: 13%">
+                                <td th:if="${condition1 || condition2}" style="width: 13%">
                                     <form 
                                         th:action="@{/job/{id}/{ids} (id = ${job.id}, ids = ${history.id})}" 
-                                        th:if="${condition}"
+                                        th:if="${condition1 || condition2}"
                                         th:method="DELETE"
+                                        id="myForm"
                                         >
                                         <!--Update Button-->
-                                        <a th:if="${condition}"
+                                        <a th:if="${condition1 || condition2}"
                                            th:href="@{/job/edit/{id}/{ids} (id = ${employee.id}, ids = ${job.id})}" 
                                            type="button" class="btn rounded-circle" style="background-color: #33ABEF" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -129,7 +130,8 @@ and open the template in the editor.
                                             </svg>
                                         </a>
                                         <!--Delete Button-->
-                                        <button type="submit" th:onclick="deleteById()"  style="background-color: #D60B17" class="btn rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                        <input type="hidden" name="_method" value="delete" />
+                                        <button type="submit" th:onclick="deleteById()" style="background-color: #D60B17" class="btn rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                                             </svg>
@@ -144,7 +146,7 @@ and open the template in the editor.
 
                     </table>
                     <center>
-                        <a th:if="${condition}" th:href="@{/history}" type="button" class="btn btn-info m-3" style="background-color:#0094FF; color: #fff">
+                        <a th:if="${condition1 || condition2}" th:href="@{/history}" type="button" class="btn btn-info m-3" style="background-color:#0094FF; color: #fff">
                             Back
                         </a>
                     </center>
@@ -162,4 +164,3 @@ and open the template in the editor.
 
 </body>
 </html>
-
