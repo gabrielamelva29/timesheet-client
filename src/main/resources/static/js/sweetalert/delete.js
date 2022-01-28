@@ -3,7 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function deleteById() {
+
+function deleteReg(id,ids) {
+    $("#deleteForm").attr("class", "delete-" + id);
+    event.preventDefault();
+    const urlAct = "/job/" + id+"/"+ids;
+
+    $.ajax({
+        url: urlAct,
+        type: 'POST',
+        dataType: 'json',
+        data: $('.delete-' + id).serialize(),
+        beforeSend: (req) => {
+            addRequestHeader();
+        },
+        success: (result) => {
+            
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    });
+}
+
+function deleteById(id,ids) {
     event.preventDefault();
     Swal.fire({
         title: 'Are you sure?',
@@ -15,7 +38,8 @@ function deleteById() {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById("myForm").submit();
+            deleteReg(id,ids);
+            window.location.href = ids;
         }
     });
 }

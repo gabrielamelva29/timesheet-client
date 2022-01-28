@@ -38,7 +38,7 @@ and open the template in the editor.-->
             <div class="p-2 mr-2">
                 <h3 class="text-primary" >TIMESHEET</h3>
             </div>
-            <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/job/edit/{id}/{ids} (id = ${job.id}, ids = ${history})}" th:object="${job}" th:method="PUT" id="jobForm">
+            <form th:class="${#fields.hasErrors()} ? 'was-validated' : ''" class="needs-validation" novalidate th:action="@{/job/edit/{id}/{ids} (id = ${history}, ids = ${job.id})}" th:object="${job}" th:method="PUT" id="jobForm">
                 <div  class="card  p-3" style="font-size: 12px">
                     <h6> Add New Log Activity</h6>
                     <div class="mb-1 row">
@@ -48,6 +48,7 @@ and open the template in the editor.-->
                         </div>
                         <div class="col-sm-2">
                             <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"/>
+                            <p th:if="${param.updated} != null">This Date is Already</p>
                         </div>
                     </div>
 
