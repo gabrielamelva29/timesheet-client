@@ -47,6 +47,12 @@ public class JobService {
         return restTemplate.getForObject(url+"/"+id, Job.class);
     }
     
+     public Boolean getByDate(String date){
+         ResponseEntity<Boolean> response =  restTemplate
+                .exchange(url+"/date?date="+date, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>(){});
+        return response.getBody();
+    }
+    
      public Integer getByCountDate(String periode){
          ResponseEntity<Integer> response =  restTemplate
                 .exchange(url+"/periode?periode="+periode, HttpMethod.GET, null, new ParameterizedTypeReference<Integer>(){});
