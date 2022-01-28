@@ -91,7 +91,6 @@ public class HrController {
             }
         }
         YearMonth yearMonthObject = YearMonth.of(history.getYear(), days);
-        System.out.println(days);
         int daysInMonth = yearMonthObject.lengthOfMonth();
         if (days<=9) {
             periode = history.getYear() + "-0" + days;
@@ -99,9 +98,6 @@ public class HrController {
             periode = history.getYear() + "-" + days;
         }
         countDays = jobService.getByCountDate(periode);
-        System.out.println(daysInMonth);
-        System.out.println(countDays);
-        System.out.println(periode);
         if (daysInMonth <= countDays) {
             jobHistoryService.sent(id);
             return "redirect:/history?sent=true";

@@ -92,40 +92,14 @@ and open the template in the editor.
                             <th scope="col">Tools</th>
                         </tr>
                     </thead>
-<!--                    <tbody>
-                        <tr th:each="job : ${jobs}">
-                            <td th:text="${i.count}"></td>
-                            <td th:text="${job.date}"></td>
-                            <td th:text="${job.startTime}"></td>
-                            <td th:text="${job.endTime}"></td>
-                            <td th:text="${job.totalHour}"></td>
-                            <td th:text="${job.status.name}"></td>
-                            <td th:text="${job.activity}"></td>
-                            <td>
-                                Update Button
-                                <a th:href="@{/job/edit/{id} (id = ${job.id})}" type="button" class="btn btn-sm btn-warning">
-                                    Edit
-                                </a>
-                                Delete Button
-                                <form 
-                                    th:action="@{/job/{id} (id = ${job.id})}" 
-                                    th:method="DELETE"
-                                    onSubmit="return confirm('Are you sure you wish to delete?');" class="btn btn-sm btn-danger">
-                                    <input  name="delete" th:value="${history.id}" hidden/>
-                                    <input type="submit" value="Delete"/>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>             -->
                 </table>    
                 <table style="width: 35%" id="statusTable">
                 </table>
             </div>
         </div>
     <th:block layout:fragment="scripts">
-        <!--<script th:src="@{/js/employee.js}"></script>-->
         <script th:src="@{/js/status.js}"></script>
-        <script th:src="@{/layout/js/datatable.js}"></script>
+        <script th:src="@{/js/layout/datatable.js}"></script>
     </th:block>
 
 </body>

@@ -8,11 +8,11 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <link rel="stylesheet" th:href="@{/layout/css/bootstrap.min.css}" />
-        <link rel="stylesheet" th:href="@{/layout/css/jquery.dataTables.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/layout/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/layout/jquery.dataTables.min.css}" />
         
         <link rel="stylesheet" th:href="@{/css/styles.css}" />
-        <link rel="stylesheet" th:href="@{/layout/css/layout.css}" />
+        <link rel="stylesheet" th:href="@{/css/layout/layout.css}" />
         
         <meta name="_csrf" th:content="${_csrf.token}"/>
         <!-- default header name is X-CSRF-TOKEN -->
@@ -65,8 +65,8 @@ and open the template in the editor.
             </div>        
         </div>
         <!-- Bootstrap core JS-->
-        <script th:src="@{/layout/js/jquery-3.6.0.js}"></script>
-        <script th:src="@{/layout/js/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/js/layout/jquery-3.6.0.js}"></script>
+        <script th:src="@{/js/layout/jquery.dataTables.min.js}"></script>
     <!-- Core theme JS-->
     <script th:src="@{/js/scripts.js}"></script>
     <script th:src="@{/js/csrf.js}"></script>
