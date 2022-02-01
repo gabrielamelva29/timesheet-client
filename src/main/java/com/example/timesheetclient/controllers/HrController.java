@@ -100,7 +100,7 @@ public class HrController {
         countDays = jobService.getByCountDate(periode);
         if (daysInMonth <= countDays) {
             jobHistoryService.sent(id);
-            return "redirect:/history?sent=true";
+            return "redirect:/history";
         } else {
             return "redirect:/history?sent=false";
         }

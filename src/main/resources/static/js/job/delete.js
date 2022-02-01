@@ -39,6 +39,18 @@ function deleteById(id,ids) {
     }).then((result) => {
         if (result.isConfirmed) {
             deleteReg(id,ids);
+            successMessageDelete("Deleted was Successfully",ids);
+            
+        }
+    });
+}
+
+function successMessageDelete(berhasil,ids) {
+    Swal.fire({
+        icon: 'success',
+        title: berhasil
+    }).then((result) => {
+        if (result.isConfirmed) {
             window.location.href = ids;
         }
     });
