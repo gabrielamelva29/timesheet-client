@@ -7,6 +7,7 @@ package com.example.timesheetclient.controllers;
 
 import com.example.timesheetclient.excel.ExportExcelAll;
 import com.example.timesheetclient.models.JobHistory;
+import com.example.timesheetclient.models.ResponseModel;
 import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
 import com.example.timesheetclient.services.JobService;
@@ -78,7 +79,8 @@ public class HrController {
     Integer days;
 
     @PostMapping("/sent/{id}")
-    public String sent(@PathVariable Integer id,
+    public @ResponseBody
+    ResponseModel<JobHistory> sent(@PathVariable Integer id,
             Model model,
             RedirectAttributes attributes) {
         int bulan, countDays;
@@ -100,10 +102,9 @@ public class HrController {
         countDays = jobService.getByCountDate(periode);
         if (daysInMonth <= countDays) {
             jobHistoryService.sent(id);
-            return "redirect:/history";
-        } else {
-            return "redirect:/history?sent=false";
+            return new ResponseModel<>();
         }
+            return null;
     }
 
     String bulan;
