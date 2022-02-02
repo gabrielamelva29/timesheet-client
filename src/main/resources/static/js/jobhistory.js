@@ -4,9 +4,6 @@ $(document).ready(() => {
     if (urlParams.get('created') == 'false') {
         failMessage("This Month is Already");
     }
-    if (urlParams.get('sent') == 'false') {
-        failMessage("This Period Must be Full");
-    }
 });
 
 function failMessage(gagal) {
@@ -45,15 +42,18 @@ function send(id) {
             addRequestHeader();
         },
         success: (result) => {
-            
+            console.log("berhasil");
+            successMessage("Send was Successfully")
+
         },
         error: (err) => {
             console.log(err);
+            failMessage("This Period Must be Full");
         }
     });
 }
 
-function confirmationSend(id){
+function confirmationSend(id) {
     event.preventDefault();
     Swal.fire({
         title: 'Are you sure?',
@@ -66,7 +66,6 @@ function confirmationSend(id){
     }).then((result) => {
         if (result.isConfirmed) {
             send(id);
-            successMessage("Send was Successfully")
         }
     });
 }
@@ -85,7 +84,7 @@ function approved(id) {
             addRequestHeader();
         },
         success: (result) => {
-            
+
         },
         error: (err) => {
             console.log(err);
@@ -93,7 +92,7 @@ function approved(id) {
     });
 }
 
-function confirmationApproved(id){
+function confirmationApproved(id) {
     event.preventDefault();
     Swal.fire({
         title: 'Are you sure?',
@@ -106,7 +105,7 @@ function confirmationApproved(id){
     }).then((result) => {
         if (result.isConfirmed) {
             approved(id);
-            successMessageReject("Approved was Successfully")
+            successMessageReject("Approved was Successfully");
         }
     });
 }
@@ -125,7 +124,7 @@ function reject(id) {
             addRequestHeader();
         },
         success: (result) => {
-            
+
         },
         error: (err) => {
             console.log(err);
@@ -134,7 +133,7 @@ function reject(id) {
 }
 
 
-function confirmationReject(id){
+function confirmationReject(id) {
     event.preventDefault();
     Swal.fire({
         title: 'Are you sure?',
