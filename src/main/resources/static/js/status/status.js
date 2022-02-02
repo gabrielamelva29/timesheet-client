@@ -1,6 +1,19 @@
 $(document).ready(() => {
     load();
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('updated') == 'false') {
+        failMessages("This Date is Already");
+    }
 });
+
+function failMessages(gagal) {
+    Swal.fire({
+        icon: 'error',
+        title: gagal
+    });
+}
+
 function load() {
     $.ajax({
         url: '/status/getAll',
