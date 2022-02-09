@@ -5,6 +5,9 @@ $(document).ready(() => {
     if (urlParams.get('updated') == 'false') {
         failMessages("This Date is Already");
     }
+    if (urlParams.get('created') == 'false') {
+        failMessages("This Date is Already");
+    }
 });
 
 function failMessages(gagal) {

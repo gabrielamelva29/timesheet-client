@@ -5,6 +5,7 @@
  */
 package com.example.timesheetclient.models;
 
+import com.example.timesheetclient.dto.EmployeeDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,7 +43,7 @@ public class Job {
     @Size(max = 2000, message = "Max character is 2000")
     private String activity;
     
-    private Employee employee;
+    private EmployeeDto employee;
     
     private Status status;
 }

@@ -262,7 +262,7 @@ public class ExportExcel {
         int column = 0;
         //List Status
         rowCount++;
-        statusService.counts(a);
+        statusService.counts(jobHistory.getId());
         List<Status> statuses = statusService.getAll();
         for (Status status : statuses) {
 

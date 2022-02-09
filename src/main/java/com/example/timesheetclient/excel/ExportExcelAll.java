@@ -192,7 +192,7 @@ public class ExportExcelAll {
 
             createCell(sheet.getRow(4), 6, "P = Present; S = Sick;  V = Vacation; BT = Business Trip; PM = Permit; X = Not Working Anymore", style0);
 
-            List<Job> listJobEmployee = jobService.findByEmployee(jobHistory1.getEmployee().getId());
+            List<Job> listJobEmployee = jobService.getAllByDate(jobHistory1.getId(), jobHistory1.getEmployee().getId());
             int rowCount = 7;
             for (Job job : listJobEmployee) {
                 Row rows = sheet.createRow(rowCount++);
@@ -254,7 +254,7 @@ public class ExportExcelAll {
                 rowCountStatus = rowCount;
             }
 
-            statusService.counts(jobHistory1.getEmployee().getId());
+            statusService.counts(jobHistory1.getId());
             List<Status> Statuses = statusService.getAll();
             Row rows = sheet.createRow(rowCountStatus);
             rowCountStatus++;
