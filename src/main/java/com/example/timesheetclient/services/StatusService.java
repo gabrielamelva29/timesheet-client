@@ -48,6 +48,6 @@ public class StatusService {
     
     public void counts(Integer id){
         restTemplate
-                .getForObject(url + "/counts/"+id, Status.class);
+                .getForObject(url + "/counts?tanggal="+id, Status.class);
     }
 }

@@ -83,8 +83,7 @@ public class HrController {
     ResponseModel<JobHistory> sent(@PathVariable Integer id,
             Model model,
             RedirectAttributes attributes) {
-        int bulan, countDays;
-        String periode;
+        Integer countDays;
         String[] monthname = {"", "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
         JobHistory history = jobHistoryService.getById(id);
         for (int i = 0; i < 13; i++) {
@@ -94,12 +93,7 @@ public class HrController {
         }
         YearMonth yearMonthObject = YearMonth.of(history.getYear(), days);
         int daysInMonth = yearMonthObject.lengthOfMonth();
-        if (days<=9) {
-            periode = history.getYear() + "-0" + days;
-        }else{
-            periode = history.getYear() + "-" + days;
-        }
-        countDays = jobService.getByCountDate(periode);
+        countDays = jobService.getByCountDate(history.getId(), history.getEmployee().getId());
         if (daysInMonth <= countDays) {
             jobHistoryService.sent(id);
             return new ResponseModel<>();

@@ -78,9 +78,9 @@ public class EmployeeController {
             statusService.counts(Integer.SIZE);
             return "timesheet/add-form-employee";
         }
-        model.addAttribute("jobs", jobService.findByEmployee(idemp.getEmployee().getId()));
+        model.addAttribute("jobs", jobService.getAllByDate(id,jobHistory.getEmployee().getId()));
         model.addAttribute("employee", employeeService.getById(jobHistory.getEmployee().getId()));
-        statusService.counts(jobHistory.getEmployee().getId());
+        statusService.counts(jobHistory.getId());
         return "timesheet/update-form-employee";
     }
 
@@ -146,7 +146,7 @@ public class EmployeeController {
         response.setContentType("application/octet-stream");
 
         JobHistory jobHistory = jobHistoryService.getById(id);
-        List<Job> listJobs = jobService.findByEmployee(jobHistory.getEmployee().getId());
+        List<Job> listJobs = jobService.getAllByDate(jobHistory.getId(),jobHistory.getEmployee().getId());
         Employee employee = employeeService.getById(jobHistory.getEmployee().getId());
 
         String headerKey = "Content-Disposition";

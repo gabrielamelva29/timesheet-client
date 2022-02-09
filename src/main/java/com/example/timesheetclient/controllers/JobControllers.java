@@ -64,7 +64,7 @@ public class JobControllers {
             model.addAttribute("employee", employeeService.getById(id));
             return "timesheet/add-form-activity";
         }
-        if (jobService.getByDate(job.getDate())) {
+        if (jobService.getByDate(job.getDate(),id)!=null) {
             model.addAttribute("statuses", statusService.getAll());
             model.addAttribute("history", ids);
             model.addAttribute("employee", employeeService.getById(id));
@@ -75,9 +75,10 @@ public class JobControllers {
         return "redirect:/history/{ids}";
     }
 
-    @PutMapping("/edit/{id}/{ids}")
+    @PutMapping("/edit/{id}/{ids}/{idemplo}")
     public String update(@PathVariable Integer id,
             @PathVariable Integer ids,
+            @PathVariable Integer idemplo,
             @Valid Job job,
             BindingResult result,
             Model model,
@@ -87,10 +88,10 @@ public class JobControllers {
             model.addAttribute("history", id);
             return "timesheet/update-form-activity";
         }
-        if (jobService.getByDate(job.getDate())) {
+        if (jobService.getByDate(job.getDate(), idemplo)!=null) {
             model.addAttribute("statuses", statusService.getAll());
             model.addAttribute("history", id);
-            return "redirect:/job/edit/{id}/{ids}?updated=false";
+            return "redirect:/job/edit/{idemplo}/{ids}?updated=false";
         }
         jobService.update(ids, job);
         attributes.addFlashAttribute("message", "Update Successed");

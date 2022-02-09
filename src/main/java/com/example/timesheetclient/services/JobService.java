@@ -43,19 +43,23 @@ public class JobService {
         return response.getBody();
     }
     
+    public List<Job> getAllByDate(Integer idHistory, Integer idEmployee){
+        ResponseEntity<List<Job>> response =  restTemplate
+                .exchange(url+"/getAllByDate?idHistory="+idHistory+"&&idEmployee="+idEmployee, HttpMethod.GET, null, new ParameterizedTypeReference<List<Job>>(){});
+        return response.getBody();
+    }
+    
      public Job getById(Integer id){
         return restTemplate.getForObject(url+"/"+id, Job.class);
     }
     
-     public Boolean getByDate(String date){
-         ResponseEntity<Boolean> response =  restTemplate
-                .exchange(url+"/date?date="+date, HttpMethod.GET, null, new ParameterizedTypeReference<Boolean>(){});
-        return response.getBody();
+     public Job getByDate(String date, Integer id){
+         return restTemplate.getForObject(url+"/date?date="+date+"&&id="+id, Job.class);
     }
     
-     public Integer getByCountDate(String periode){
+     public Integer getByCountDate(Integer idHistory, Integer idEmployee){
          ResponseEntity<Integer> response =  restTemplate
-                .exchange(url+"/periode?periode="+periode, HttpMethod.GET, null, new ParameterizedTypeReference<Integer>(){});
+                .exchange(url+"/periode?idHistory="+idHistory+"&&idEmployee="+idEmployee, HttpMethod.GET, null, new ParameterizedTypeReference<Integer>(){});
         return response.getBody();
     }
     
