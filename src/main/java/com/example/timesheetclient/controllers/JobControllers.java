@@ -13,6 +13,7 @@ import com.example.timesheetclient.services.EmployeeService;
 import com.example.timesheetclient.services.JobHistoryService;
 import com.example.timesheetclient.services.JobService;
 import com.example.timesheetclient.services.StatusService;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -103,5 +104,11 @@ public class JobControllers {
             @PathVariable Integer ids) {
         jobService.delete(id);
         return "redirect:/history/{ids}";
+    }
+    
+    @GetMapping("/findByEmployee/{idEmployee}")
+    public @ResponseBody
+    List<Job> findByEmployee(@PathVariable Integer idEmployee){
+        return jobService.findByEmployee(idEmployee);
     }
 }

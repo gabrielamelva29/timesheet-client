@@ -107,6 +107,12 @@ and open the template in the editor.-->
         <script th:src="@{/js/sweetalert/sweetalert.js}"></script>
         <script type="text/javascript" th:src="@{/js/status/attendance.js}" charset="UTF-8"></script>
         <script type="text/javascript" th:src="@{/js/status/status.js}" charset="UTF-8"></script>
+        <script th:inline="javascript" charset="UTF-8">
+            $(document).ready(function () {
+            var employee = [[${employee.id}]];
+            getByDate(employee)
+            });
+        </script>
         <!-- Menambahakan Date Range Picker -->
         <script type="text/javascript" th:src="@{/js/datepicker/bootstrap-datepicker.min.js}" charset="UTF-8"></script>
         <script type="text/javascript" th:src="@{/js/datepicker/datepicker.js}" charset="UTF-8"></script>
