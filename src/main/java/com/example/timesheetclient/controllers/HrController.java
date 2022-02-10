@@ -61,19 +61,21 @@ public class HrController {
     }
 
     @PostMapping("/approved/{id}")
-    public String approved(@PathVariable Integer id,
+    public @ResponseBody
+    ResponseModel<JobHistory> approved(@PathVariable Integer id,
             Model model,
             RedirectAttributes attributes) {
         jobHistoryService.approved(id);
-        return "redirect:/hr";
+        return new ResponseModel<>();
     }
 
     @PostMapping("/rejected/{id}")
-    public String rejected(@PathVariable Integer id,
+    public @ResponseBody
+    ResponseModel<JobHistory> rejected(@PathVariable Integer id,
             Model model,
             RedirectAttributes attributes) {
         jobHistoryService.rejected(id);
-        return "redirect:/hr";
+        return new ResponseModel<>();
     }
 
     Integer days;
