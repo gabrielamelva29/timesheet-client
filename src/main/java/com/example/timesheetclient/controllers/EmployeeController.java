@@ -75,7 +75,7 @@ public class EmployeeController {
         idemp = jobHistoryService.getById(id);
 
         if (jobHistory.getEmployee() == null) {
-            statusService.counts(Integer.SIZE);
+            statusService.counts(jobHistory.getId());
             return "timesheet/add-form-employee";
         }
         model.addAttribute("jobs", jobService.getAllByDate(id,jobHistory.getEmployee().getId()));

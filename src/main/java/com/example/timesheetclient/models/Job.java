@@ -43,7 +43,7 @@ public class Job {
     @Size(max = 2000, message = "Max character is 2000")
     private String activity;
     
-    private EmployeeDto employee;
+    private Employee employee;
     
     private Status status;
 }

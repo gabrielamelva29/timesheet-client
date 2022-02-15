@@ -44,13 +44,13 @@ public class JobHistoryController {
         return "timesheet/job-history";
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public String created(Model model, Employee employee,
             RedirectAttributes attributes) {
         if (jobHistoryService.getByMonth() == null) {
-            statusService.counts(Integer.SIZE);
             JobHistory jobHistory = jobHistoryService.creates();
             JobHistory emp = jobHistoryService.getById(jobHistory.getId());
+            statusService.counts(emp.getId());
             model.addAttribute("history", emp);
             return "timesheet/add-form-employee";
         } else {
